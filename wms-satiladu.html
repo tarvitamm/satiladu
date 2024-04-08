@@ -1,0 +1,2166 @@
+
+<!-- mapserver template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="initial-scale=0.75, maximum-scale=0.75, minimum-scale=0.75, user-scalable=yes, width=device-width">
+  <link rel="stylesheet" href="https://ehgateway.maaamet.ee/ol/v6.4.3/ol.css" type="text/css">
+  <style>
+    html, body, #map {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial,Helvetica;
+      font-size: 1em;
+      color: white;
+      background-color: #111;
+    }
+    h1 {
+      font-family: Arial,Helvetica;
+      font-size: 1em;
+      font-weight: normal;
+      color: white;
+      margin: 0.5em;
+    }
+    .buttonno {
+      background: rgba(48,119,77,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonno:hover {
+      background: rgba(81,152,98,0.8);
+    }
+    .buttonnon {
+      background: rgba(48,119,77,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnog {
+      background: rgba(50,50,50,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnog:hover {
+      background: rgba(100,100,100,0.8);
+    }
+    .buttonnoy {
+      background: rgba(150,150,0,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnoy:hover {
+      background: rgba(200,200,0,0.8);
+    }
+    .buttonnob {
+      background: rgba(48,77,119,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnob:hover {
+      background: rgba(81,98,152,0.8);
+    }
+    .buttonnogn {
+      background: rgba(50,50,50,0.8);
+      border-radius:0.3em;
+      border-style: none; 
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-l {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-i {
+      position: relative;
+      background: #C8C800;
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 0.5em solid transparent;
+      border-right-color: #bd0055;
+      border-left: 0;
+      margin-top: -0.5em;
+      margin-left: -0.5em;
+    }
+    .speech-bubble-g-l {
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: -2.6em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-s-l {
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-s-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: 3.2em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-r {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-r:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 0.5em solid transparent;
+      border-left-color: #bd0055;
+      border-right: 0;
+      margin-top: -0.5em;
+      margin-right: -0.5em;
+    }
+    .speech-bubble-b {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-b:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-top-color: #bd0055;
+      border-bottom: 0;
+      margin-left: -0.375em;
+      margin-bottom: -0.375em;
+    }
+    .speech-bubble-t {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-t:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: #bd0055;
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+    .speech-bubble-g-t-product {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-product:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: rgba(48,119,77,0.8);
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+    .speech-bubble-g-t-etc {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-etc:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: 0.3em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-g-t-lut {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-lut:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 45%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: rgba(48,119,77,0.8);
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+
+
+
+    .scalebar {
+    }
+
+  </style>
+
+  <title>Satiladu | Maa-amet</title>
+
+  <script src="https://ehgateway.maaamet.ee/utils/elm-pep/elm-pep.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script>
+  <script src="https://ehgateway.maaamet.ee/ol/v6.4.3/ol.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://ehgateway.maaamet.ee/utils/Lightpick/lightpick.css">
+  <script src="https://ehgateway.maaamet.ee/utils/Lightpick/moment.min.js"></script>
+  <script src="https://ehgateway.maaamet.ee/utils/Lightpick/lightpick.js"></script>
+  <script type="text/javascript" src="https://inaadress.maaamet.ee/inaadress/js/inaadress.min.js"></script>
+</head>
+
+<body onload="init()">
+  <a style="display:none;" id="image-download" download="map.png"></a>
+  <a style="display:none;" id="tfw-download" download="map.pgw"></a>
+  <div id="map"></div>
+
+  <div id="InAadressDiv" onclick="onClick('none')" style="position:absolute; top:1em; left:7em; right:auto; bottom:auto; width: 20em; height: 1em; z-index: 0"></div>
+
+  <div id="ZoomIn" title="Suurenda sisse" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()+1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /><line x1='5' y1='3' x2='5' y2='7' style='stroke:white;stroke-width:1' /></svg>"></div>
+  <div id="ZoomOut" title="Suurenda v&auml;lja" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()-1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:3.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /></svg>"></div>
+  <div id="mapRotationDiv" title="P&otilde;hjasuund" onclick="onClick('none');map.getView().animate({rotation: 0, duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:6em; left:1em; height:2.2em; width:2.2em;"><img id="mapRotationImage" style="width:2.2em; height:2.2em; transform: rotate(0rad);" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polygon points='4,5 5,3 6,5' style='fill:white;stroke:white;stroke-width:0.3' /><polygon points='4,5 5,7 6,5' style='fill:none;stroke:white;stroke-width:0.3' /><circle cx='5' cy='5' r='3.5' stroke='white' stroke-width='0.3' fill='none' /></svg>"></div>
+
+  <div id="NavPrev" title="Navigeeri tagasi" onclick="onClick('none');NavigateTo(-1)" class="buttonnog" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:3.5em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em; transform: rotate(0rad);" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='5,7 3,5 5,3' style='fill:none;stroke:white;stroke-width:0.5' /><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:0.5' /></svg>"></div>
+  <div id="NavNext" title="Navigeeri edasi" onclick="onClick('none');NavigateTo(1)" class="buttonnog" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:3.5em; left:3.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em; transform: rotate(0rad);" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='5,7 7,5 5,3' style='fill:none;stroke:white;stroke-width:0.5' /><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:0.5' /></svg>"></div>
+
+  <div id="NavToOne" title="Suurendusaste: 1px = 10m" onclick="onClick('none');map.getView().setResolution(10);" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:8.5em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.3em; }</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>1:1</text></svg>"></div>
+
+  <div id="PositionButtonDiv" title="Asukoht kaardil" onclick="onClick('none');geolocation.setTracking(!geolocation.getTracking());PositionLayer.setVisible(geolocation.getTracking());document.getElementById('PositionButtonDiv').className=(geolocation.getTracking() ? 'buttonnoy' : 'buttonno');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:6em; left:3.5em; height:2.2em; width:2.2em;"><img style="padding:0.45em; width:1.3em; height:1.3em" src="data:image/svg+xml,<?xml version='1.0' encoding='utf-8'?><svg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='25px' height='25px' viewBox='0 0 24 24' enable-background='new 0 0 24 24' xml:space='preserve'> <path fill='none' d='M0,0h24v24H0V0z'/><path fill='%23ffffff' d='M20.939,11C20.48,6.83,17.17,3.52,13,3.06V1h-2v2.06C6.83,3.52,3.52,6.83,3.06,11H1v2h2.06 c0.46,4.17,3.77,7.48,7.94,7.939V23h2v-2.061c4.17-0.459,7.48-3.771,7.939-7.939H23v-2H20.939z M12,19c-3.87,0-7-3.13-7-7 s3.13-7,7-7s7,3.13,7,7S15.87,19,12,19z'/><path fill='%23ffffff' d='M12,16c-2.205,0-4-1.796-4-4c0-2.207,1.795-4,4-4c2.206,0,4,1.793,4,4C16,14.204,14.206,16,12,16z M12,9.6 c-1.322,0-2.4,1.075-2.4,2.4c0,1.32,1.078,2.398,2.4,2.398c1.325,0,2.398-1.078,2.398-2.398C14.398,10.675,13.325,9.6,12,9.6z'/></svg>"></div>
+
+  <div id="SaveScreen" title="Salvesta ekraanipilt" onclick="onClick('D-SaveMap');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:11em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polygon points='3,3 3,7 7,7 7,4 6,3' style='fill:none;stroke:white;stroke-width:0.5' /><polyline points='4.5,3 4.5,4 5.5,4 5.5,3' style='fill:none;stroke:white;stroke-width:0.5' /><polyline points='4,7 4,5.5 6,5.5 6,7' style='fill:none;stroke:white;stroke-width:0.5' /></svg>"></div>
+
+  <div id="CopyLink" title="Kopeeri WMS'i v&otilde;i lehek&uuml;lje aadress vahem&auml;llu" onclick="onClick('D-SaveLink');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:13.5em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='4,4 3,4 3,7 6,7 6,6' style='fill:none;stroke:white;stroke-width:0.5'/><polygon points='4,3 4,6 7,6 7,4 6,3' style='fill:none;stroke:white;stroke-width:0.5'/></svg>"></div>
+
+  <div id="Help" title="Abi" onclick="onClick('D-HelpWindow');HelpMeText();" class="buttonnoy" style="z-index: 99999991; visibility:visible; cursor:pointer; position:absolute; top:16em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.3em; font-weight:bold;}</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>?</text></svg>"></div>
+
+  <div id="HybridDiv" title="H&uuml;briid kiht" onclick="onClick('none');setHybrid();" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:3.5em; left:1em; height:4em; width:4em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2.5em; height:2.5em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.75em; }</style><polygon points='9,5 9,24 16,21 16,3' style='fill:white;stroke:white;stroke-width:1' /><polygon points='16,3 16,21 23,24 23,6' style='fill:none;stroke:white;stroke-width:1' /><polygon points='23,6 23,24 30,21 30,3' style='fill:white;stroke:white;stroke-width:1' /><text x='0' y='38' fill='white' class='txt'>H&uuml;briid</text></svg>"></div>
+
+  <div id="MaskDiv" title="Mask" onclick="onClick('D-Mask');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:11.2em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='5,0 35,0 35,20 5,20' style='fill:none;stroke:white;stroke-width:1' /><polygon points='5,0 20,0 10,10 15,20 5,20' style='fill:white;stroke:white;stroke-width:1' /><polygon points='20,7 28,7 30,15 20,15 17,10' style='fill:white;stroke:white;stroke-width:1' /><text x='2' y='40' fill='white' class='txt'>Mask</text></svg>"></div>
+
+  <div id="BordersDiv" title="Piirid" onclick="onClick('D-Borders');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:14.5em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='5,0 35,0 35,20 5,20' style='fill:none;stroke:white;stroke-width:1' /><line x1='5' y1='20' x2='15' y2='0' style='stroke:white;stroke-width:1' /><line x1='20' y1='20' x2='25' y2='10' style='stroke:white;stroke-width:1' /><line x1='17' y1='10' x2='22' y2='0' style='stroke:white;stroke-width:1' /><line x1='17' y1='10' x2='35' y2='10' style='stroke:white;stroke-width:1' /><text x='2' y='40' fill='white' class='txt'>Piirid</text></svg>"></div>
+
+  <div id="EtcDiv" title="Muu" onclick="onClick('D-Etc');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:7.9em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='5,15 5,20 10,20 10,15' style='fill:white;stroke:none;stroke-width:1' /><polygon points='16,15 16,20 21,20 21,15' style='fill:white;stroke:none;stroke-width:1' /><polygon points='28,15 28,20 33,20 33,15' style='fill:white;stroke:none;stroke-width:1' /><text x='4' y='40' fill='white' class='txt'>Muu</text></svg>"></div>
+
+  <div id="OrtoDiv" title="Orto" onclick="onClick('D-Orto');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:17.8em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='10,0 30,0 30,20' style='fill:white;stroke:none;stroke-width:1' /><line x1='10' y1='0' x2='10' y2='20' style='stroke:white;stroke-width:1' /><line x1='10' y1='20' x2='30' y2='20' style='stroke:white;stroke-width:1' /><text x='4' y='40' fill='white' class='txt'>Orto</text></svg>"></div>
+
+  <div id="ChooseFilter" title="Vali filter" class="buttonno" onclick="onClick('D-ProductList');" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; right:1em; height:2.2em; width:12.4em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span id="product">&nbsp;</span></td></tr></table></div>
+  <div id="D-ProductList" class="speech-bubble-g-t-product" style="z-index: 99999900; visibility:hidden; position:absolute; top:4em; right:1em; width:6.9em; padding-left:0.5em; padding-right:0.5em; padding-bottom:0.5em;"></div>
+
+  <div id="Resample" title="Lülita pildi pehmendus v&auml;lja. M&otilde;jub hetkel vaid NDVI pildile" onclick="onClick('none');resample=(resample=='nearest' ? 'bilinear' : 'nearest');onMoveEnd(false);layerSAT[0].getSource().updateParams({'resample': resample});layerSAT[1].getSource().updateParams({'resample': resample});layerSAT[0].getSource().clear();layerSAT[1].getSource().clear();this.className=(resample=='nearest' ? 'buttonnoy' : 'buttonno');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; right:19em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /><rect x='5' y='3' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='3' y='5' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='5' y='5' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /></svg>"></div>
+
+  <div id="comparediv" title="V&otilde;rreldav pilt" class="buttonnogn" style="z-index: 99999900; visibility:hidden; cursor:pointer; position:absolute; bottom:1em; right:17.1em; height:2.2em; width:13.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id="comparesensedate">&nbsp;</span></td></tr></table></div>
+  <div id="setcomparediv" title="V&otilde;rdle pilte" onclick="onClick('none');changePictures();" onselectstart="return false;" onmousedown="return false;" class="buttonnob" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:1em; right:14.4em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='4.3,6.5 2.8,5 4.3,3.5' style='fill:none;stroke:white;stroke-width:0.5' /><polyline points='5.9,6.5 7.4,5 5.9,3.5' style='fill:none;stroke:white;stroke-width:0.5' /></svg>"></div>
+
+  <div id="kuupaevdiv" title="Vali kuup&auml;ev" onclick="onClick('none');startcompare();" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:1em; right:1em; height:2.2em; width:12.9em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span id="sensedate">&nbsp;</span></td></tr></table></div>
+
+  <div id="scalebar" class="buttonnon" style="z-index: 99999900; visibility:visible; cursor:default; position:absolute; bottom:1em; left:1em; height:2.2em; white-space: nowrap;"><div id="scaleline" style=" margin:0.5em; border:1px solid #eee; text-align: center; border-top:none; font-size: 1em; float:left; white-space: nowrap;">--</div></div>
+
+  <div style="z-index: 99999998; position:absolute; bottom:5px; left:50%;"><div id="notice" style="position: relative; left:-50%; color: #000000; text-shadow: -1px 0 #ddd, 0 1px #ddd, 1px 0 #ddd, 0 -1px #ddd; font-size: 12px; line-height: 14px; text-align: center;">Maa-amet</div></div>
+  <div id="minimap" style="z-index: 99999900; position:absolute; width:0px; height:0px; bottom:0px; right:0px; display:none; background:white; border-radius: 5px; color:black"><img style="padding:10px;" id="minimapimage" src="" /><img style="position:absolute; visibility:hidden; left:15%; top:15%; padding:0px; height:70%;" id="minimapimageloading" src="https://ehgateway.maaamet.ee/utils/img/loader.gif" /></div>
+
+  <div title="NDVI v&auml;&auml;rtus" id="NDVI" class="buttonno" style="z-index: 0; visibility:visible; cursor:pointer; position:absolute; bottom:4em; right:1em; height:2.2em; width:5em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span id="myHeight">&nbsp;</span></td></tr></table></div>
+  <div title="Koordinaadid" id="koordinaadid" class="buttonno" style="z-index: 0; visibility:visible; cursor:pointer; position:absolute; bottom:4em; right:6.5em; height:2.2em; width:9em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span id="myPosition">&nbsp;</span></td></tr></table></div>
+
+  <div class="speech-bubble-g-l" id="D-SaveMap" style="position:absolute; visibility:hidden; top:9.5em; left:4.3em; z-index: 99999901;">
+    <div id="export-png" title="Salvesta ekraanipilt, PNG formaadis" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.2em; }</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>PNG</text></svg>"></div>
+    <div id="export-pgw" title="Salvesta ekraanipilt, PNG formaadis koos asukohainfoga&#13;V&otilde;imalik kasutada ka GIS rakenduses&#13;N&otilde;uab veebilehitselalt mitme faili alla laadimise luba." class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.2em; }</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>GIS</text></svg>"></div>
+    <div id="export-png-clipboard" title="Kopeeri kaardipilt (png) vahem&auml;llu" onclick="copy_to_clipboard('img')" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='4,4 3,4 3,7 6,7 6,6' style='fill:none;stroke:white;stroke-width:0.5'/><polygon points='4,3 4,6 7,6 7,4 6,3' style='fill:none;stroke:white;stroke-width:0.5'/></svg>"></div>
+  </div>
+
+  <div class="speech-bubble-g-l" id="D-SaveLink" style="position:absolute; visibility:hidden; top:13.2em; left:4.3em;">
+    <div id="export-wms-clipboard" title="Kopeeri WMS'i aadress vahem&auml;llu" onclick="copy_to_clipboard('wms')" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.2em; }</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>WMS</text></svg>"></div>
+    <div id="export-url-clipboard" title="Kopeeri lehek&uuml;lje aadress (url) vahem&auml;llu" onclick="copy_to_clipboard('url')" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.2em; }</style><text x='5' y='6.5' fill='white' class='txt' text-anchor='middle'>URL</text></svg>"></div>
+  </div>
+
+  <div class="speech-bubble-g-t-etc" id="D-Etc" style="position:absolute; visibility:hidden; bottom:7.8em; left:5.1em;">
+    <div id="deadtrees" title="Automaatselt tuvastatud surnud puude asukohad Eestis.&#10;Arvutatud suvise lennu ALS andmete laekumisega (Maa-amet, katsetuslik kaardikiht)" onclick="setDeadtrees((deadtrees==1 ? -1 : 1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id>Surnud puud</span></td></tr></table></div>
+    <div id="etc-0" title="Mesilad / PRIA" onclick="setEtc((Etc==-1 ? 0 : -1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Mesilad</span></td></tr></table></div>
+  </div>
+
+  <div class="speech-bubble-s-l" id="D-Orto" style="position:absolute; visibility:hidden; bottom:15.1em; left:5.1em;">
+    <div id="orto-0" title="Ortofoto 2020 - 2021 / Maa-amet" onclick="setOrto(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Ortofoto</span></td></tr></table></div>
+    <div id="orto-1" title="Suvine metsanduslik ortofoto 2018 - 2021 / Maa-amet" onclick="setOrto(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Metsanduslik</span></td></tr></table></div>
+    <div id="orto-2" title="Suvine taimkatte indeks NDVI 2021 / Maa-amet" onclick="setOrto(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Taimkatte indeks</span></td></tr></table></div>
+    <div id="orto-3" title="Suvine taimkatte k&otilde;rgus 2018 - 2021 / Maa-amet" onclick="setOrto(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Taimkate 2018-21</span></td></tr></table></div>
+    <div id="orto-4" title="Suvine taimkatte k&otilde;rgus 2012 - 2017 / Maa-amet" onclick="setOrto(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Taimkate 2012-17</span></td></tr></table></div>
+    <div id="orto-5" title="Suvine taimkatte k&otilde;rgus 2008 - 2011 / Maa-amet" onclick="setOrto(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Taimkate 2008-11</span></td></tr></table></div>
+  </div>
+
+  <div class="speech-bubble-s-l" id="D-Mask" style="position:absolute; visibility:hidden; bottom:7.2em; left:5.1em;">
+    <div id="mask-0" title="Metsad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Mets</span></td></tr></table></div>
+    <div id="mask-1" title="Veekogud ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Veekogu</span></td></tr></table></div>
+    <div id="mask-2" title="M&auml;rgalad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>M&auml;rgala</span></td></tr></table></div>
+    <div id="mask-3" title="Lagedad alad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Lage</span></td></tr></table></div>
+    <div id="mask-4" title="&Uuml;le 10 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>&Uuml;le 10 m</span></td></tr></table></div>
+    <div id="mask-5" title="Alla 1 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Alla 1 m</span></td></tr></table></div>
+    <div id="mask-6" title="&Uuml;le 10 m suvise taimkattega alad 2008 - 2020 / Maa-amet" onclick="setMask(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>>10m 2008-20</span></td></tr></table></div>
+  </div>
+
+  <div class="speech-bubble-s-l" id="D-Borders" style="position:absolute; visibility:hidden; bottom:6.4em; left:5.1em;">
+    <div id="borders-0" title="Maakatastri piirid / Maa-amet" onclick="setBorders(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Kataster</span></td></tr></table></div>
+    <div id="borders-1" title="Riigimetsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Riigimets</span></td></tr></table></div>
+    <div id="borders-2" title="Erametsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Eramets</span></td></tr></table></div>
+    <div id="borders-3" title="Kaitsealade piirid / Keskkonnaagentuur" onclick="setBorders(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Kaitsealad</span></td></tr></table></div>
+    <div id="borders-4" title="ÜP kaitsemetsade piirid / Keskkonnaagentuur" onclick="setBorders(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Kaitsemets</span></td></tr></table></div>
+    <div id="borders-5" title="Metsateatiste ja raiega MKE-de piirid / Keskkonnaagentuur" onclick="setBorders(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Teatised</span></td></tr></table></div>
+    <div id="borders-6" title="P&otilde;llumassiivide piirid / PRIA" onclick="setBorders(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>P&otilde;ld</span></td></tr></table></div>
+    <div id="borders-7" title="Samak&otilde;rgusjooned / Maa-amet" onclick="setBorders(7);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>K&otilde;rgused</span></td></tr></table></div>
+    <div id="borders-8" title="Mustvalge p&otilde;hikaart / Maa-amet" onclick="setBorders(8);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>P&otilde;hikaart</span></td></tr></table></div>
+    <div id="borders-9" title="Mullat&uuml;&uuml;pide piirid / Maa-amet" onclick="setBorders(9);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span>Mullastik</span></td></tr></table></div>
+  </div>
+
+  <div id="LutDiv" title="Kujunda ise" onclick="onClick('D-LutWindow');changeLutClick()" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; border-radius:0.3em; border-style: none; position:absolute; top:1em; right:13.9em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='6' x2='3' y2='7' style='stroke:white;stroke-width:1' /><line x1='5' y1='3' x2='5' y2='7' style='stroke:white;stroke-width:1' /><line x1='7' y1='5' x2='7' y2='7' style='stroke:white;stroke-width:1' /></svg>"></div>
+
+  <div id="D-LutWindow" class="speech-bubble-g-t-lut" style="position:absolute; visibility:hidden; top:4em; right:1em;">
+    <div style="z-index: 99999900; background: rgba(48,119,77,0.9); margin:0.5em; padding:0.5em;">
+      <table>
+        <tr>
+          <td style="color:white;" align="center">
+            1. kanal<br /> <i>punane</i> 
+          </td>
+          <td>&nbsp;</td>
+          <td style="color:white;" align="center">
+            2. kanal <br /> <i>roheline</i> 
+          </td>
+          <td>&nbsp;</td>
+          <td style="color:white;" align="center">
+            3. kanal <br /> <i>sinine</i> 
+          </td>
+        </tr>
+        <tr>
+          <td style="color:white;" align="center">
+            <select id="B1" onchange="bandschange()">
+              <option value="1" selected>punane</option>
+              <option value="2">roheline</option>
+              <option value="3">sinine</option>
+              <option value="4">l&auml;hi-infrapuna</option>
+              <option value="5">NDVI</option>
+              <option value="6">NDPI</option>
+            </select>
+          </td>
+          <td>&nbsp;</td>
+          <td style="color:white;" align="center">
+            <select id="B2" onchange="bandschange()">
+              <option value="1">punane</option>
+              <option value="2" selected>roheline</option>
+              <option value="3">sinine</option>
+              <option value="4">l&auml;hi-infrapuna</option>
+              <option value="5">NDVI</option>
+              <option value="6">NDPI</option>
+            </select>
+          </td>
+          <td>&nbsp;</td>
+          <td style="color:white;" align="center">
+            <select id="B3" onchange="bandschange()">
+              <option value="1">punane</option>
+              <option value="2">roheline</option>
+              <option value="3" selected>sinine</option>
+              <option value="4">l&auml;hi-infrapuna</option>
+              <option value="5">NDVI</option>
+              <option value="6">NDPI</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <br />
+      <div>
+        <hr style="margin-bottom:1.5em;">
+        <table>
+          <tr>
+            <td align="right">
+              &uuml;ldine heledus 
+            </td>
+            <td>
+              <input onchange="lutChange()" oninput="document.getElementById('gammaTXT').innerHTML=Math.round(this.value*100)"  id="gamma"  type="range" value="0" min="-1" max="1" step="0.01" style="width: 15em; height: 0.6em;">
+            </td>
+            <td>
+              <span id="gammaTXT">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="right">
+              1. kanal
+            </td>
+            <td style="padding:0.4em;">
+              <input onchange="lutChange()" oninput="document.getElementById('gammarTXT').innerHTML=Math.round(this.value*100)" id="gammar" type="range" value="0" min="-1" max="1" step="0.01" style="width: 15em; height: 0.6em;">
+            </td>
+            <td>
+              <span id="gammarTXT">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">
+              2. kanal 
+            </td>
+            <td style="padding:0.4em;">
+              <input onchange="lutChange()" oninput="document.getElementById('gammagTXT').innerHTML=Math.round(this.value*100)" id="gammag" type="range" value="0" min="-1" max="1" step="0.01" style="width: 15em; height: 0.6em;">
+            </td>
+            <td>
+              <span id="gammagTXT">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">
+              3. kanal 
+            </td>
+            <td style="padding:0.4em;">
+              <input onchange="lutChange()" oninput="document.getElementById('gammabTXT').innerHTML=Math.round(this.value*100)" id="gammab" type="range" value="0" min="-1" max="1" step="0.01" style="width: 15em; height: 0.6em;">
+            </td>
+            <td>
+              <span id="gammabTXT">0</span>
+            </td>
+          </tr>
+        </table>
+        <hr style="margin-top:1em;">
+        <div><center><i><br />Vali menüüdest pildi jaoks spektrikanalid ja<br />muuda liuguritega kanalite heledusi.<br /><br />Pildi jagamiseks kopeeri aadressriba sisu.</i></center></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="D-MessageWindow" style="visibility:hidden; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="1"><tr><td id="MessageText" style="color:black; padding:2em" align="center" valign="center">&nbsp;</td></tr></table></div>
+  <div id="D-HelpWindow" style="visibility:hidden; overflow:auto; z-index: 99999990; position:absolute; top:50%; left:50%; max-height:90%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="0"><tr><td id="HelpText" style="color:black; padding:2em" align="center" valign="center"></td></tr></table></div>
+
+<script>
+
+var inAadress = new InAadress({"container":"InAadressDiv","mode":3,"ihist":"1993","appartment":0,"lang":"et"});
+document.addEventListener('addressSelected', function(e){
+  map.getView().animate({center: [e.detail[0].y,e.detail[0].x], resolution: 0.5, duration: 250});
+});
+
+var MouseMove_timer;
+
+var SatList = {};
+
+var Picker;
+
+var ProductsWMS=['RGB','NRG','NDVI','NGR','NDPI','PNB','NGP','NDR','PDB','NDN','PDN','NNR','DNP'];
+var ProductsTXT=['RGB','NRG','NDVI','NGR','NDPI','PNB','NGP','NDR','PDB','NDN','PDN','NNR','DNP'];
+var ProductsInfo=['Satelliidifoto / Punane Roheline Sinine','Maakate-1 / Lähi-infrapuna Punane Roheline','Taimkate-1 /  NDVI','Metsanduslik / Lähi-infrapuna Roheline Punane','Veeindeks / NDPI','Maakate-2 / NDPI Lähi-infrapuna Sinine','Maakate-3 / Lähi-infrapuna Roheline NDPI','Taimkate-2 / Lähi-infrapuna NDVI Punane','Maakate-4 / NDPI NDVI Sinine','Taimkate-3 / Lähi-infrapuna NDVI Lähi-infrapuna','Maakate-5 / NDPI NDVI Lähi-infrapuna','Taimkate-4 / Lähi-infrapuna Lähi-infrapuna Punane','Maakate-6 / NDVI Lähi-infrapuna NDPI'];
+
+var Product=[0,0];
+var layerMSImode=[false,false];
+
+var bands=[[1,2,3],[1,2,3]];
+
+var gamma=[0,0];
+var gammar=[0,0];
+var gammag=[0,0];
+var gammab=[0,0];
+
+var lutarr=[[[0,31,63,95,127,159,191,223,255],[0,31,63,95,127,159,191,223,255],[0,31,63,95,127,159,191,223,255]],[[0,31,63,95,127,159,191,223,255],[0,31,63,95,127,159,191,223,255],[0,31,63,95,127,159,191,223,255]]];
+
+var resample="bilinear";
+document.getElementById('Resample').className=(resample=='nearest' ? 'buttonnoy' : 'buttonno');
+
+var OrtoUrl=['https://kaart.maaamet.ee/wms/fotokaart','https://kaart.maaamet.ee/wms/alus','https://teenus.maaamet.ee/ows/wms-satiladu-ndvi','https://teenus.maaamet.ee/ows/wms-chm','https://teenus.maaamet.ee/ows/wms-chm','https://teenus.maaamet.ee/ows/wms-chm'];
+var OrtoWMS=['EESTIFOTO','cir_ngr','NDVI_2021_suvi','CHM2018_suvi,CHM2019_suvi,CHM2020_suvi,CHM2021_suvi','CHM2012_kevad,CHM2012_suvi,CHM2013_kevad,CHM2013_suvi,CHM2014,CHM2015_kevad,CHM2015_suvi,CHM2017_suvi','CHM2008-11'];
+var Orto=-1;
+
+var MaskWMS=['puittaimestik','veekogu','margala','lage','taimestik_ule_10_m_2018-2021','taimestik_alla_1_m_2018-2021','taimestik_ule_10_m_2008-2020'];
+var Mask=-1;
+
+var BordersWMS=['katastriuksused','riigimetsaeraldised','erametsaeraldised','kaitsealad','kaitsemetsad','metsateatised','pollumassiivid','horisontaalid','pohikaart','mullatuubid'];
+var Borders=-1;
+
+var Hybrid=false;
+
+var Sensors=['Sentinel-2'];
+var Sensor=[0,0];
+
+var MapOpener;
+
+var MapHistory=[];
+var MapHistoryNr=0;
+var MapHistoryPush=false;
+
+var sensedate=['0000-00-00','0000-00-00'];
+
+var minimapCache=[];
+var minimapimageWidth=0;
+var minimapimageHeight=0;
+
+var box;
+var rot=0;
+
+var witchActive=0;
+
+var Etc=-1;
+var deadtrees=-1;
+
+var UrlParams={};
+sURLVariables = decodeURIComponent(window.location.search.substring(1)).split('&');
+for (i=0;i<sURLVariables.length;i++) {
+  sParameterName = sURLVariables[i].split('=');
+  if (sParameterName[0]!="") UrlParams[sParameterName[0]]=sParameterName[1];
+}
+
+if (UrlParams['date'] !== undefined) sensedate[0]=UrlParams['date'];
+if (UrlParams['cdate'] !== undefined) sensedate[1]=UrlParams['cdate'];
+
+if (UrlParams['sensor'] !== undefined) {
+  for(i=0;i<Sensors.length;i++) {
+    if (Sensors[i].toLowerCase()==UrlParams['sensor'].toLowerCase()) {
+      Sensor[0]=i;
+    }
+  }
+}
+
+if (UrlParams['csensor'] !== undefined) {
+  for(i=0;i<Sensors.length;i++) {
+    if (Sensors[i].toLowerCase()==UrlParams['csensor'].toLowerCase()) {
+      Sensor[1]=i;
+    }
+  }
+}
+
+if (UrlParams['rotation'] !== undefined) {
+  rot=parseFloat(UrlParams['rotation'])*Math.PI/180;
+  if (rot!=0)  document.getElementById('mapRotationDiv').className="buttonnoy";
+}
+
+if (UrlParams['mapbox'] !== undefined) {
+  box=UrlParams['mapbox'].split(",");
+} else {
+  box=[277364,6360000,832636,6650000];
+}
+
+if (UrlParams['filter'] !== undefined) {
+  for(i=0;i<ProductsWMS.length;i++) {
+    if (ProductsWMS[i].toLowerCase()==UrlParams['filter'].toLowerCase()) {
+      Product[0]=i;
+    }
+  }
+  if (UrlParams['filter'].toLowerCase()=='msi') {
+    if (UrlParams['bands'] !== undefined) {
+      ibands=UrlParams['bands'].split(",");
+      bands[0]=[parseInt(ibands[0]),parseInt(ibands[1]),parseInt(ibands[2])];
+
+      document.getElementById('B1').value=bands[0][0];
+      document.getElementById('B2').value=bands[0][1];
+      document.getElementById('B3').value=bands[0][2];
+    }
+    if (UrlParams['curve'] !== undefined) {
+      gamma[0]=parseInt(UrlParams['curve'])/100;
+    }
+    if (UrlParams['curver'] !== undefined) {
+      gammar[0]=parseInt(UrlParams['curver'])/100;
+    }
+    if (UrlParams['curveg'] !== undefined) {
+      gammag[0]=parseInt(UrlParams['curveg'])/100;
+    }
+    if (UrlParams['curveb'] !== undefined) {
+      gammab[0]=parseInt(UrlParams['curveb'])/100;
+    }
+    if (!gamma[0]==0 || !gammar[0]==0 || !gammag[0]==0 || !gammab[0]==0) {
+      document.getElementById('gamma').value=gamma[0];
+      document.getElementById('gammar').value=gammar[0];
+      document.getElementById('gammag').value=gammag[0];
+      document.getElementById('gammab').value=gammab[0];
+      document.getElementById('gammaTXT').innerHTML=Math.round(gamma[0]*100);
+      document.getElementById('gammarTXT').innerHTML=Math.round(gammar[0]*100);
+      document.getElementById('gammagTXT').innerHTML=Math.round(gammag[0]*100);
+      document.getElementById('gammabTXT').innerHTML=Math.round(gammab[0]*100);
+      setGamma(lutarr[0],gamma[0],gammar[0],gammag[0],gammab[0]);
+    }
+    layerMSImode[0]=true;
+  }
+  if (UrlParams['mapbox'] == undefined) {
+    if (UrlParams['filter'].toLowerCase()=='msi') {
+      document.getElementById('D-LutWindow').style.visibility='visible';
+    } else {
+      Hybrid=true;
+      document.getElementById('HybridDiv').className="buttonnoy";
+      startcompare();
+    }
+  }
+}
+
+lut1='';
+lut2='';
+lut3='';
+
+for (i=0;i<9;i++) {
+  lut1+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[0][0][i]) + ',';
+  lut2+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[0][1][i]) + ',';
+  lut3+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[0][2][i]) + ',';
+}
+inLut=[lut1.substring(0,lut1.length-1),lut2.substring(0,lut2.length-1),lut3.substring(0,lut3.length-1)];
+
+if (UrlParams['cfilter'] !== undefined) {
+  for(i=0;i<ProductsWMS.length;i++) {
+    if (ProductsWMS[i].toLowerCase()==UrlParams['cfilter'].toLowerCase()) {
+      Product[1]=i;
+    }
+  }
+  if (UrlParams['cfilter'].toLowerCase()=='msi') {
+    if (UrlParams['cbands'] !== undefined) {
+      ibands=UrlParams['cbands'].split(",");
+      bands[1]=[parseInt(ibands[0]),parseInt(ibands[1]),parseInt(ibands[2])];
+    }
+    if (UrlParams['ccurve'] !== undefined) {
+      gamma[1]=parseInt(UrlParams['ccurve'])/100;
+    }
+    if (UrlParams['ccurver'] !== undefined) {
+      gammar[1]=parseInt(UrlParams['ccurver'])/100;
+    }
+    if (UrlParams['ccurveg'] !== undefined) {
+      gammag[1]=parseInt(UrlParams['ccurveg'])/100;
+    }
+    if (UrlParams['ccurveb'] !== undefined) {
+      gammab[1]=parseInt(UrlParams['ccurveb'])/100;
+    }
+    if (!gamma[1]==0 || !gammar[1]==0 || !gammag[1]==0 || !gammab[1]==0) {
+      setGamma(lutarr[1],gamma[1],gammar[1],gammag[1],gammab[1]);
+    }
+    layerMSImode[1]=true;
+  }
+}
+
+clut1='';
+clut2='';
+clut3='';
+
+for (i=0;i<9;i++) {
+  clut1+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[1][0][i]) + ',';
+  clut2+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[1][1][i]) + ',';
+  clut3+=Math.max((i*32)-1,0) + ':' + Math.round(lutarr[1][2][i]) + ',';
+}
+inClut=[clut1.substring(0,clut1.length-1),clut2.substring(0,clut2.length-1),clut3.substring(0,clut3.length-1)];
+
+var lutStr=[inLut,inClut];
+
+if (UrlParams['hybrid'] !== undefined) {
+  Hybrid=true;
+  document.getElementById('HybridDiv').className="buttonnoy";
+}
+
+if (UrlParams['mask'] !== undefined) {
+  Mask=UrlParams['mask'];
+  document.getElementById('mask-' + Mask).className="buttonnoy";
+}
+
+if (UrlParams['borders'] !== undefined) {
+  Borders=UrlParams['borders'];
+  document.getElementById('borders-' + Borders).className="buttonnoy";
+}
+
+if (UrlParams['orto'] !== undefined) {
+  Orto=UrlParams['orto'];
+  document.getElementById('orto-' + Orto).className="buttonnoy";
+}
+
+if (UrlParams['points'] !== undefined) {
+  Etc=UrlParams['points'];
+  document.getElementById('etc-' + Etc).className="buttonnoy";
+}
+
+if (UrlParams['deadtrees'] !== undefined) {
+  deadtrees=UrlParams['deadtrees'];
+  document.getElementById('deadtrees').className="buttonnoy";
+}
+
+if (UrlParams['resample'] !== undefined) {
+  resample=UrlParams['resample'];
+//  document.getElementById('etc-' + Etc).className="buttonnoy";
+}
+
+document.getElementById('sensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
+
+if (sensedate[1]!='0000-00-00') {
+  document.getElementById('comparesensedate').innerHTML=sensedate[1] + ' &nbsp; ' + (!layerMSImode[1] ? ProductsTXT[Product[1]] : 'Kujundatud');
+  document.getElementById('comparediv').style.visibility='visible';
+}
+
+if (sensedate[0]!='0000-00-00') {
+  document.title=sensedate[0] + ' ' + Sensors[Sensor[0]] + ' ' + (!layerMSImode[0] ? ProductsWMS[Product[0]] : 'MSI');
+  document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[0].substring(0,4);
+}
+
+document.getElementById('product').innerHTML=Sensors[Sensor[0]] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
+
+createProductListDiv();
+
+
+var extent = [40500, 5993000, 1064500, 7017000];
+var center = [568884,6514600];
+var projection = new ol.proj.Projection({
+  code: 'EPSG:3301',
+  extent: extent,
+  units: 'm',
+  axisOrientation: 'up'
+});
+
+var Hybrid_resolutions = new Array(4000,2000,1000,500,250,125,62.5,31.25,15.625,7.8125,3.90625,1.953125,0.9765625,0.48828125,0.244140625);
+var Hybrid_tileGrid = new ol.tilegrid.TileGrid({
+  extent: extent,
+  resolutions: Hybrid_resolutions,
+  tileSize: [256, 256]
+});
+
+var Sat_resolutions = new Array(2560,1280,640,320,160,80,40,20,10,5,2.5,1.25,0.625,0.3125);
+var Satextent = [-75000,5865000,1235000,7175000];
+var Sat_tileGrid = new ol.tilegrid.TileGrid({
+  extent: Satextent,
+  resolutions: Sat_resolutions,
+  tileSize: [512, 512]
+});
+
+var Hybrid_tile = new ol.layer.Tile({
+  preload: 1,
+  visible : (Hybrid),
+  source: new ol.source.XYZ({
+    tileGrid: Hybrid_tileGrid,
+    crossOrigin: 'anonymous',
+    projection: 'EPSG:3301',
+    url: 'https://tiles.maaamet.ee/tm/tms/1.0.0/hybriid@LEST/{z}/{x}/{-y}.jpg&ASUTUS=Maa-amet&ENV=ehmapserver',
+    ratio: 1
+  })
+});
+
+var layerSAT=[
+
+new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : (sensedate[0]!='0000-00-00'),
+  source: new ol.source.TileWMS({
+    url: 'https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[0]].toLowerCase() + '-' + ProductsWMS[Product[0]].toLowerCase(),
+    params: {
+      'LAYERS': Sensors[Sensor[0]].replace('-','_').toLowerCase() + '_' + ProductsWMS[Product[0]].toLowerCase(),
+      'FORMAT': 'image/jpeg',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'resample': resample,
+      'TRANSPARENT': false,
+      'date': sensedate[0],
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+  })
+}),
+
+new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : false,
+  source: new ol.source.TileWMS({
+    url: 'https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[1]].toLowerCase() + '-' + ProductsWMS[Product[1]].toLowerCase(),
+    params: {
+      'LAYERS': Sensors[Sensor[1]].replace('-','_').toLowerCase() + '_' + ProductsWMS[Product[1]].toLowerCase(),
+      'FORMAT': 'image/jpeg',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'resample': resample,
+      'TRANSPARENT': false,
+      'date': sensedate[1],
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+  })
+})
+];
+
+var layerMSI=[
+
+new ol.layer.Tile({
+    preload: 0,
+    extent: extent,
+    visible : false,
+    source: new ol.source.TileWMS({
+      url: 'https://teenus.maaamet.ee/ows/wms-sentinel-2-msi',
+      params: {
+        'LAYERS': 'sentinel_2_msi',
+        'FORMAT': 'image/jpeg',
+        'VERSION':'1.1.1',
+        'TILED': true,
+        'TRANSPARENT': false,
+        'date': sensedate[0],
+        'bands': bands[0],
+        'lut1': lutStr[0][0],
+        'lut2': lutStr[0][1],
+        'lut3': lutStr[0][2],
+      },
+      tileGrid: Sat_tileGrid,
+      crossOrigin: 'anonymous',
+      serverType: 'mapserver',
+    })
+}),
+
+new ol.layer.Tile({
+    preload: 0,
+    extent: extent,
+    visible : false,
+    source: new ol.source.TileWMS({
+      url: 'https://teenus.maaamet.ee/ows/wms-sentinel-2-msi',
+      params: {
+        'LAYERS': 'sentinel_2_msi',
+        'FORMAT': 'image/jpeg',
+        'VERSION':'1.1.1',
+        'TILED': true,
+        'TRANSPARENT': false,
+        'date': sensedate[1],
+        'bands': bands[1],
+        'lut1': lutStr[1][0],
+        'lut2': lutStr[1][1],
+        'lut3': lutStr[1][2],
+      },
+      tileGrid: Sat_tileGrid,
+      crossOrigin: 'anonymous',
+      serverType: 'mapserver',
+    })
+})
+];
+
+var layerOrto = new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : (Orto>-1),
+  maxResolution: 60,
+  source: new ol.source.TileWMS({
+    url: OrtoUrl[''+Orto+''],
+    params: {
+      'LAYERS': OrtoWMS[''+Orto+''],
+      'FORMAT': 'image/jpeg',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'TRANSPARENT': false,
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+    gutter: 15,
+  })
+});
+
+var layerDeadtrees = new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : (deadtrees==1),
+  source: new ol.source.TileWMS({
+    url: 'https://teenus.maaamet.ee/ows/ai_tuletised',
+    params: {
+      'LAYERS': 'ai_surnud_puud',
+      'FORMAT': 'image/png',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'TRANSPARENT': true,
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+//    gutter: 15,
+  })
+});
+
+var layerMask = new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : (Mask>-1),
+  maxResolution: 120,
+  source: new ol.source.TileWMS({
+    url: 'https://teenus.maaamet.ee/ows/wms-mask',
+    params: {
+      'LAYERS': MaskWMS[''+Mask+''],
+      'FORMAT': 'image/png',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'TRANSPARENT': true,
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+    gutter: 15,
+  })
+});
+
+var layerBorders = new ol.layer.Tile({
+  preload: 0,
+  extent: extent,
+  visible : (Borders>-1),
+  maxResolution: 7.5,
+  source: new ol.source.TileWMS({
+    url: 'https://teenus.maaamet.ee/ows/wms-satiladu',
+    params: {
+      'LAYERS': BordersWMS[''+Borders+''],
+      'FORMAT': 'image/png',
+      'VERSION':'1.1.1',
+      'TILED': true,
+      'TRANSPARENT': true,
+    },
+    tileGrid: Sat_tileGrid,
+    crossOrigin: 'anonymous',
+    serverType: 'mapserver',
+    mode: 'tiled',
+    gutter: 0,
+  })
+});
+
+const layerEtc = new ol.layer.Vector({
+  preload: 0,
+  extent: extent,
+  visible: (Etc>-1),
+  maxResolution: 7.5,
+  source: new ol.source.Vector({
+    strategy: ol.loadingstrategy.bbox,
+    format: new ol.format.GeoJSON(),
+    crossOrigin: 'anonymous',
+  }),
+  style: new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 5,
+      fill: new ol.style.Stroke({color: 'white'}),
+      stroke: new ol.style.Stroke({color: 'black', width: 3}),
+    }),
+  }),
+});
+
+
+const accuracyFeature = new ol.Feature();
+
+const positionFeature = new ol.Feature();
+positionFeature.setStyle(
+  new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 6,
+      fill: new ol.style.Fill({
+        color: '#3399CC',
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#fff',
+        width: 2,
+      }),
+    }),
+  })
+);
+
+const PositionLayer = new ol.layer.Vector({
+  visible: false,
+  source: new ol.source.Vector({
+    features: [accuracyFeature, positionFeature],
+  }),
+});
+
+
+
+let map = new ol.Map({
+  target: 'map',
+  interactions: ol.interaction.defaults({
+    doubleClickZoom: true,
+    dragAndDrop: false,
+    dragPan: true,
+    dragRotate: false,
+    keyboardPan: true,
+    keyboardZoom: true,
+    mouseWheelZoom: true,
+    pointer: false,
+    select: false,
+    shiftDragZoom:true,
+    dragPan:true,
+    pinchRotate:true,
+    pinchZoom:true
+  }),
+  controls: [],
+  layers: [layerSAT[0],layerMSI[0],layerSAT[1],layerMSI[1],layerOrto,layerMask,layerBorders,Hybrid_tile,layerDeadtrees,layerEtc,PositionLayer],
+  view: new ol.View({
+    center: center,
+    projection:projection,
+    enableRotation: true,
+    minResolution: 0.3125,
+    constrainResolution: false
+  })
+});
+
+map.getView().fit(box);
+map.getView().setRotation(rot);
+MapHistory.push([map.getView().getCenter(),map.getView().getResolution(),map.getView().getRotation()]);
+
+
+function onMoveEnd(hist) {
+  document.getElementById('LutDiv').className=(layerMSImode[witchActive] ? "buttonnoy" : "buttonno");
+
+  if (map.getView().getResolution()>120) {
+    document.getElementById('MaskDiv').className="buttonnog";
+  } else {
+    document.getElementById('MaskDiv').className=(Mask==-1?"buttonno":"buttonnoy");
+  }
+
+  if (map.getView().getResolution()>60) {
+    document.getElementById('OrtoDiv').className="buttonnog";
+
+  } else {
+    if (Orto == -1) {
+      document.getElementById('OrtoDiv').className="buttonno";
+
+      layerSAT[0].setVisible(witchActive==0 && !layerMSImode[0]);
+      layerMSI[0].setVisible(witchActive==0 && layerMSImode[0]);
+      layerSAT[1].setVisible(witchActive==1 && !layerMSImode[1]);
+      layerMSI[1].setVisible(witchActive==1 && layerMSImode[1]);
+
+      layerOrto.setVisible(false);  
+
+    } else {
+      document.getElementById('OrtoDiv').className="buttonnoy";
+
+      layerOrto.setVisible(true);
+
+      layerSAT[0].setVisible(false);
+      layerMSI[0].setVisible(false);
+      layerSAT[1].setVisible(false);  
+      layerMSI[1].setVisible(false);
+    }
+  }
+
+  if (map.getView().getResolution()>7.5) {
+    document.getElementById('BordersDiv').className="buttonnog";
+    document.getElementById('EtcDiv').className="buttonnog";
+
+    layerSAT[0].setVisible(witchActive==0 && !layerMSImode[0]);
+    layerMSI[0].setVisible(witchActive==0 && layerMSImode[0]);
+    layerSAT[1].setVisible(witchActive==1 && !layerMSImode[1]);
+    layerMSI[1].setVisible(witchActive==1 && layerMSImode[1]);
+
+    layerEtc.setVisible(false);
+
+  } else {
+    document.getElementById('BordersDiv').className=(Borders==-1?"buttonno":"buttonnoy");
+    document.getElementById('EtcDiv').className=(Etc==-1?"buttonno":"buttonnoy");
+
+    if (Etc > -1) {
+      loadEtcVector(Etc);
+      layerEtc.setVisible(true);
+    }
+  }
+
+  if (map.getView().getResolution()>3.75) {
+    document.getElementById('borders-9').className=(Borders==9?"buttonnoy":"buttonnog");
+  } else {
+    document.getElementById('borders-9').className=(Borders==9?"buttonnoy":"buttonno");
+  }
+
+
+  if (map.getView().getRotation()>=(2*Math.PI)) map.getView().setRotation(map.getView().getRotation()-(2*Math.PI));
+  if (map.getView().getRotation()<=-(2*Math.PI)) map.getView().setRotation(map.getView().getRotation()+(2*Math.PI));
+
+  var Vextent = map.getView().calculateExtent(map.getSize());
+  var Vcenter = map.getView().getCenter();
+  var Vsize = map.getSize();
+  var Vresolution = map.getView().getResolution();
+  var Vrotation = map.getView().getRotation()*180/Math.PI;
+  if (Vrotation<0) Vrotation = (360+Vrotation);
+
+  if (MapHistoryPush && hist && !(Vcenter==MapHistory[(MapHistory.length-1)][0] && Vresolution==MapHistory[(MapHistory.length-1)][1] && map.getView().getRotation()==MapHistory[(MapHistory.length-1)][2])) {
+    if (MapHistoryNr<MapHistory.length-1) MapHistory = MapHistory.slice(0,(MapHistoryNr+1))
+    MapHistoryNr=MapHistory.length;
+    MapHistory.push([Vcenter,Vresolution,map.getView().getRotation()]);
+    document.getElementById('NavPrev').className="buttonno";
+    document.getElementById('NavNext').className="buttonnog";
+  }
+  MapHistoryPush=true;
+
+  var VCextent=[Vcenter[0]-((Vsize[0]/2)*Vresolution),Vcenter[1]-((Vsize[1]/2)*Vresolution),Vcenter[0]+((Vsize[0]/2)*Vresolution),Vcenter[1]+((Vsize[1]/2)*Vresolution)];
+
+  if (typeof (history.pushState) != "undefined") {
+    for (i=0;i<Vextent.length;i++) {
+      Vextent[i]=Math.round(Vextent[i]);
+    }
+    for (i=0;i<VCextent.length;i++) {
+      VCextent[i]=Math.round(VCextent[i]);
+    }
+    var newurl=window.location.pathname;
+    if (sensedate[witchActive]!='0000-00-00') {
+      if (!layerMSImode[witchActive]) {
+        filterStr='&filter=' + ProductsWMS[Product[witchActive]].toLowerCase();
+      } else {
+        filterStr='&filter=msi' + '&bands=' + layerMSI[witchActive].getSource().getParams()['bands'] + '&curve=' + Math.round(gamma[witchActive]*100) + '&curver=' + Math.round(gammar[witchActive]*100) + '&curveg=' + Math.round(gammag[witchActive]*100) + '&curveb=' + Math.round(gammab[witchActive]*100) + '&lut1=' + lutStr[witchActive][0] + '&lut2=' + lutStr[witchActive][1] + '&lut3=' + lutStr[witchActive][2];
+      }
+      newurl += '?sensor=' + Sensors[Sensor[witchActive]].toLowerCase() + filterStr + '&date=' + sensedate[witchActive];
+    }
+    witchNotActive=(witchActive==0 ? 1 : 0);
+    if (sensedate[witchNotActive]!='0000-00-00' && !(sensedate[0]==sensedate[1] && (!layerMSImode[0] && !layerMSImode[1] && Product[0]==Product[1] || layerMSImode[0] && layerMSImode[1] && bands[0][0]==bands[1][0] && bands[0][1]==bands[1][1] && bands[0][2]==bands[1][2] && lutStr[0][0]==lutStr[1][0] && lutStr[0][1]==lutStr[1][1] && lutStr[0][2]==lutStr[1][2]) && Sensors[Sensor[0]]==Sensors[Sensor[1]])) {
+      if (!layerMSImode[witchNotActive]) {
+        cfilterStr='&cfilter=' + ProductsWMS[Product[witchNotActive]].toLowerCase();
+      } else {
+        cfilterStr='&cfilter=msi' + '&cbands=' + layerMSI[witchNotActive].getSource().getParams()['bands'] + '&ccurve=' + Math.round(gamma[witchNotActive]*100) + '&ccurver=' + Math.round(gammar[witchNotActive]*100) + '&ccurveg=' + Math.round(gammag[witchNotActive]*100) + '&ccurveb=' + Math.round(gammab[witchNotActive]*100) + '&clut1=' + lutStr[witchNotActive][0] + '&clut2=' + lutStr[witchNotActive][1] + '&clut3=' + lutStr[witchNotActive][2];
+      }
+      newurl += '&csensor=' + Sensors[Sensor[witchNotActive]].toLowerCase() + cfilterStr + '&cdate=' + sensedate[witchNotActive];
+    }
+
+    if (Hybrid) {
+      newurl += '&hybrid=1';
+    }
+
+    if (Mask>-1) {
+      newurl += '&mask=' + Mask;
+    }
+
+    if (resample!='bilinear') {
+      newurl += '&resample=' + resample;
+    }
+
+    if (Borders>-1) {
+      newurl += '&borders=' + Borders;
+    }
+
+    if (Orto>-1) {
+      newurl += '&orto=' + Orto;
+    }
+
+    if (Etc>-1) {
+      newurl += '&points=' + Etc;
+    }
+
+    if (deadtrees==1) {
+      newurl += '&deadtrees=1';
+    }
+
+    newurl += '&mapbox=' + VCextent.join(",");
+    if (Vrotation!=0) newurl += '&rotation=' + Vrotation.toFixed(2);
+    history.replaceState('current', '',newurl);
+
+  }
+  minimapCache=[];
+
+  var pxSize=map.getView().getResolution();
+  var emOne=(pxSize * (document.getElementById('HybridDiv').offsetWidth/4));
+  var sWidth=emOne*7;
+  var sClosest=Math.pow(10, Math.round(Math.log10(sWidth)));
+
+  var sWidth=(sClosest/emOne);
+  if (sWidth<5) sWidth=sWidth*2;
+  if (sWidth>18) sWidth=sWidth/4;
+  if (sWidth>9) sWidth=sWidth/2;
+
+  sWidthM=Math.round(sWidth*emOne)
+
+  document.getElementById('scaleline').style.width=sWidth + 'em';
+  document.getElementById('scaleline').innerHTML=(sWidthM<1000 ? sWidthM + ' m' : (sWidthM/1000) + ' km');
+}
+
+map.on('moveend', function () {
+  onMoveEnd(true);
+});
+
+
+function onClick(Dexept) {
+  for (div of document.getElementsByTagName("div")) {
+    if (div.id.startsWith("D-")) {
+      if (Dexept==div.id) {
+        div.style.visibility=(div.style.visibility==='hidden' ? 'visible' : 'hidden');
+      } else {
+        div.style.visibility='hidden';
+      }
+    }
+  }
+  if (typeof(picker) !== 'undefined') picker.hide();
+}
+
+map.on('click', onClick);
+map.on('movestart', onClick);
+
+var onRotateTimeout;
+
+function onRotate() {
+  document.getElementById('mapRotationImage').style.transform='rotate(' + map.getView().getRotation()  + 'rad)';
+
+  if (map.getView().getRotation()==0) {
+    document.getElementById('mapRotationDiv').className="buttonno";  
+  } else {
+    document.getElementById('mapRotationDiv').className="buttonnoy";
+  }
+}
+
+map.getView().on('change:rotation', onRotate);
+
+
+
+document.getElementById('export-png').addEventListener('click', function() { downloadPNG(false);});
+document.getElementById('export-pgw').addEventListener('click', function() { downloadPNG(true); });
+
+
+function downloadPNG(pgw) {
+  map.once('rendercomplete', function() {
+    document.getElementById('D-SaveMap').style.visibility='hidden';
+    var mapCanvas = document.createElement('canvas');
+    var size = map.getSize();
+    mapCanvas.width = size[0];
+    mapCanvas.height = size[1];
+    var mapContext = mapCanvas.getContext('2d');
+    Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
+      if (canvas.width > 0) {
+        var opacity = canvas.parentNode.style.opacity;
+        mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+        var transform = canvas.style.transform;
+        var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+        CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+        mapContext.drawImage(canvas, 0, 0);
+      }
+    });
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(mapCanvas.msToBlob(), 'map.png');
+    } else {
+      tmpToday = new Date();
+      tmpDate = tmpToday.getFullYear() + '-' + ('0' + (tmpToday.getMonth()+1)).slice(-2) + '-' + ('0' + tmpToday.getDate()).slice(-2) + '-' + ('0' + tmpToday.getHours()).slice(-2) + '-' + ('0' + tmpToday.getMinutes()).slice(-2) + '-' + ('0' + tmpToday.getSeconds()).slice(-2);
+
+      if (pgw) {
+        tmpUpperLeft=map.getCoordinateFromPixel([0.5,0.5]);
+        tmpGSD=map.getView().getResolution();
+        tmpRotation=map.getView().getRotation();
+      }
+
+      imglink = document.getElementById('image-download');
+      imglink.download = Sensors[Sensor[witchActive]] + ' ' + (!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI') + ' ' + sensedate[witchActive] + ' @ ' + tmpDate + '.png';
+
+      imglink.href = mapCanvas.toDataURL();
+      imglink.click();
+
+      if (pgw) {
+        A=tmpGSD*Math.cos(tmpRotation);
+        D=tmpGSD*Math.sin(tmpRotation);
+        B=tmpGSD*Math.sin(tmpRotation);
+        E=-tmpGSD*Math.cos(tmpRotation);
+        C=tmpUpperLeft[0];
+        F=tmpUpperLeft[1];
+
+        tfwlink = document.getElementById('tfw-download');
+        tfwlink.download = Sensors[Sensor[witchActive]] + ' ' + (!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI') + ' ' + sensedate[witchActive] + ' @ ' + tmpDate + '.pgw';
+        tfwtext = A + '\n' + D + '\n' + B + '\n' + E + '\n' + C + '\n' + F + '\n';
+        tfwdata = new Blob([tfwtext], {type: 'text/plain'});
+        tfwurl = window.URL.createObjectURL(tfwdata);
+        tfwlink.href = tfwurl;
+        tfwlink.click();
+      }
+    }
+  });
+  map.renderSync();
+}
+
+var messageTimeout;
+
+function showMessage(status,text) {
+  document.getElementById('MessageText').innerHTML=text;
+  document.getElementById('D-MessageWindow').style.visibility='visible';
+  clearTimeout(messageTimeout);
+  messageTimeout=setTimeout(() => { document.getElementById('D-MessageWindow').style.visibility='hidden'; }, 3000);
+}
+
+
+
+function copy_to_clipboard(what) {
+  if (what=='wms') {
+    if (layerMSImode[witchActive]) {
+      MapLink=layerMSI[witchActive].getSource().getUrls()[0] + '?date=' + sensedate[witchActive] + '&layers=' + layerMSI[witchActive].getSource().getParams()['LAYERS'] + '&resample=' + layerMSI[witchActive].getSource().getParams()['resample'] + '&bands=' + layerMSI[witchActive].getSource().getParams()['bands'] + '&lut1=' + layerMSI[witchActive].getSource().getParams()['lut1'] + '&lut2=' + layerMSI[witchActive].getSource().getParams()['lut2'] + '&lut3=' + layerMSI[witchActive].getSource().getParams()['lut3'];
+    } else {
+      MapLink=layerSAT[witchActive].getSource().getUrls()[0] + '?date=' + sensedate[witchActive] + '&layers=' + layerSAT[witchActive].getSource().getParams()['LAYERS'] + '&resample=' + layerSAT[witchActive].getSource().getParams()['resample'];
+    }
+    navigator.clipboard.writeText(MapLink).then(() => {
+      showMessage(0,"WMS link kopeeritud vahem&auml;llu.");
+    },() => {
+      showMessage(1,"Kahjuks ei õnnestu WMS lingi aadressi vahem&auml;llu kopeerida <br><br>" + err);
+    });
+  } else if (what=='url') {
+    MapLink=window.location.href;
+    navigator.clipboard.writeText(MapLink).then(() => {
+      showMessage(0,"Kaardi aadress kopeeritud vahem&auml;llu.");
+    },() => {
+      showMessage(1,"Kahjuks ei õnnestu kaardi aadressi vahem&auml;llu kopeerida <br><br>" + err);
+    });
+  } else if (what=='img') {
+    map.once('rendercomplete', function() {
+      var mapCanvas = document.createElement('canvas');
+      var size = map.getSize();
+      mapCanvas.width = size[0];
+      mapCanvas.height = size[1];
+      var mapContext = mapCanvas.getContext('2d');
+      Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
+        if (canvas.width > 0) {
+          var opacity = canvas.parentNode.style.opacity;
+          mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+          var transform = canvas.style.transform;
+          var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+          CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+          mapContext.drawImage(canvas, 0, 0);
+        }
+      });
+      mapCanvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
+        showMessage(0,"Kaardipilt kopeeritud vahem&auml;llu.");
+      },() => {
+        showMessage(1,"Kahjuks &otilde;nnestu kaardipilti vahem&auml;llu kopeerida <br><br>" + err);
+      }));
+    });
+    map.renderSync();
+  }
+}
+
+
+
+function startcompare() {
+  document.getElementById('kuupaevdiv').removeAttribute("onclick");
+
+  var oReq = new XMLHttpRequest();
+  oReq.onload = function(e) {
+    SatList = JSON.parse(oReq.responseText);
+
+    var minDate='9999-99-99';
+    var maxDate='0000-00-00';
+
+    for ([key,value] of Object.entries(SatList)) {
+      if (value['date']>maxDate) maxDate=value['date'];
+      if (value['date']<minDate) minDate=value['date'];
+    }
+
+    startdatesplit=minDate.split('-');
+    startDate = new Date(parseInt(startdatesplit[0]), parseInt(startdatesplit[1])-1, parseInt(startdatesplit[2]), 0, 0, 0, 0);
+    enddatesplit=maxDate.split('-');
+    endDate = new Date(parseInt(enddatesplit[0]), parseInt(enddatesplit[1])-1, parseInt(enddatesplit[2]), 0, 0, 0, 0);
+    currDate = startDate;
+
+    var dateDisableArray = [];
+
+    while (currDate<=endDate) {
+      dateDisableArray.push(currDate.getFullYear() + '-' + ('0'+(currDate.getMonth()+1)).substr(-2) + '-' + ('0'+currDate.getDate()).substr(-2));
+      currDate.setDate(currDate.getDate() + 1);
+    }
+
+    for ([key,value] of Object.entries(SatList)) {
+      delArrayIndex=dateDisableArray.indexOf(value['date']);
+      if (delArrayIndex>-1) {
+        dateDisableArray.splice(delArrayIndex,1);
+      }
+    }
+
+    picker = new Lightpick({
+      field: document.getElementById('kuupaevdiv'),
+      format: 'YYYY-MM-DD',
+      lang: 'et',
+      firstDay: 1,
+      numberOfMonths: 1,
+      autoclose: true,
+      hideOnBodyClick: true,
+      orientation: 'top',
+      minDate: minDate,
+      maxDate: maxDate,
+      disableDates: dateDisableArray,
+      locale: {
+        buttons: {
+          prev: '<',
+          next: '>',
+          close: '\D7',
+          reset: 'Reset',
+          apply: 'Apply'
+       }
+     },
+     dropdowns: {
+       years: {
+         min: startdatesplit[0],
+         max: null
+       },
+       months: true,
+     },
+     onSelect: function(date){
+       if (date.format('YYYY-MM-DD')==sensedate[witchActive]) return;
+       setsensdateexact(date.format('YYYY-MM-DD'));
+     },
+     onOpen: function(date){
+       minimapCache=[];
+       setOrto(-1);
+       onclick('none');
+     },
+     onClose: function(){
+       document.getElementById("minimap").style.display='none';
+     }
+    });
+
+    picker.setDate(sensedate[0]);
+    picker.show();
+  }
+  oReq.open("GET", "https://geoportaal.maaamet.ee/index.php?page_id=733&kuupaev_algus=2000-01-01&kuupaev_lopp=2030-12-31&formaat=json");
+  oReq.send();
+}
+
+
+function setsensdateexact(newdate) {
+  for ([key,value] of Object.entries(SatList)) {
+    if (value['date']==newdate) {
+      sensedate[witchActive]=newdate;
+      document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
+      document.title=sensedate[witchActive] + ' ' + Sensors[Sensor[witchActive]] + ' ' + (!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI');
+      document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[witchActive].substring(0,4);
+      layerSAT[witchActive].getSource().updateParams({"date": sensedate[witchActive]});
+      layerSAT[witchActive].getSource().clear();
+      layerMSI[witchActive].getSource().updateParams({"date": sensedate[witchActive]});
+      layerMSI[witchActive].getSource().clear();
+      break;
+    }
+  }
+  onMoveEnd(false);
+}
+
+
+function changePictures() {
+  document.getElementById('D-ProductList').style.visibility='hidden';
+  if (!layerMSImode[(witchActive==0 ? 1 : 0)])  document.getElementById('D-LutWindow').style.visibility='hidden';
+
+  if (sensedate[1]=='0000-00-00') {
+    document.getElementById('comparediv').style.visibility='visible';
+    document.getElementById('comparesensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
+    sensedate[1]=sensedate[0];
+    Product[1]=Product[0];
+    Sensor[1]=Sensor[0];
+    layerSAT[1].getSource().updateParams({"date": sensedate[0]});
+    layerSAT[1].getSource().setUrl('https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[0]].toLowerCase() + '-' + ProductsWMS[Product[0]].toLowerCase());
+    layerSAT[1].getSource().updateParams({"LAYERS": Sensors[Sensor[0]].replace('-','_').toLowerCase() + '_' + ProductsWMS[Product[0]].toLowerCase()});
+
+    layerMSI[1].getSource().updateParams({"date": sensedate[0]});
+
+    if (layerMSImode[0]) {
+      bands[1]=bands[0];
+      layerMSI[1].getSource().updateParams({"bands" : bands[0][0] + ',' + bands[0][1] + ',' + bands[0][2]});
+
+      gamma[1]=gamma[0];
+      gammar[1]=gammar[0];
+      gammag[1]=gammag[0];
+      gammab[1]=gammab[0];
+
+      setGamma(lutarr[1],gamma[1],gammar[1],gammag[1],gammab[1]);
+      setLut(layerMSI[1],1,lutarr[1]);
+
+      layerMSImode[1]=true;
+    }
+
+  } else {
+    witchActive=(witchActive==1 ? 0 : 1);
+    document.getElementById('comparesensedate').innerHTML=sensedate[(witchActive==1 ? 0 : 1)] + ' &nbsp; ' + (!layerMSImode[(witchActive==1 ? 0 : 1)] ? ProductsTXT[Product[(witchActive==1 ? 0 : 1)]] : 'Kujundatud');
+    document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
+    document.getElementById('product').innerHTML=Sensors[Sensor[witchActive]] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
+
+    layerSAT[0].setVisible(witchActive==0 && !layerMSImode[0]);
+    layerMSI[0].setVisible(witchActive==0 && layerMSImode[0]);
+    layerSAT[1].setVisible(witchActive==1 && !layerMSImode[1]);
+    layerMSI[1].setVisible(witchActive==1 && layerMSImode[1]);
+
+    document.getElementById('B1').value=bands[witchActive][0];
+    document.getElementById('B2').value=bands[witchActive][1];
+    document.getElementById('B3').value=bands[witchActive][2];
+
+    document.getElementById('gamma').value=gamma[witchActive];
+    document.getElementById('gammar').value=gammar[witchActive];
+    document.getElementById('gammag').value=gammag[witchActive];
+    document.getElementById('gammab').value=gammab[witchActive];
+
+    document.getElementById('gammaTXT').innerHTML=Math.round(gamma[witchActive]*100);
+    document.getElementById('gammarTXT').innerHTML=Math.round(gammar[witchActive]*100);
+    document.getElementById('gammagTXT').innerHTML=Math.round(gammag[witchActive]*100);
+    document.getElementById('gammabTXT').innerHTML=Math.round(gammab[witchActive]*100);
+
+    document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[witchActive].substring(0,4);
+    document.title=sensedate[witchActive] + ' ' + Sensors[Sensor[witchActive]] + ' ' + (!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI');
+  }
+
+  if (typeof(picker) !== 'undefined') picker.setDate(sensedate[witchActive]);
+
+  onMoveEnd(false);
+  createProductListDiv();
+
+  window.dispatchEvent(new Event('resize'));
+
+}
+
+
+function bandschange() {
+  bands[witchActive]=[document.getElementById('B1').value*1,document.getElementById('B2').value*1,document.getElementById('B3').value*1];
+  layerMSI[witchActive].getSource().updateParams({"bands" : bands[witchActive][0] + ',' + bands[witchActive][1] + ',' + bands[witchActive][2]});
+
+  onMoveEnd(false);
+}
+
+
+function lutChange() {
+  gamma[witchActive]=document.getElementById('gamma').value;
+  gammar[witchActive]=document.getElementById('gammar').value;
+  gammag[witchActive]=document.getElementById('gammag').value;
+  gammab[witchActive]=document.getElementById('gammab').value;
+
+  setGamma(lutarr[witchActive],gamma[witchActive],gammar[witchActive],gammag[witchActive],gammab[witchActive]);
+
+  setLut(layerMSI[witchActive],witchActive,lutarr[witchActive]);
+}
+
+
+function setGamma(arr,igamma,igammar,igammag,igammab) {
+  v=[igammar*1+igamma*1,igammag*1+igamma*1,igammab*1+igamma*1];
+
+  v[0]=Math.min(Math.max(v[0],-1),1);
+  v[1]=Math.min(Math.max(v[1],-1),1);
+  v[2]=Math.min(Math.max(v[2],-1),1);
+  if (v<0) {
+    for(j=0;j<3;j++) {
+      vch=1-v[j]*-1;
+      arr[j][1]=(Math.pow(31/255,1/vch) * 255);
+      arr[j][2]=(Math.pow(63/255,1/vch) * 255);
+      arr[j][3]=(Math.pow(95/255,1/vch) * 255);
+      arr[j][4]=(Math.pow(127/255,1/vch) * 255);
+      arr[j][5]=(Math.pow(159/255,1/vch) * 255);
+      arr[j][6]=(Math.pow(191/255,1/vch) * 255);
+      arr[j][7]=(Math.pow(223/255,1/vch) * 255);
+    }
+  } else {
+    for(j=0;j<3;j++) {
+      vch=1-v[j];
+      arr[j][1]=255-(Math.pow((255-31)/255,1/vch) * 255);
+      arr[j][2]=255-(Math.pow((255-63)/255,1/vch) * 255);
+      arr[j][3]=255-(Math.pow((255-95)/255,1/vch) * 255);
+      arr[j][4]=255-(Math.pow((255-127)/255,1/vch) * 255);
+      arr[j][5]=255-(Math.pow((255-159)/255,1/vch) * 255);
+      arr[j][6]=255-(Math.pow((255-191)/255,1/vch) * 255);
+      arr[j][7]=255-(Math.pow((255-223)/255,1/vch) * 255);
+    }
+  }
+}
+
+
+function setLut(layer,lutStrNr,arr) {
+  lut1='';
+  lut2='';
+  lut3='';
+  for (i=0;i<9;i++) {
+    lut1+=Math.max((i*32)-1,0) + ':' + Math.round(arr[0][i]) + ',';
+    lut2+=Math.max((i*32)-1,0) + ':' + Math.round(arr[1][i]) + ',';
+    lut3+=Math.max((i*32)-1,0) + ':' + Math.round(arr[2][i]) + ',';
+  }
+  lut1=lut1.substring(0,lut1.length-1);
+  lut2=lut2.substring(0,lut2.length-1);
+  lut3=lut3.substring(0,lut3.length-1);
+  
+  layer.getSource().updateParams({"lut1" : lut1});
+  layer.getSource().updateParams({"lut2" : lut2});
+  layer.getSource().updateParams({"lut3" : lut3});
+
+  if (lutStrNr==0) {
+    lutStr=[[lut1,lut2,lut3],lutStr[1]];
+  } else if (lutStrNr==1) {
+    lutStr=[lutStr[0],[lut1,lut2,lut3]];
+  }
+
+  onMoveEnd(false);
+}
+
+
+function minimap(minimapday,pn) {
+  clearTimeout(MapOpener);
+  document.getElementById('minimapimage').onload = null;
+  document.getElementById('minimapimageloading').style.visibility = 'hidden';
+
+  filterName=(!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI');
+  paramStr=(!layerMSImode[witchActive] ? '' : '&bands='+bands[witchActive][0]+','+bands[witchActive][1]+','+bands[witchActive][2]+'&lut1='+lutStr[witchActive][0]+'&lut2='+lutStr[witchActive][1]+'&lut3='+lutStr[witchActive][2]);
+
+  if (minimapCache.includes(minimapday)) {
+    document.getElementById('minimap').style.display = 'block';
+    document.getElementById('minimapimage').src='https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[witchActive]].toLowerCase() + '-' + filterName.toLowerCase() + '?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/jpeg&LAYERS=' + Sensors[Sensor[witchActive]].replace('-','_').toLowerCase() + '_' + filterName.toLowerCase() + paramStr + '&date=' + minimapday + '&WIDTH=' + minimapimageWidth + '&HEIGHT=' + minimapimageHeight + '&SRS=EPSG:3301&STYLES=&BBOX=' + map.getView().calculateExtent(map.getSize())[0] + ',' + map.getView().calculateExtent(map.getSize())[1] + ',' + map.getView().calculateExtent(map.getSize())[2] + ',' + map.getView().calculateExtent(map.getSize())[3];
+  } else {
+
+    document.getElementById('minimapimageloading').style.visibility = 'visible';
+
+    MapOpener = setTimeout(function(){
+
+      mapaspect=((map.getView().calculateExtent(map.getSize())[3]-map.getView().calculateExtent(map.getSize())[1])/(map.getView().calculateExtent(map.getSize())[2]-map.getView().calculateExtent(map.getSize())[0]));
+
+      minimapimageWidth=Math.round(pn.offsetWidth-20);
+      minimapimageHeight=Math.round(minimapimageWidth*mapaspect);
+
+      document.getElementById('minimap').style.bottom = Math.round(window.innerHeight-pn.offsetTop+15) + 'px';
+      document.getElementById('minimap').style.right = window.innerWidth-(parseInt(pn.style.left)+pn.offsetWidth) + 'px';
+      document.getElementById('minimap').style.width = Math.round(pn.offsetWidth) + 'px';
+      document.getElementById('minimap').style.height = Math.round(pn.offsetWidth*mapaspect+7) + 'px';
+      document.getElementById('minimap').style.display = 'block';
+
+      document.getElementById('minimapimage').onload = function () {
+        document.getElementById('minimapimageloading').style.visibility = 'hidden';
+        minimapCache.push(minimapday);
+        minimapCache = minimapCache.slice(-42);
+      }
+      document.getElementById('minimapimage').src='https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[witchActive]].toLowerCase() + '-' + filterName.toLowerCase() + '?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/jpeg&LAYERS=' + Sensors[Sensor[witchActive]].replace('-','_').toLowerCase() + '_' + filterName.toLowerCase() + paramStr + '&date=' + minimapday + '&WIDTH=' + minimapimageWidth + '&HEIGHT=' + minimapimageHeight + '&SRS=EPSG:3301&STYLES=&BBOX=' + map.getView().calculateExtent(map.getSize())[0] + ',' + map.getView().calculateExtent(map.getSize())[1] + ',' + map.getView().calculateExtent(map.getSize())[2] + ',' + map.getView().calculateExtent(map.getSize())[3];
+
+    }, 250);
+  }
+}
+
+
+function createProductListDiv() {
+  document.getElementById('D-ProductList').innerHTML = '';
+
+  for(i=0;i<ProductsWMS.length+1;i++) {
+    if (i<ProductsWMS.length) {
+      if (!layerMSImode[witchActive] && i==Product[witchActive]) {
+        filterButton = 'buttonnoy';
+      } else {
+        filterButton = 'buttonno';
+      }
+      filterInfo = ProductsInfo[i];
+      filterTXT = ProductsTXT[i];
+      onClickStr='filterClick(' + i + ')';
+    } else if (i==ProductsWMS.length) {
+      filterButton = (layerMSImode[witchActive] ? 'buttonnoy' : 'buttonno');
+      filterInfo = 'Kujundatud';
+      filterTXT = 'Kujundatud';
+      onClickStr='MSIswitch()';
+    }
+    document.getElementById('D-ProductList').innerHTML += '<div title="Filter:  ' + filterInfo + '" onclick="' + onClickStr + '" class="' + filterButton + '" style="z-index: 99999900; cursor:pointer; height:2.2em; width:6.9em; margin-top:0.5em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span>' + filterTXT + '</span></td></tr></table></div>';
+  }
+}
+
+
+function MSIswitch() {
+  if (!layerMSImode[witchActive]) {
+    MSIclick();
+  } else {
+    filterClick(0);
+  }
+}
+
+
+function filterClick(i) {
+  document.getElementById('D-LutWindow').style.visibility='hidden';
+  changeProduct(i);
+
+  document.getElementById('product').innerHTML=Sensors[Sensor[witchActive]] + ' &nbsp; ' + ProductsTXT[Product[witchActive]];
+  document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + ProductsTXT[Product[witchActive]];
+  document.title=sensedate[witchActive] + ' ' + Sensors[Sensor[witchActive]] + ' ' + ProductsWMS[Product[witchActive]];
+
+  if (layerMSImode[witchActive]) {
+    document.getElementById('LutDiv').className="buttonno";
+    layerMSImode[witchActive] = false;
+  }
+  createProductListDiv();
+  onMoveEnd(false);
+}
+
+
+function MSIclick() {
+  if (!layerMSImode[witchActive]) {
+    document.getElementById('B1').value=bands[witchActive][0];
+    document.getElementById('B2').value=bands[witchActive][1];
+    document.getElementById('B3').value=bands[witchActive][2];
+
+    document.getElementById('gamma').value=gamma[witchActive];
+    document.getElementById('gammar').value=gammar[witchActive];
+    document.getElementById('gammag').value=gammag[witchActive];
+    document.getElementById('gammab').value=gammab[witchActive];
+
+    document.getElementById('product').innerHTML=Sensors[Sensor[witchActive]] + ' &nbsp; Kujundatud';
+    document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; Kujundatud';
+    document.title=sensedate[witchActive] + ' ' + Sensors[Sensor[witchActive]] + ' MSI';
+
+    document.getElementById('LutDiv').className="buttonnoy";
+    layerMSImode[witchActive] = true;
+    createProductListDiv();
+    onMoveEnd(false);
+  }
+}
+
+
+function changeProduct(np) {
+  setOrto(-1);
+
+  if (!layerMSImode[witchActive] && Product[witchActive] == np) {
+    Product[witchActive]=0;
+  } else {
+    Product[witchActive]=np;
+  }
+  createProductListDiv();
+
+  layerSAT[witchActive].getSource().setUrl('https://teenus.maaamet.ee/ows/wms-' + Sensors[Sensor[witchActive]].toLowerCase() + '-' + ProductsWMS[Product[witchActive]].toLowerCase());
+  layerSAT[witchActive].getSource().updateParams({"LAYERS": Sensors[Sensor[witchActive]].replace('-','_').toLowerCase() + '_' + ProductsWMS[Product[witchActive]].toLowerCase()});
+  layerSAT[witchActive].getSource().clear();
+  onMoveEnd(false);
+}
+
+
+function changeLutClick() {
+  if (document.getElementById('D-LutWindow').style.visibility=='visible') {
+    MSIclick();
+  }
+}
+
+
+function initDate() {
+  var oReq = new XMLHttpRequest();
+  oReq.onload = function(e) {
+    SatList = JSON.parse(oReq.responseText);
+    if (typeof(SatList[0]['date'])==='string') {
+      setsensdateexact(SatList[0]['date']);
+      layerSAT[0].setVisible(true);
+      document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[0].substring(0,4);
+      document.title=sensedate[0] + ' ' + Sensors[Sensor[0]] + ' ' + ProductsWMS[Product[0]];
+    }
+  }
+  oReq.open("GET", "https://geoportaal.maaamet.ee/index.php?page_id=733&formaat=json");
+  oReq.send();
+}
+
+
+function setHybrid() {
+  if(Hybrid) {
+    Hybrid_tile.setVisible(false);
+    document.getElementById('HybridDiv').className="buttonno";  
+    Hybrid=false;
+  } else {
+    Hybrid_tile.setVisible(true);
+    document.getElementById('HybridDiv').className="buttonnoy";  
+    Hybrid=true;
+  }
+  Hybrid=Hybrid_tile.getVisible();
+  onMoveEnd(false);
+}
+
+
+function loadEtcVector(nr) {
+  if (nr==0) {
+    featureRequest = new ol.format.WFS().writeGetFeature({
+      srsName: 'EPSG:3301',
+      featureTypes: ['pria_ehitised'],
+      outputFormat: 'application/json',
+      geometryName: 'geometry',
+      bbox: map.getView().calculateExtent(map.getSize()),
+      filter: ol.format.filter.equalTo('loomaliigid', 'MESILANE'),
+    });
+    fetch('https://kls.pria.ee/geoserver/pria_avalik/ows', {
+      method: 'POST',
+      body: new XMLSerializer().serializeToString(featureRequest),
+    })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (json) {
+      features = new ol.format.GeoJSON().readFeatures(json);
+      layerEtc.getSource().addFeatures(features);
+    });
+  }
+}
+
+
+function setEtc(nr) {
+  if (nr==-1) {
+    layerEtc.setVisible(false);
+    document.getElementById('etc-0').className="buttonno";
+    Etc=-1;
+  } else {
+    loadEtcVector(nr);
+    if (nr==0) document.getElementById('etc-0').className="buttonnoy";
+    Etc=nr;
+    layerEtc.setVisible(true);
+  }
+
+  if (Etc==0 || deadtrees==1) {
+    document.getElementById('EtcDiv').className="buttonnoy";
+  } else {
+    document.getElementById('EtcDiv').className="buttonno";
+  }
+
+  onMoveEnd(false);
+}
+
+
+function setDeadtrees(nr) {
+  if (nr==1) {
+    layerDeadtrees.setVisible(true);
+    document.getElementById('deadtrees').className="buttonnoy";
+  } else {
+    layerDeadtrees.setVisible(false);
+    document.getElementById('deadtrees').className="buttonno";
+  }
+  deadtrees=nr;
+
+  if (Etc==0 || deadtrees==1) {
+    document.getElementById('EtcDiv').className="buttonnoy";
+  } else {
+    document.getElementById('EtcDiv').className="buttonno";
+  }
+
+  onMoveEnd(false);
+}
+
+
+function setOrto(nr) {
+  if (nr==-1 || nr==Orto) {
+    layerOrto.setVisible(false);
+    document.getElementById('OrtoDiv').className="buttonno";
+    Orto=-1;
+  } else {
+    document.getElementById('OrtoDiv').className="buttonnoy";
+    Orto=nr;
+    layerOrto.getSource().setUrl(OrtoUrl[''+Orto+'']);
+    layerOrto.getSource().updateParams({"LAYERS": OrtoWMS[''+Orto+'']});
+    layerOrto.getSource().clear();
+    layerOrto.setVisible(true);
+  }
+
+  for(i=0;i<OrtoWMS.length;i++) {
+    if (i==Orto) {
+      document.getElementById('orto-' + i).className="buttonnoy";
+    } else {
+      document.getElementById('orto-' + i).className="buttonno";
+    }
+  }
+
+  onMoveEnd(false);
+}
+
+
+function setMask(nr) {
+  if (Mask==nr) {
+    layerMask.setVisible(false);
+    document.getElementById('MaskDiv').className="buttonno";
+    Mask=-1;
+  } else {
+    document.getElementById('MaskDiv').className="buttonnoy";
+    Mask=nr;
+    layerMask.getSource().updateParams({"LAYERS": MaskWMS[''+Mask+'']});
+    layerMask.getSource().clear();
+    layerMask.setVisible(true);
+  }
+
+  for(i=0;i<MaskWMS.length;i++) {
+    if (i==Mask) {
+      document.getElementById('mask-' + i).className="buttonnoy";
+    } else {
+      document.getElementById('mask-' + i).className="buttonno";
+    }
+  }
+
+  onMoveEnd(false);
+}
+
+
+function setBorders(nr) {
+  if (Borders==nr) {
+    layerBorders.setVisible(false);
+    document.getElementById('BordersDiv').className="buttonno";
+    Borders=-1;
+  } else {
+    document.getElementById('BordersDiv').className="buttonnoy";
+    Borders=nr;
+    layerBorders.getSource().updateParams({"LAYERS": BordersWMS[''+Borders+'']});
+    layerBorders.getSource().clear();
+    layerBorders.setVisible(true);
+  }
+
+  for(i=0;i<BordersWMS.length;i++) {
+    if (i==Borders) {
+      document.getElementById('borders-' + i).className="buttonnoy";
+    } else {
+      document.getElementById('borders-' + i).className="buttonno";
+    }
+  }
+
+  onMoveEnd(false);
+}
+
+
+function init() {
+//  HelpMeText();
+  if (sensedate[0]=='0000-00-00') initDate();
+  wResize();
+  document.getElementById('mapRotationImage').style.transform='rotate(' + rot + 'rad)';
+  loadEtcVector(Etc);
+}
+
+
+function wResize() {
+  MapHistoryPush=false;
+  if (typeof(picker) !== 'undefined') picker.hide();
+  minimapCache=[];
+
+  if (map.getSize()[0]<620 && document.getElementById('comparediv').style.visibility=='visible') {
+    if (document.getElementById('scalebar').style.visibility=='visible') document.getElementById('scalebar').style.visibility='hidden';
+  } else if (document.getElementById('scalebar').style.visibility=='hidden') {
+    document.getElementById('scalebar').style.visibility='visible';
+  }
+
+  if (map.getSize()[0] / parseFloat(getComputedStyle(document.querySelector('body'))['font-size']) < 48) {
+    if (document.getElementById('InAadressDiv').style.top == '1em') {
+      document.getElementById('InAadressDiv').style.top = '4em';
+      document.getElementById('InAadressDiv').style.left = null;
+      document.getElementById('InAadressDiv').style.right = '1em';
+    }
+  } else {
+    if (document.getElementById('InAadressDiv').style.top == '4em') {
+      document.getElementById('InAadressDiv').style.top = '1em';
+      document.getElementById('InAadressDiv').style.right = null;
+      document.getElementById('InAadressDiv').style.left = '7em';
+    }
+
+  }
+
+}
+
+
+function NavigateTo(dir) {
+  if (MapHistoryNr==0 && dir<0) return;
+  if (MapHistory.length-1==MapHistoryNr && dir>0) return;
+  MapHistoryPush=false;
+  MapHistoryNr = MapHistoryNr + dir;
+  document.getElementById('NavPrev').className=(MapHistoryNr==0 ? 'buttonnog' : 'buttonno');
+  document.getElementById('NavNext').className=(MapHistory.length-1==MapHistoryNr ? 'buttonnog' : 'buttonno');
+  map.getView().animate({rotation: MapHistory[MapHistoryNr][2], center: MapHistory[MapHistoryNr][0], resolution: MapHistory[MapHistoryNr][1], duration: 250});
+}
+
+
+var HelpElements=[
+['ZoomIn','Suurendab kaarti 2x sisse',0,0],
+['ZoomOut','Suurendab kaarti 2x välja',0,0],
+['mapRotationDiv','Kaardi pööramine põhja-lõunasuunaliseks<br>Kaardi pööramine: hoia all klahve Alt+Shift ning lohista hiirega kaardil',0,0],
+['NavPrev','Kaardi navigeerimine eelmisele vaatele',0,0],
+['NavNext','Kaardi navigeerimine järgmisele vaatele',0,0],
+['NavToOne','Kaardi suurendamine 1px=10m',0,0],
+['PositionButtonDiv','Näita oma asukohta kaardil',0,0],
+['SaveScreen','Salvesta kaardipilt',0,0],
+['export-png','Salvesta kaardipilt png formaadis',1,0],
+['export-pgw','Salvesta kaardipilt png formaadis koos asukohafailiga<br>Võimaldab pilti kasutada GIS programmides georefereeritult',1,0],
+['export-png-clipboard','Kopeeri kaardipilt vahemällu',1,0],
+['CopyLink','Kopeeri WMS või lehekülje aadress vahemällu',0,0],
+['export-wms-clipboard','Kopeeri WMS aadress vahemällu',1,0],
+['export-url-clipboard','Kopeeri lehekülje aadress vahemällu',1,0],
+//['InAadressDiv','Otsi asukohta kaardil',0,1],
+['Help','Abiaken',0,1],
+['OrtoDiv','Ortofoto ja taimkatte kaardikihid',0,0],
+['BordersDiv','Piiride kaardikihtide valik<br>Lisa vaadeldava pildi peale soovitud vektorkiht',0,0],
+['MaskDiv','Maski kaardikihtide valik<br>Täpsusta huvipakkuv nähtus ja peida maski abil muud nähtuse tüübid',0,0],
+['EtcDiv','Muud kaardikihid',0,0],
+['HybridDiv','Hübriidkaardi sisse-välja lülitamine',0,0],
+['Resample','Satelliitpildi pehmenduse (bilinear) sisse-välja lülitamine pikslite väljatoomiseks',0,1],
+['LutDiv','Satelliitpildi kujundamine',0,0],
+['ChooseFilter','Vali satelliitpildi filter',0,0],
+['kuupaevdiv','Valitud satelliitpilt ja selle filter<br>Vali satelliitpildi kuupäev',0,1],
+['setcomparediv','Satelliitpildi võrdlus',0,0],
+['comparediv','Võrreldava satelliitpildi nimi ja filter',0,0],
+['koordinaadid','Kursori koordinaadid',0,1],
+['NDVI','NDVI väärtus kursori asukohas',0,0]
+];
+//'NavToOne',
+
+
+function HelpMeText() {
+//  <div id="D-HelpWindow" style="visibility:visible; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="1"><tr><td id="HelpText" style="color:black; padding:2em" align="center" valign="center">&nbsp;</td></tr></table></div>
+  document.getElementById('HelpText').innerHTML='<h1 style="color: black;">Kontakt: <a href="mailto:esthub@maaamet.ee">esthub@maaamet.ee</a></h1><br><hr style="width: 50%"><br>';
+
+  var _Hdiv = document.getElementById('HelpText');
+
+  var _Htbl = document.createElement("table");
+  var _HtblBody = document.createElement("tbody");
+
+  for (oneelement of HelpElements) { 
+
+    var _Hrow = document.createElement("tr");
+    var _Hrow3 = document.createElement("tr");
+    var _Hcell1 = document.createElement("td");
+    var _Hcell2 = document.createElement("td");
+    var _Hcell3 = document.createElement("td");
+
+    if (oneelement[3]==1) {
+      _Hcell3.style.padding="0.5em";
+      _Hcell3.align = "center";
+      _Hcell3.colSpan = "2";
+      _hr = document.createElement("hr");
+      _hr.style.width ="50%";
+      _Hcell3.appendChild(_hr);
+      _Hrow3.appendChild(_Hcell3);
+      _HtblBody.appendChild(_Hrow3);
+    }
+
+    tmp=document.getElementById(oneelement[0]).cloneNode(true);
+
+    if (oneelement[0]=='InAadressDiv') {
+      tmp.firstChild.removeChild(tmp.firstChild.lastChild);
+      tmp.style.height = "32px";
+      tmp.firstChild.style.height = "32px";
+    }
+
+    tmp.id="";
+    tmp.removeAttribute("onclick");
+    tmp.removeAttribute("id");
+    tmp.style.position = "";
+    tmp.style.visibility = "";
+    tmp.style.top = "";
+    tmp.style.bottom = "";
+    tmp.style.left = "";
+    tmp.style.right = "";
+    tmp.style.color = "white";
+    tmp.style.margin = "";
+//    document.getElementById('HelpText').appendChild(tmp);
+//    document.getElementById('HelpText').appendChild(document.createTextNode(oneelement[1]));
+    _Hcell1.appendChild(document.createElement("span").appendChild(tmp));
+    _Hcell1.style.paddingLeft = "0.5em";
+    _Hcell1.style.paddingRight = (oneelement[2]==1 ? "0.5em" : "2em");
+    _Hcell1.style.paddingTop = "0.5em";
+    _Hcell1.style.paddingBottom = "0.5em";
+    _Hcell1.align = "right";
+//    _Hcell2.appendChild(document.createTextNode(oneelement[1]));
+    _Hcell2.innerHTML = oneelement[1];
+    _Hcell2.style.paddingLeft = (oneelement[2]==1 ? "2em" : "0.5em");
+    _Hcell2.style.paddingRight = "0.5em";
+    _Hcell2.style.paddingTop = "0.5em";
+    _Hcell2.style.paddingBottom = "0.5em";
+    _Hrow.appendChild(_Hcell1);
+    _Hrow.appendChild(_Hcell2);
+    _HtblBody.appendChild(_Hrow);
+ }
+
+  _Htbl.appendChild(_HtblBody);
+  document.getElementById('HelpText').appendChild(_Htbl);
+}
+
+window.addEventListener('resize', function(event){
+  wResize();
+});
+
+function geo_lest(ne) {
+  LAT = (ne[1]*(Math.PI/180));
+  LON = (ne[0]*(Math.PI/180));
+  a = 6378137.000000000000;
+  F = 298.257222100883;
+  RF = F;
+  F = (1/F);
+  B0 = ((57.000000000000 + 31.000000000000 / 60.000000000000 + 3.194148000000 / 3600.000000000000)*(Math.PI/180));
+  L0 = ((24.000000000000)*(Math.PI/180));
+  FN = 6375000.000000000000;
+  FE = 500000.000000000000;
+  B1 = ((59.000000000000 + 20.000000000000 / 60.000000000000)*(Math.PI/180));
+  B2 = ((58.000000000000) * (Math.PI/180));
+  f1 = (1/RF);
+  er = ((2.000000000000 * f1) - (f1 * f1));
+  e = Math.sqrt(er);
+  t1 = Math.sqrt(((1.000000000000 - Math.sin(B1)) / (1.000000000000 + Math.sin(B1))) * (Math.pow(((1.000000000000 + e * Math.sin(B1)) / (1.000000000000 - e * Math.sin(B1))), e)));
+  t2 = Math.sqrt(((1.000000000000 - Math.sin(B2)) / (1.000000000000 + Math.sin(B2))) * (Math.pow(((1.000000000000 + e * Math.sin(B2)) / (1.000000000000 - e * Math.sin(B2))), e)));
+  t0 = Math.sqrt(((1.000000000000 - Math.sin(B0)) / (1.000000000000 + Math.sin(B0))) * (Math.pow(((1.000000000000 + e * Math.sin(B0)) / (1.000000000000 - e * Math.sin(B0))), e)));
+  t = Math.sqrt(((1.000000000000 - Math.sin(LAT)) / (1.000000000000 + Math.sin(LAT))) * (Math.pow(((1.000000000000 + e * Math.sin(LAT)) / (1.000000000000 - e * Math.sin(LAT))), e)));
+  m1 = (Math.cos(B1) / (Math.pow((1.000000000000 - er * Math.sin(B1) * Math.sin(B1)), 0.500000000000)));
+  m2 = (Math.cos(B2) / (Math.pow((1.000000000000 - er * Math.sin(B2) * Math.sin(B2)), 0.500000000000)));
+  n = ((Math.log(m1) - Math.log(m2)) / (Math.log(t1) - Math.log(t2)));
+  FF = (m1 / (n * Math.pow(t1, n)));
+  p0 = (a * FF * (Math.pow(t0, n)));
+  FII = (n * (LON - L0));
+  p = (a * FF * Math.pow(t, n));
+  n = (p0 - (p * Math.cos(FII)) + FN);
+  e = (p * Math.sin(FII) + FE);
+
+  return [e,n];
+}
+
+
+
+
+map.on('pointermove', function(evt) {
+  if (evt.dragging) {
+    return;
+  }
+  clearTimeout(MouseMove_timer);
+  document.getElementById('myHeight').innerHTML="&nbsp;";
+
+  MouseMove_timer=setTimeout(function(){
+    var hReq = new XMLHttpRequest();
+    hReq.onload = function(e) {
+      demValue = hReq.responseText;
+      if (hReq.responseText.length<10) {
+        document.getElementById('myHeight').innerHTML=(demValue/10000);
+      }
+    }
+    hReq.open("GET", "https://teenus.maaamet.ee/ows/wms-sentinel-2-ndvi?mode=query&mapxy=" + evt.coordinate[0] + "%20" + evt.coordinate[1] + "&qlayer=sentinel_2_ndvi_two&date=" + sensedate[witchActive]);
+    hReq.send();
+  }, 500);
+ document.getElementById('myPosition').innerHTML=Math.round(evt.coordinate[0]) + ' ' + Math.round(evt.coordinate[1]);
+});
+
+
+var geolocation = new ol.Geolocation({
+  tracking: false,
+  trackingOptions: {
+    enableHighAccuracy: true
+  },
+  projection: new ol.proj.Projection({code: 'EPSG:3301'})
+});
+
+
+geolocation.on('change:position', function() {
+  var coordinates = geolocation.getPosition();
+  positionFeature.setGeometry(coordinates ? new ol.geom.Point(geo_lest(coordinates)) : null);
+});
+
+geolocation.on('change:accuracyGeometry', function () {
+  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+});
+
+
+</script>
+</body>
+</html>
