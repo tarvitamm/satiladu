@@ -262,6 +262,7 @@
     .scalebar {
     }
 
+
   </style>
 
   <title>Satiladu | Maa-amet</title>
@@ -276,14 +277,13 @@
 </head>
 
 <body onload="init()">
-<button onclick="switchLanguage('estonian')">Eesti</button>
-<button onclick="switchLanguage('english')">English</button>
+
   <a style="display:none;" id="image-download" download="map.png"></a>
   <a style="display:none;" id="tfw-download" download="map.pgw"></a>
   <div id="map"></div>
 
   <div id="InAadressDiv" onclick="onClick('none')" style="position:absolute; top:1em; left:7em; right:auto; bottom:auto; width: 20em; height: 1em; z-index: 0"></div>
-  <div class="inads-input-div" style="height: 48px;" ><input class="inads-input" placeholder="otsi aadressi..." data-translate="input"><i class="inads-input-search"></i><i class="inads_spinner hidden"></i><i class="inads-input-clear hidden" title="puhasta"></i><a href="https://inaadress.maaamet.ee/generaator/" target="_blank" class="inads-copyright">In-ADS (Maa-amet)</a></div>
+  <div class="inads-input-div" style="height: 48px;" ><input class="inads-input" placeholder="Otsi aadressi..." data-translate="input"><i class="inads-input-search"></i><i class="inads_spinner hidden"></i><i class="inads-input-clear hidden" title="puhasta"></i><a href="https://inaadress.maaamet.ee/generaator/" target="_blank" class="inads-copyright">In-ADS (Maa-amet)</a></div>
   <div id="ZoomIn" data-translate="ZoomIn" title="Suurenda sisse" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()+1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /><line x1='5' y1='3' x2='5' y2='7' style='stroke:white;stroke-width:1' /></svg>"></div>
   <div id="ZoomOut" data-translate="ZoomOut" title="Suurenda v&auml;lja" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()-1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:3.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /></svg>"></div>
   <div id="mapRotationDiv" data-translate="North" title="P&otilde;hjasuund" onclick="onClick('none');map.getView().animate({rotation: 0, duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:6em; left:1em; height:2.2em; width:2.2em;"><img id="mapRotationImage" style="width:2.2em; height:2.2em; transform: rotate(0rad);" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polygon points='4,5 5,3 6,5' style='fill:white;stroke:white;stroke-width:0.3' /><polygon points='4,5 5,7 6,5' style='fill:none;stroke:white;stroke-width:0.3' /><circle cx='5' cy='5' r='3.5' stroke='white' stroke-width='0.3' fill='none' /></svg>"></div>
@@ -314,7 +314,7 @@
   <div id="ChooseFilter" data-translate="ChooseFilter" title="Vali filter" class="buttonno" onclick="onClick('D-ProductList');" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; right:1em; height:2.2em; width:12.4em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span id="product">&nbsp;</span></td></tr></table></div>
   <div id="D-ProductList"  class="speech-bubble-g-t-product" style="z-index: 99999900; visibility:hidden; position:absolute; top:4em; right:1em; width:6.9em; padding-left:0.5em; padding-right:0.5em; padding-bottom:0.5em;"></div>
 
-  <div id="Resample" data-translate="Resample" title="Lülita pildi pehmendus v&auml;lja. M&otilde;jub hetkel vaid NDVI pildile" onclick="onClick('none');resample=(resample=='nearest' ? 'bilinear' : 'nearest');onMoveEnd(false);layerSAT[0].getSource().updateParams({'resample': resample});layerSAT[1].getSource().updateParams({'resample': resample});layerSAT[0].getSource().clear();layerSAT[1].getSource().clear();this.className=(resample=='nearest' ? 'buttonnoy' : 'buttonno');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; right:19em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /><rect x='5' y='3' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='3' y='5' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='5' y='5' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /></svg>"></div>
+  <div id="Resample" data-translate="Resample" title="Lülita pildi pehmendus v&auml;lja. M&otilde;jub hetkel vaid NDVI pildile" onclick="onClick('none');resample=(resample=='nearest' ? 'bilinear' : 'nearest');onMoveEnd(false);layerSAT[0].getSource().updateParams({'resample': resample});layerSAT[1].getSource().updateParams({'resample': resample});layerSAT[0].getSource().clear();layerSAT[1].getSource().clear();this.className=(resample=='nearest' ? 'buttonnoy' : 'buttonno');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; right:16.6em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='3' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /><rect x='5' y='3' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='3' y='5' width='2' height='2' style='fill:none;stroke:white;stroke-width:0.1' /><rect x='5' y='5' width='2' height='2' style='fill:white;stroke:white;stroke-width:0.1' /></svg>"></div>
 
   <div id="comparediv" data-translate="Compare" title="V&otilde;rreldav pilt" class="buttonnogn" style="z-index: 99999900; visibility:hidden; cursor:pointer; position:absolute; bottom:1em; right:17.1em; height:2.2em; width:13.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id="comparesensedate">&nbsp;</span></td></tr></table></div>
   <div id="setcomparediv" data-translate="SetCompare" title="V&otilde;rdle pilte" onclick="onClick('none');changePictures();" onselectstart="return false;" onmousedown="return false;" class="buttonnob" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:1em; right:14.4em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polyline points='4.3,6.5 2.8,5 4.3,3.5' style='fill:none;stroke:white;stroke-width:0.5' /><polyline points='5.9,6.5 7.4,5 5.9,3.5' style='fill:none;stroke:white;stroke-width:0.5' /></svg>"></div>
@@ -341,40 +341,40 @@
   </div>
 
   <div class="speech-bubble-g-t-etc" id="D-Etc" style="position:absolute; visibility:hidden; bottom:7.8em; left:5.1em;">
-    <div id="deadtrees" data-translate="DeadTrees" title="Automaatselt tuvastatud surnud puude asukohad Eestis.&#10;Arvutatud suvise lennu ALS andmete laekumisega (Maa-amet, katsetuslik kaardikiht)" onclick="setDeadtrees((deadtrees==1 ? -1 : 1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id data-translate="deadTreesLabel">Surnud puud</span></td></tr></table></div>
-    <div id="etc-0" data-translate="ETC" title="Mesilad / PRIA" onclick="setEtc((Etc==-1 ? 0 : -1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="beehivesLabel">Mesilad</span></td></tr></table></div>
+    <div id="deadtrees" data-translate="DeadTrees" title="Automaatselt tuvastatud surnud puude asukohad Eestis.&#10;Arvutatud suvise lennu ALS andmete laekumisega (Maa-amet, katsetuslik kaardikiht)" onclick="setDeadtrees((deadtrees==1 ? -1 : 1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id data-translate="deadTreesLabel">Surnud puud</span></td></tr></table></div>
+    <div id="etc-0" data-translate="ETC" title="Mesilad / PRIA" onclick="setEtc((Etc==-1 ? 0 : -1));" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="beehivesLabel">Mesilad</span></td></tr></table></div>
   </div>
 
   <div class="speech-bubble-s-l" id="D-Orto" style="position:absolute; visibility:hidden; bottom:15.1em; left:5.1em;">
-    <div id="orto-0" data-translate="Orto-0" title="Ortofoto 2020 - 2021 / Maa-amet" onclick="setOrto(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto0Label">Ortofoto</span></td></tr></table></div>
-    <div id="orto-1" data-translate="Orto-1" title="Suvine metsanduslik ortofoto 2018 - 2021 / Maa-amet" onclick="setOrto(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto1Label">Metsanduslik</span></td></tr></table></div>
-    <div id="orto-2" data-translate="Orto-2" title="Suvine taimkatte indeks NDVI 2021 / Maa-amet" onclick="setOrto(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto2Label">Taimkatte indeks</span></td></tr></table></div>
-    <div id="orto-3" data-translate="Orto-3" title="Suvine taimkatte k&otilde;rgus 2018 - 2021 / Maa-amet" onclick="setOrto(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto3Label">Taimkate 2018-21</span></td></tr></table></div>
-    <div id="orto-4" data-translate="Orto-4" title="Suvine taimkatte k&otilde;rgus 2012 - 2017 / Maa-amet" onclick="setOrto(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto4Label">Taimkate 2012-17</span></td></tr></table></div>
-    <div id="orto-5" data-translate="Orto-5" title="Suvine taimkatte k&otilde;rgus 2008 - 2011 / Maa-amet" onclick="setOrto(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:9.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto5Label">Taimkate 2008-11</span></td></tr></table></div>
+    <div id="orto-0" data-translate="Orto-0" title="Ortofoto 2020 - 2021 / Maa-amet" onclick="setOrto(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto0Label">Ortofoto</span></td></tr></table></div>
+    <div id="orto-1" data-translate="Orto-1" title="Suvine metsanduslik ortofoto 2018 - 2021 / Maa-amet" onclick="setOrto(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto1Label">Metsanduslik</span></td></tr></table></div>
+    <div id="orto-2" data-translate="Orto-2" title="Suvine taimkatte indeks NDVI 2021 / Maa-amet" onclick="setOrto(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto2Label">Taimkatte indeks</span></td></tr></table></div>
+    <div id="orto-3" data-translate="Orto-3" title="Suvine taimkatte k&otilde;rgus 2018 - 2021 / Maa-amet" onclick="setOrto(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto3Label">Taimkate 2018-21</span></td></tr></table></div>
+    <div id="orto-4" data-translate="Orto-4" title="Suvine taimkatte k&otilde;rgus 2012 - 2017 / Maa-amet" onclick="setOrto(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto4Label">Taimkate 2012-17</span></td></tr></table></div>
+    <div id="orto-5" data-translate="Orto-5" title="Suvine taimkatte k&otilde;rgus 2008 - 2011 / Maa-amet" onclick="setOrto(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Orto5Label">Taimkate 2008-11</span></td></tr></table></div>
   </div>
 
   <div class="speech-bubble-s-l" id="D-Mask" style="position:absolute; visibility:hidden; bottom:7.2em; left:5.1em;">
-    <div id="mask-0" data-translate="Mask-0" title="Metsad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask0Label">Mets</span></td></tr></table></div>
-    <div id="mask-1" data-translate="Mask-1" title="Veekogud ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask1Label">Veekogu</span></td></tr></table></div>
-    <div id="mask-2" data-translate="Mask-2" title="M&auml;rgalad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask2Label">M&auml;rgala</span></td></tr></table></div>
-    <div id="mask-3" data-translate="Mask-3" title="Lagedad alad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask3Label">Lage</span></td></tr></table></div>
-    <div id="mask-4" data-translate="Mask-4" title="&Uuml;le 10 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask4Label">&Uuml;le 10 m</span></td></tr></table></div>
-    <div id="mask-5" data-translate="Mask-5" title="Alla 1 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask5Label">Alla 1 m</span></td></tr></table></div>
-    <div id="mask-6" data-translate="Mask-6" title="&Uuml;le 10 m suvise taimkattega alad 2008 - 2020 / Maa-amet" onclick="setMask(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:7.7em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask6Label">>10m 2008-20</span></td></tr></table></div>
+    <div id="mask-0" data-translate="Mask-0" title="Metsad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask0Label">Mets</span></td></tr></table></div>
+    <div id="mask-1" data-translate="Mask-1" title="Veekogud ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask1Label">Veekogu</span></td></tr></table></div>
+    <div id="mask-2" data-translate="Mask-2" title="M&auml;rgalad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask2Label">M&auml;rgala</span></td></tr></table></div>
+    <div id="mask-3" data-translate="Mask-3" title="Lagedad alad ETAK-i j&auml;rgi / Maa-amet" onclick="setMask(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask3Label">Lage</span></td></tr></table></div>
+    <div id="mask-4" data-translate="Mask-4" title="&Uuml;le 10 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask4Label">&Uuml;le 10 m</span></td></tr></table></div>
+    <div id="mask-5" data-translate="Mask-5" title="Alla 1 m suvise taimkattega alad 2018 - 2021 / Maa-amet" onclick="setMask(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask5Label">Alla 1 m</span></td></tr></table></div>
+    <div id="mask-6" data-translate="Mask-6" title="&Uuml;le 10 m suvise taimkattega alad 2008 - 2020 / Maa-amet" onclick="setMask(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Mask6Label">>10m 2008-20</span></td></tr></table></div>
   </div>
 
   <div class="speech-bubble-s-l" id="D-Borders" style="position:absolute; visibility:hidden; bottom:6.4em; left:5.1em;">
-    <div id="borders-0" data-translate="Borders-0" title="Maakatastri piirid / Maa-amet" onclick="setBorders(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders0Label">Kataster</span></td></tr></table></div>
-    <div id="borders-1" data-translate="Borders-1" title="Riigimetsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders1Label">Riigimets</span></td></tr></table></div>
-    <div id="borders-2" data-translate="Borders-2" title="Erametsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders2Label">Eramets</span></td></tr></table></div>
-    <div id="borders-3" data-translate="Borders-3" title="Kaitsealade piirid / Keskkonnaagentuur" onclick="setBorders(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders3Label">Kaitsealad</span></td></tr></table></div>
-    <div id="borders-4" data-translate="Borders-4" title="ÜP kaitsemetsade piirid / Keskkonnaagentuur" onclick="setBorders(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders4Label">Kaitsemets</span></td></tr></table></div>
-    <div id="borders-5" data-translate="Borders-5" title="Metsateatiste ja raiega MKE-de piirid / Keskkonnaagentuur" onclick="setBorders(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders5Label">Teatised</span></td></tr></table></div>
-    <div id="borders-6" data-translate="Borders-6" title="P&otilde;llumassiivide piirid / PRIA" onclick="setBorders(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders6Label">P&otilde;ld</span></td></tr></table></div>
-    <div id="borders-7" data-translate="Borders-7" title="Samak&otilde;rgusjooned / Maa-amet" onclick="setBorders(7);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders7Label">K&otilde;rgused</span></td></tr></table></div>
-    <div id="borders-8" data-translate="Borders-8" title="Mustvalge p&otilde;hikaart / Maa-amet" onclick="setBorders(8);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders8Label">P&otilde;hikaart</span></td></tr></table></div>
-    <div id="borders-9" data-translate="Borders-9" title="Mullat&uuml;&uuml;pide piirid / Maa-amet" onclick="setBorders(9);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:6.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders9Label">Mullastik</span></td></tr></table></div>
+    <div id="borders-0" data-translate="Borders-0" title="Maakatastri piirid / Maa-amet" onclick="setBorders(0);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders0Label">Kataster</span></td></tr></table></div>
+    <div id="borders-1" data-translate="Borders-1" title="Riigimetsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(1);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders1Label">Riigimets</span></td></tr></table></div>
+    <div id="borders-2" data-translate="Borders-2" title="Erametsaeraldiste piirid / Keskkonnaagentuur" onclick="setBorders(2);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders2Label">Eramets</span></td></tr></table></div>
+    <div id="borders-3" data-translate="Borders-3" title="Kaitsealade piirid / Keskkonnaagentuur" onclick="setBorders(3);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders3Label">Kaitsealad</span></td></tr></table></div>
+    <div id="borders-4" data-translate="Borders-4" title="ÜP kaitsemetsade piirid / Keskkonnaagentuur" onclick="setBorders(4);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders4Label">Kaitsemets</span></td></tr></table></div>
+    <div id="borders-5" data-translate="Borders-5" title="Metsateatiste ja raiega MKE-de piirid / Keskkonnaagentuur" onclick="setBorders(5);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders5Label">Teatised</span></td></tr></table></div>
+    <div id="borders-6" data-translate="Borders-6" title="P&otilde;llumassiivide piirid / PRIA" onclick="setBorders(6);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders6Label">P&otilde;ld</span></td></tr></table></div>
+    <div id="borders-7" data-translate="Borders-7" title="Samak&otilde;rgusjooned / Maa-amet" onclick="setBorders(7);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders7Label">K&otilde;rgused</span></td></tr></table></div>
+    <div id="borders-8" data-translate="Borders-8" title="Mustvalge p&otilde;hikaart / Maa-amet" onclick="setBorders(8);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders8Label">P&otilde;hikaart</span></td></tr></table></div>
+    <div id="borders-9" data-translate="Borders-9" title="Mullat&uuml;&uuml;pide piirid / Maa-amet" onclick="setBorders(9);" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em; width:10em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span data-translate="Borders9Label">Mullastik</span></td></tr></table></div>
   </div>
 
   <div id="LutDiv" data-translate="Design" title="Kujunda ise" onclick="onClick('D-LutWindow');changeLutClick()" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; border-radius:0.3em; border-style: none; position:absolute; top:1em; right:13.9em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='6' x2='3' y2='7' style='stroke:white;stroke-width:1' /><line x1='5' y1='3' x2='5' y2='7' style='stroke:white;stroke-width:1' /><line x1='7' y1='5' x2='7' y2='7' style='stroke:white;stroke-width:1' /></svg>"></div>
@@ -487,11 +487,15 @@
       </div>
     </div>
   </div>
+  <div style="position:absolute; top:1em; right:19.5em;">
+    <button onclick="switchLanguage('estonian')" class="buttonno" style="width=2.2em; height=2.2em;cursor:pointer; border-radius:0.3em; border-style: none; color: white;">EST</button>
+    <button onclick="switchLanguage('english')" class="buttonno" style="cursor:pointer; border-radius:0.3em; border-style: none; color: white;">ENG</button>
+  </div>
 
   <div id="D-MessageWindow" style="visibility:hidden; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="1"><tr><td id="MessageText" style="color:black; padding:2em" align="center" valign="center">&nbsp;</td></tr></table></div>
   <div id="D-HelpWindow" style="visibility:hidden; overflow:auto; z-index: 99999990; position:absolute; top:50%; left:50%; max-height:90%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="0"><tr><td id="HelpText" style="color:black; padding:2em" align="center" valign="center"></td></tr></table></div>
 
-<script>
+  <script>
 let currentLanguage = 'estonian';
 var inAadress = new InAadress({"container":"InAadressDiv","mode":3,"ihist":"1993","appartment":0,"lang":"et"});
 document.addEventListener('addressSelected', function(e){
@@ -507,7 +511,7 @@ var Picker;
 var ProductsWMS=['RGB','NRG','NDVI','NGR','NDPI','PNB','NGP','NDR','PDB','NDN','PDN','NNR','DNP'];
 var ProductsTXT=['RGB','NRG','NDVI','NGR','NDPI','PNB','NGP','NDR','PDB','NDN','PDN','NNR','DNP'];
 var ProductsInfo=['Satelliidifoto / Punane Roheline Sinine','Maakate-1 / Lähi-infrapuna Punane Roheline','Taimkate-1 /  NDVI','Metsanduslik / Lähi-infrapuna Roheline Punane','Veeindeks / NDPI','Maakate-2 / NDPI Lähi-infrapuna Sinine','Maakate-3 / Lähi-infrapuna Roheline NDPI','Taimkate-2 / Lähi-infrapuna NDVI Punane','Maakate-4 / NDPI NDVI Sinine','Taimkate-3 / Lähi-infrapuna NDVI Lähi-infrapuna','Maakate-5 / NDPI NDVI Lähi-infrapuna','Taimkate-4 / Lähi-infrapuna Lähi-infrapuna Punane','Maakate-6 / NDVI Lähi-infrapuna NDPI'];
-
+var ProductsInfoEng = ['Satellite Image / Red Green Blue','Land Cover-1 / Near Infrared Red Green','Vegetation-1 / NDVI','Forestry / Near Infrared Green Red','Water Index / NDPI','Land Cover-2 / NDPI Near Infrared Blue','Land Cover-3 / Near Infrared Green NDPI','Vegetation-2 / Near Infrared NDVI Red','Land Cover-4 / NDPI NDVI Blue','Vegetation-3 / Near Infrared NDVI Near Infrared','Land Cover-5 / NDPI NDVI Near Infrared','Vegetation-4 / Near Infrared Near Infrared Red','Land Cover-6 / NDVI Near Infrared NDPI'];
 var Product=[0,0];
 var layerMSImode=[false,false];
 
@@ -734,11 +738,20 @@ if (UrlParams['resample'] !== undefined) {
   resample=UrlParams['resample'];
 //  document.getElementById('etc-' + Etc).className="buttonnoy";
 }
-
+function SenseDate(){
+if (currentLanguage === 'estonian'){
 document.getElementById('sensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
-
+}
+else{
+document.getElementById('sensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Designed');
+}
 if (sensedate[1]!='0000-00-00') {
+  if (currentLanguage === 'estonian'){
   document.getElementById('comparesensedate').innerHTML=sensedate[1] + ' &nbsp; ' + (!layerMSImode[1] ? ProductsTXT[Product[1]] : 'Kujundatud');
+  }
+  else{
+    document.getElementById('comparesensedate').innerHTML=sensedate[1] + ' &nbsp; ' + (!layerMSImode[1] ? ProductsTXT[Product[1]] : 'Designed');
+  }
   document.getElementById('comparediv').style.visibility='visible';
 }
 
@@ -746,9 +759,13 @@ if (sensedate[0]!='0000-00-00') {
   document.title=sensedate[0] + ' ' + Sensors[Sensor[0]] + ' ' + (!layerMSImode[0] ? ProductsWMS[Product[0]] : 'MSI');
   document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[0].substring(0,4);
 }
-
-document.getElementById('product').innerHTML=Sensors[Sensor[0]] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
-
+if (currentLanguage === 'estonian'){
+document.getElementById('product').innerHTML=Sensors[Sensor[0]] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');}
+else{
+document.getElementById('product').innerHTML=Sensors[Sensor[0]] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Designed');
+}
+}
+SenseDate();
 createProductListDiv();
 
 
@@ -1473,7 +1490,13 @@ function setsensdateexact(newdate) {
   for ([key,value] of Object.entries(SatList)) {
     if (value['date']==newdate) {
       sensedate[witchActive]=newdate;
+      if (currentLanguage === 'estonian'){
       document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
+      }
+      else{
+        document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Designed');
+
+      }
       document.title=sensedate[witchActive] + ' ' + Sensors[Sensor[witchActive]] + ' ' + (!layerMSImode[witchActive] ? ProductsWMS[Product[witchActive]] : 'MSI');
       document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[witchActive].substring(0,4);
       layerSAT[witchActive].getSource().updateParams({"date": sensedate[witchActive]});
@@ -1493,7 +1516,13 @@ function changePictures() {
 
   if (sensedate[1]=='0000-00-00') {
     document.getElementById('comparediv').style.visibility='visible';
+    if (currentLanguage === 'estonian'){
     document.getElementById('comparesensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');
+    }
+    else{
+    document.getElementById('comparesensedate').innerHTML=sensedate[0] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Designed');
+
+    }
     sensedate[1]=sensedate[0];
     Product[1]=Product[0];
     Sensor[1]=Sensor[0];
@@ -1520,9 +1549,16 @@ function changePictures() {
 
   } else {
     witchActive=(witchActive==1 ? 0 : 1);
+    if (currentLanguage === 'estonian'){
     document.getElementById('comparesensedate').innerHTML=sensedate[(witchActive==1 ? 0 : 1)] + ' &nbsp; ' + (!layerMSImode[(witchActive==1 ? 0 : 1)] ? ProductsTXT[Product[(witchActive==1 ? 0 : 1)]] : 'Kujundatud');
     document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
     document.getElementById('product').innerHTML=Sensors[Sensor[witchActive]] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Kujundatud');
+    }
+    else{
+    document.getElementById('comparesensedate').innerHTML=sensedate[(witchActive==1 ? 0 : 1)] + ' &nbsp; ' + (!layerMSImode[(witchActive==1 ? 0 : 1)] ? ProductsTXT[Product[(witchActive==1 ? 0 : 1)]] : 'Designed');
+    document.getElementById('sensedate').innerHTML=sensedate[witchActive] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Designed');
+    document.getElementById('product').innerHTML=Sensors[Sensor[witchActive]] + ' &nbsp; ' + (!layerMSImode[witchActive] ? ProductsTXT[Product[witchActive]] : 'Designed');
+    }
 
     layerSAT[0].setVisible(witchActive==0 && !layerMSImode[0]);
     layerMSI[0].setVisible(witchActive==0 && layerMSImode[0]);
@@ -1686,14 +1722,25 @@ function createProductListDiv() {
       } else {
         filterButton = 'buttonno';
       }
+      if (currentLanguage === 'estonian'){
       filterInfo = ProductsInfo[i];
+      }
+      else{
+      filterInfo = ProductsInfoEng[i];
+      }
       filterTXT = ProductsTXT[i];
       onClickStr='filterClick(' + i + ')';
     } else if (i==ProductsWMS.length) {
       filterButton = (layerMSImode[witchActive] ? 'buttonnoy' : 'buttonno');
+      if (currentLanguage === 'estonian'){
       filterInfo = 'Kujundatud';
       filterTXT = 'Kujundatud';
-      onClickStr='MSIswitch()';
+      }
+      else{
+      filterInfo = 'Designed';
+      filterTXT = 'Designed';
+      }
+      onClickStr='MSIswitch(); switchLanguage(currentLanguage);';
     }
     document.getElementById('D-ProductList').innerHTML += '<div title="Filter:  ' + filterInfo + '" onclick="' + onClickStr + '" class="' + filterButton + '" style="z-index: 99999900; cursor:pointer; height:2.2em; width:6.9em; margin-top:0.5em;"><table width="100%" height="100%" border="0"><tr><td nowrap valign="center" align="center"><span>' + filterTXT + '</span></td></tr></table></div>';
   }
@@ -2189,6 +2236,8 @@ geolocation.on('change:accuracyGeometry', function () {
 function switchLanguage(language) {
     currentLanguage = language;
     HelpMeText(); // Call your HelpMeText function to update any other text elements
+    createProductListDiv();
+    SenseDate();
     fetch('http://localhost:63342/satiladu/translations.json')
         .then(response => response.json())
         .then(data => {
@@ -2215,13 +2264,18 @@ function switchLanguage(language) {
                     spanElement.textContent = translations[language][key];
                     }
                 }
-                const inputElement = element.querySelector('.inads-input');
-                if (inputElement) {
-                    console.log(inputElement);
-                    const placeholderTranslationKey = inputElement.getAttribute('data-translate');
-                    const placeholderTranslationValue = translations[language][placeholderTranslationKey];
+
+                const placeholderElement = element.querySelector('input');
+                if (placeholderElement) {
+                    console.log('leidsin')
+                    // Assuming 'input' is the translation key for the placeholder
+                    const placeholderTranslationValue = translations[language][translationKey];
                     inputElement.setAttribute('placeholder', placeholderTranslationValue);
                 }
+                if (element.classList.contains('inads-input')) {
+                  refreshDivContent(translationValue)
+                }
+
 
                 // Translate the text content within SVG
                 const imgElement = element.querySelector('img');
@@ -2234,7 +2288,10 @@ function switchLanguage(language) {
                         const textElement = svgDoc.querySelector('.txt');
                         if (textElement) {
                             textElement.textContent = translationValue;
-
+                            if (translationKey == 'Borders'){
+                                const fontSize = language === 'english' ? '0.68em' : '0.9em';
+                                textElement.setAttribute('style', `font-size: ${fontSize};`);
+                            }
                             imgElement.setAttribute('src', 'data:image/svg+xml;utf8,' + new XMLSerializer().serializeToString(svgDoc));
                         }
                     } catch (error) {
@@ -2252,6 +2309,16 @@ function switchLanguage(language) {
         .catch(error => {
             console.error('Error fetching translations:', error);
         });
+}
+
+function refreshDivContent(translationValue) {
+    const divElement = document.querySelector('.inads-input-div');
+    const newDivElement = divElement.cloneNode(true);
+    const inputElement = newDivElement.querySelector('.inads-input');
+    if (inputElement) {
+        inputElement.setAttribute('placeholder', translationValue);
+    }
+    divElement.parentNode.replaceChild(newDivElement, divElement);
 }
 
 function translateTableElement(element, translations, language) {
@@ -2280,7 +2347,6 @@ function translateTableElement(element, translations, language) {
     // Translate the text content directly for the table cell
     element.textContent = translationValue;
 }
-
 
 
 
