@@ -284,7 +284,6 @@
   <div id="map"></div>
 
   <div id="InAadressDiv" onclick="onClick('none')" style="position:absolute; top:1em; left:7em; right:auto; bottom:auto; width: 20em; height: 1em; z-index: 0"></div>
-  <div class="inads-input-div" style="height: 48px;" ><input class="inads-input" placeholder="Otsi aadressi..." data-translate="input"><i class="inads-input-search"></i><i class="inads_spinner hidden"></i><i class="inads-input-clear hidden" title="puhasta"></i><a href="https://inaadress.maaamet.ee/generaator/" target="_blank" class="inads-copyright">In-ADS (Maa-amet)</a></div>
   <div id="ZoomIn" data-translate="ZoomIn" title="Suurenda sisse" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()+1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:1em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /><line x1='5' y1='3' x2='5' y2='7' style='stroke:white;stroke-width:1' /></svg>"></div>
   <div id="ZoomOut" data-translate="ZoomOut" title="Suurenda v&auml;lja" onclick="onClick('none');map.getView().animate({zoom: (map.getView().getZoom()-1), duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:1em; left:3.5em; height:2.2em; width:2.2em;"><img style="width:2.2em; height:2.2em" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><line x1='3' y1='5' x2='7' y2='5' style='stroke:white;stroke-width:1' /></svg>"></div>
   <div id="mapRotationDiv" data-translate="North" title="P&otilde;hjasuund" onclick="onClick('none');map.getView().animate({rotation: 0, duration: 250});" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; top:6em; left:1em; height:2.2em; width:2.2em;"><img id="mapRotationImage" style="width:2.2em; height:2.2em; transform: rotate(0rad);" src="data:image/svg+xml;utf8,<svg width='10' height='10' version='1.1' xmlns='http://www.w3.org/2000/svg'><polygon points='4,5 5,3 6,5' style='fill:white;stroke:white;stroke-width:0.3' /><polygon points='4,5 5,7 6,5' style='fill:none;stroke:white;stroke-width:0.3' /><circle cx='5' cy='5' r='3.5' stroke='white' stroke-width='0.3' fill='none' /></svg>"></div>
@@ -489,8 +488,8 @@
     </div>
   </div>
   <div style="position:absolute; top:1em; right:19.5em; display: flex; align-items: center;">
-    <button onclick="switchLanguage('estonian')" class="buttonno" style="width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">EST</button>
-    <button onclick="switchLanguage('english')" class="buttonno" style="margin-left: 0.6em; width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">ENG</button>
+    <button id="estbutton" onclick="switchLanguage('estonian')" class="buttonno" style="width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">EST</button>
+    <button id="engbutton" onclick="switchLanguage('english')" class="buttonno" style="margin-left: 0.6em; width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">ENG</button>
   </div>
 
 
@@ -500,6 +499,33 @@
   <script>
 let currentLanguage = 'estonian';
 var inAadress = new InAadress({"container":"InAadressDiv","mode":3,"ihist":"1993","appartment":0,"lang":"et"});
+setLanguageButton();
+function refreshInAadress() {
+    // Select the container div
+    var containerDiv = document.getElementById("InAadressDiv");
+
+    // Clear the container's inner HTML to remove the previous instance
+    containerDiv.innerHTML = '';
+
+    // Depending on the current language, initialize the new InAadress instance
+    if (currentLanguage === 'estonian') {
+        var inAadress = new InAadress({
+            "container": "InAadressDiv",
+            "mode": 3,
+            "ihist": "1993",
+            "appartment": 0,
+            "lang": "et"
+        });
+    } else {
+        var inAadress = new InAadress({
+            "container": "InAadressDiv",
+            "mode": 3,
+            "ihist": "1993",
+            "appartment": 0,
+            "lang": "en"
+        });
+    }
+}
 document.addEventListener('addressSelected', function(e){
   map.getView().animate({center: [e.detail[0].y,e.detail[0].x], resolution: 0.5, duration: 250});
 });
@@ -759,7 +785,12 @@ if (sensedate[1]!='0000-00-00') {
 
 if (sensedate[0]!='0000-00-00') {
   document.title=sensedate[0] + ' ' + Sensors[Sensor[0]] + ' ' + (!layerMSImode[0] ? ProductsWMS[Product[0]] : 'MSI');
+  if (currentLanguage === 'estonian'){
   document.getElementById('notice').innerHTML="Maa-amet &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[0].substring(0,4);
+  }
+  else{
+  document.getElementById('notice').innerHTML="Estonian Land Board &nbsp; / &nbsp; ESTHub &nbsp; / &nbsp; Contains modified Copernicus Sentinel data " + sensedate[0].substring(0,4);
+  }
 }
 if (currentLanguage === 'estonian'){
 document.getElementById('product').innerHTML=Sensors[Sensor[0]] + ' &nbsp; ' + (!layerMSImode[0] ? ProductsTXT[Product[0]] : 'Kujundatud');}
@@ -2240,6 +2271,8 @@ function switchLanguage(language) {
     HelpMeText(); // Call your HelpMeText function to update any other text elements
     createProductListDiv();
     SenseDate();
+    refreshInAadress();
+    setLanguageButton();
     fetch('http://localhost:63342/satiladu/translations.json')
         .then(response => response.json())
         .then(data => {
@@ -2269,13 +2302,12 @@ function switchLanguage(language) {
 
                 const placeholderElement = element.querySelector('input');
                 if (placeholderElement) {
-                    console.log('leidsin')
                     // Assuming 'input' is the translation key for the placeholder
                     const placeholderTranslationValue = translations[language][translationKey];
                     inputElement.setAttribute('placeholder', placeholderTranslationValue);
                 }
                 if (element.classList.contains('inads-input')) {
-                  refreshDivContent(translationValue)
+
                 }
 
 
@@ -2314,13 +2346,17 @@ function switchLanguage(language) {
 }
 
 function refreshDivContent(translationValue) {
-    const divElement = document.querySelector('.inads-input-div');
-    const newDivElement = divElement.cloneNode(true);
-    const inputElement = newDivElement.querySelector('.inads-input');
+    // Select the input element directly
+    const inputElement = document.querySelector('.inads-input-div .inads-input');
+
+    // Check if the input element exists
     if (inputElement) {
+        // Update the placeholder attribute
         inputElement.setAttribute('placeholder', translationValue);
+    } else {
+        // Log an error or handle the case where the element is not found
+        console.error('Input element not found');
     }
-    divElement.parentNode.replaceChild(newDivElement, divElement);
 }
 
 function translateTableElement(element, translations, language) {
@@ -2348,6 +2384,18 @@ function translateTableElement(element, translations, language) {
 
     // Translate the text content directly for the table cell
     element.textContent = translationValue;
+}
+
+function setLanguageButton(){
+  if (currentLanguage == 'estonian') {
+      document.getElementById('estbutton').className="buttonnoy";
+      document.getElementById('engbutton').className="buttonno";
+    }
+
+    else{
+      document.getElementById('engbutton').className="buttonnoy";
+      document.getElementById('estbutton').className="buttonno";
+    }
 }
 
 
