@@ -87,7 +87,9 @@
     "near-infrared" : "lähi-infrapuna",
     "generalLight" : "üldine heledus",
     "tableInfo" : "\nVali menüüdest pildi jaoks spektrikanalid ja \nmuuda liuguritega kanalite heledusi.\n\nPildi jagamiseks kopeeri aadressriba sisu.",
-    "input": "Otsi aadressi..."
+    "input": "Otsi aadressi...",
+    "CmsDiv": "Copernicus Land Monitoring Service'i peegeldatud tooted",
+    "ClmsDiv": "Copernicus Land Monitoring Service'i peegeldatud tooted"
   },
   "english": {
     "ZoomIn": "Zoom in",
@@ -177,6 +179,8 @@
     "near-infrared" : "near-infrared",
     "generalLight" : "general brightness",
     "tableInfo": "\nChoose spectral channels for the image from the menus and \nadjust the brightness of the channels with the sliders. \n\nTo share the image, copy the content of the address bar.",
-    "input": "Search an address..."
+    "input": "Search an address...",
+    "CmsDiv": "Copernicus Land Monitoring Service's reflected products",
+    "ClmsDiv": "Copernicus Land Monitoring Service'i reflected products"
   }
 }
