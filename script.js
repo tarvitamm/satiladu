@@ -1594,7 +1594,6 @@ function setOrto(nr) {
     Orto=nr;
     layerOrto.getSource().setUrl(OrtoUrl[''+Orto+'']);
     layerOrto.getSource().updateParams({"LAYERS": OrtoWMS[''+Orto+'']});
-    console.log(layerOrto.getSource().getUrl())
     layerOrto.getSource().clear();
     layerOrto.setVisible(true);
   }
@@ -1931,7 +1930,7 @@ else_legend_titles = ['', '- mesilad'];
 
 designed_legend_urls = ['','','https://teenus.maaamet.ee/ows/wms-sentinel-2-ndvi?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=sentinel_2_ndvi_two&format=image/png&STYLE=default','','https://teenus.maaamet.ee/ows/wms-sentinel-2-ndpi?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=sentinel_2_ndpi&format=image/png&STYLE=default','','','','','','','','','']
 designed_legend_titles = ['','','','','','','','','','','','','','']
-    function showLegendTableBorders(urls,titles, bottom, left, index, type) {
+    function showLegendTable(urls,titles, bottom, left, index, type) {
     let legendName = 'legendTable' + type + "-" + index;
     let tableName = 'tableContainer' + type + "-" + index;;
     const tableContainer = document.getElementById(tableName);
@@ -1980,7 +1979,7 @@ document.addEventListener('DOMContentLoaded', () => {
     legendButtons.forEach((button) => {
         button.addEventListener('mouseenter', (event) => {
             const buttonId = event.target.id.slice(-1);
-            showLegendTableBorders(borders_legend_urls, borders_legend_titles, '10em', '12em', buttonId, 'Borders');
+            showLegendTable(borders_legend_urls, borders_legend_titles, '10em', '12em', buttonId, 'Borders');
         });
         button.addEventListener('mouseleave', (event) => {
             const buttonId = event.target.id.slice(-1);
@@ -1996,7 +1995,7 @@ document.addEventListener('DOMContentLoaded', () => {
     legendButtons.forEach((button) => {
         button.addEventListener('mouseenter', (event) => {
             const buttonId = event.target.id.slice(-1);
-            showLegendTableBorders(orto_legend_urls, orto_legend_titles, '10em', '12em', buttonId, 'Orto');
+            showLegendTable(orto_legend_urls, orto_legend_titles, '10em', '12em', buttonId, 'Orto');
         });
         button.addEventListener('mouseleave', (event) => {
             const buttonId = event.target.id.slice(-1);
@@ -2012,7 +2011,7 @@ document.addEventListener('DOMContentLoaded', () => {
     legendButtons.forEach((button) => {
         button.addEventListener('mouseenter', (event) => {
             const buttonId = event.target.id.slice(-1);
-            showLegendTableBorders(else_legend_urls, else_legend_titles, '10em', '12em', buttonId, 'Else');
+            showLegendTable(else_legend_urls, else_legend_titles, '10em', '12em', buttonId, 'Else');
         });
         button.addEventListener('mouseleave', (event) => {
             const buttonId = event.target.id.slice(-1);
@@ -2028,7 +2027,7 @@ document.addEventListener('DOMContentLoaded', () => {
     legendButtons.forEach((button) => {
         button.addEventListener('mouseenter', (event) => {
             const buttonId = event.target.id.slice(-1);
-            showLegendTableBorders(designed_legend_urls, designed_legend_titles, '10em', '12em', buttonId, 'Designed');
+            showLegendTable(designed_legend_urls, designed_legend_titles, '10em', '12em', buttonId, 'Designed');
         });
         button.addEventListener('mouseleave', (event) => {
             const buttonId = event.target.id.slice(-1);
@@ -2040,5 +2039,105 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+function addLegend(urls, titles, index, legendTable) {
+    fetch(urls[index])
+        .then(response => response.blob())
+        .then(blob => {
+            const imageUrl = URL.createObjectURL(blob);
+            // Append new row to the existing table content
+            const rowContent = `
+                <tr>
+                    <td style="color: black; display: flex; align-items: center; font-size: 14px;">
+                        <img src="${imageUrl}" alt="Legend Image" style="margin-right: 8px;"> ${titles[index]}
+                    </td>
+                </tr>
+            `;
+            legendTable.innerHTML += rowContent;
+        })
+        .catch(error => console.error('Error fetching legend:', error));
+}
+
+
+function generateLegendTable() {
+    const currentUrl = window.location.href;
+    const queryString = window.location.search;
+    const cleanQueryString = queryString.substring(1);
+    const queryParamsArray = cleanQueryString.split('&');
+    const tableContainer = document.getElementById(tableContainerAllLegends);
+    const legendTable = document.getElementById(legendTableAllLegends);
+
+    legendTableAllLegends.innerHTML = '';
+    let tableContent = `
+        <tr><th colspan="1" style="color: black;">Legend</th></tr>
+    `;
+
+    legendTableAllLegends.innerHTML += tableContent;
+
+    queryParamsArray.forEach(param => {
+        const key_value = param.split('=');
+        if (key_value[0] == 'filter'){
+            let index = -1
+            for(let k=0; k <= ProductsWMS.length; k++){
+                if (ProductsWMS[k].toLowerCase() == key_value[1]) {
+                    index = k;
+                    break;
+                }
+            }
+
+            if (designed_legend_urls[index] != ''){
+            console.log(key_value);
+            console.log(index);
+            addLegend(designed_legend_urls,designed_legend_titles,index, legendTableAllLegends);
+            }
+        }
+        else if (key_value[0] == 'borders'){
+            console.log(key_value)
+            if (borders_legend_urls[key_value[1]] != ''){
+            console.log(key_value);
+            addLegend(borders_legend_urls,borders_legend_titles,key_value[1],legendTableAllLegends);
+            }
+        }
+        else if (key_value[0] == 'orto'){
+            console.log(key_value)
+            if (borders_legend_urls[key_value[1]] != ''){
+            console.log(key_value);
+            addLegend(orto_legend_urls,orto_legend_titles,key_value[1],legendTableAllLegends);
+            }
+        }
+        else if (key_value[0] == 'mask'){
+            console.log(key_value)
+            if (mask_legend_urls[key_value[1]] != '')
+            addLegend(mask_legend_urls,mask_legend_titles,key_value[1], legendTableAllLegends);
+        }
+        else if (key_value[0] == 'deadtrees'){
+            console.log(key_value)
+            addLegend(else_legend_urls,else_legend_titles,0, legendTableAllLegends);
+        }
+        else if (key_value[0] == 'points'){
+            console.log(key_value)
+            addLegend(else_legend_urls,else_legend_titles,1, legendTableAllLegends);
+        }
+        });
+
+    }
+
+document.addEventListener('DOMContentLoaded', generateLegendTable);
+
+document.addEventListener('click', function(event) {
+    generateLegendTable();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const legendButton = document.getElementById('legendButtonAllLegends');
+    const tableContainer = document.getElementById('tableContainerAllLegends');
+
+    legendButton.addEventListener('mouseenter', (event) => {
+        tableContainer.style.display = 'block';
+    });
+
+    legendButton.addEventListener('mouseleave', (event) => {
+        tableContainer.style.display = 'none';
+    });
+});
 
 
