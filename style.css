@@ -1,0 +1,261 @@
+    html, body, #map {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial,Helvetica;
+      font-size: 1em;
+      color: white;
+      background-color: #111;
+    }
+    h1 {
+      font-family: Arial,Helvetica;
+      font-size: 1em;
+      font-weight: normal;
+      color: white;
+      margin: 0.5em;
+    }
+    .buttonno {
+      background: rgba(48,119,77,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonno:hover {
+      background: rgba(81,152,98,0.8);
+    }
+    .buttonnon {
+      background: rgba(48,119,77,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnog {
+      background: rgba(50,50,50,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnog:hover {
+      background: rgba(100,100,100,0.8);
+    }
+    .buttonnoy {
+      background: rgba(150,150,0,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnoy:hover {
+      background: rgba(200,200,0,0.8);
+    }
+    .buttonnob {
+      background: rgba(48,77,119,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .buttonnob:hover {
+      background: rgba(81,98,152,0.8);
+    }
+    .buttonnogn {
+      background: rgba(50,50,50,0.8);
+      border-radius:0.3em;
+      border-style: none;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-l {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-i {
+      position: relative;
+      background: #C8C800;
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 0.5em solid transparent;
+      border-right-color: #bd0055;
+      border-left: 0;
+      margin-top: -0.5em;
+      margin-left: -0.5em;
+    }
+    .speech-bubble-g-l {
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: -2.6em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-s-l {
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      content: '';
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-s-l:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: 3.2em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-r {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-r:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 0.5em solid transparent;
+      border-left-color: #bd0055;
+      border-right: 0;
+      margin-top: -0.5em;
+      margin-right: -0.5em;
+    }
+    .speech-bubble-b {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-b:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-top-color: #bd0055;
+      border-bottom: 0;
+      margin-left: -0.375em;
+      margin-bottom: -0.375em;
+    }
+    .speech-bubble-t {
+      position: relative;
+      background: #bd0055;
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-t:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: #bd0055;
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+    .speech-bubble-g-t-product {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-product:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: rgba(48,119,77,0.8);
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+    .speech-bubble-g-t-etc {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-etc:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border: 1.1em solid transparent;
+      border-right-color: rgba(48,119,77,0.8);
+      border-left: 0;
+      margin-top: 0.3em;
+      margin-left: -1.1em;
+    }
+    .speech-bubble-g-t-lut {
+      content: '';
+      position: relative;
+      background: rgba(48,119,77,0.8);
+      border-radius: .4em;
+      box-shadow: 0.2em 0.2em 0.4em rgba(0,0,0,0.4);
+    }
+    .speech-bubble-g-t-lut:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 45%;
+      width: 0;
+      height: 0;
+      border: 0.375em solid transparent;
+      border-bottom-color: rgba(48,119,77,0.8);
+      border-top: 0;
+      margin-left: -0.375em;
+      margin-top: -0.375em;
+    }
+
+
+
+    .scalebar {
+    }
+
+
+    #legendButton:hover + #tableContainer {
+        display: block;
+    }
+    #tableContainer {
+        display: none;
+    }
