@@ -1,5 +1,8 @@
 setLanguageButton();
 function switchLanguage(language) {
+    const legendInfoBox = document.getElementById('D-LegendInfo');
+    legendInfoBox.style.visibility = 'hidden';
+    isPopupVisible = false;
     currentLanguage = language;
     HelpMeText(); // Call your HelpMeText function to update any other text elements
     createProductListDiv();

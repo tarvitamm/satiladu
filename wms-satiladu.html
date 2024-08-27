@@ -52,10 +52,10 @@
 
   <div id="EtcDiv" data-translate="Else" title="Muu" onclick="onClick('D-Etc');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:7.9em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='5,15 5,20 10,20 10,15' style='fill:white;stroke:none;stroke-width:1' /><polygon points='16,15 16,20 21,20 21,15' style='fill:white;stroke:none;stroke-width:1' /><polygon points='28,15 28,20 33,20 33,15' style='fill:white;stroke:none;stroke-width:1' /><text x='4' y='40' fill='white' class='txt'>Muu</text></svg>"></div>
 
-  <div id="CmsDiv" title="Copernicus Marine Service'i peegeldatud tooted" onclick="onClick('D-Cms');" class="buttonno" style="z-index: 99999999; visibility:visible; cursor:pointer; position:absolute; bottom:21.1em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2.5em; height:2.5em;" src="https://geoportaal.maaamet.ee/docs/legend/cms_logo.png"></div>
-  <div class="speech-bubble-g-t-cms" id="D-Clms" style="position:absolute; visibility:hidden; bottom:21em; left:5.1em;">
-    <div id="clms-0" title="Proov 1" onclick="setClms(0)" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id>Proov 1</span></td></tr></table></div>
-  </div>
+<!--    <div id="CmsDiv" title="Copernicus Marine Service'i peegeldatud tooted" onclick="onClick('D-Cms');" class="buttonno" style="z-index: 99999999; visibility:visible; cursor:pointer; position:absolute; bottom:21.1em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2.5em; height:2.5em;" src="https://geoportaal.maaamet.ee/docs/legend/cms_logo.png"></div>-->
+<!--  <div class="speech-bubble-g-t-cms" id="D-Clms" style="position:absolute; visibility:hidden; bottom:21em; left:5.1em;">-->
+<!--    <div id="clms-0" title="Proov 1" onclick="setClms(0)" class="buttonno" style="z-index: 99999900; cursor:pointer; margin:0.5em; height:2.2em;"><table width="100%" height="100%" border="0" style="padding-left:0.5em; padding-right:0.5em;"><tr><td nowrap valign="center" align="center"><span id>Proov 1</span></td></tr></table></div>-->
+<!--  </div>-->
   <div slider id="slider-distance" style="visibility:hidden; position:absolute; top:0em; right:25em;">
     <div>
       <div inverse-left style="width:70%;"></div>
@@ -91,7 +91,7 @@
            onchange="if (Cms>-1) changeCms((document.getElementById('slidetInputValMin').value-50),(document.getElementById('slidetInputValMax').value-50))" />
   </div>
 
-  <div id="ClmsDiv" title="Copernicus Land Monitoring Service'i peegeldatud tooted" onclick="onClick('D-Clms');" class="buttonno" style="z-index: 99999999; visibility:visible; cursor:pointer; position:absolute; bottom:24.4em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2.5em; height:2.5em;" src="https://geoportaal.maaamet.ee/docs/legend/clmslogo.png"></div>
+  <!-- <div id="ClmsDiv" title="Copernicus Land Monitoring Service'i peegeldatud tooted" onclick="onClick('D-Clms');" class="buttonno" style="z-index: 99999999; visibility:visible; cursor:pointer; position:absolute; bottom:24.4em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2.5em; height:2.5em;" src="https://geoportaal.maaamet.ee/docs/legend/clmslogo.png"></div>-->
 
 
   <div id="OrtoDiv" data-translate="Orto" title="Orto" onclick="onClick('D-Orto');" class="buttonno" style="z-index: 99999900; visibility:visible; cursor:pointer; position:absolute; bottom:17.8em; left:1em; height:3em; width:3em; text-align: center; display: flex; justify-content: center; align-items: center;"><img style="width:2em; height:2em;" src="data:image/svg+xml;utf8,<svg width='40' height='40' version='1.1' xmlns='http://www.w3.org/2000/svg'><style>.txt { font-family: Arial,Helvetica; font-size:0.9em; }</style><polygon points='10,0 30,0 30,20' style='fill:white;stroke:none;stroke-width:1' /><line x1='10' y1='0' x2='10' y2='20' style='stroke:white;stroke-width:1' /><line x1='10' y1='20' x2='30' y2='20' style='stroke:white;stroke-width:1' /><text x='4' y='40' fill='white' class='txt'>Orto</text></svg>"></div>
@@ -276,8 +276,8 @@
     </div>
   </div>
   <div style="position:absolute; top:1em; right:19.5em; display: flex; align-items: center;">
-    <button id="estbutton" onclick="switchLanguage('estonian')" class="buttonno" style="width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">EST</button>
-    <button id="engbutton" onclick="switchLanguage('english')" class="buttonno" style="margin-left: 0.6em; width: 2.64em; height: 2.64em; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">ENG</button>
+    <button id="estbutton" onclick="switchLanguage('estonian')" class="buttonno" style="width: 2.64em; height: 2.64em; z-index: 99999900; visibility:visible; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">EST</button>
+    <button id="engbutton" onclick="switchLanguage('english')" class="buttonno" style="margin-left: 0.6em; width: 2.64em; height: 2.64em;z-index: 99999900; visibility:visible; cursor: pointer; border-radius: 0.3em; border-style: none; color: white; display: flex; justify-content: center; align-items: center;">ENG</button>
   </div>
 
  <div style="position: absolute; top: 1em; right: 25em; display: flex; align-items: center;">
@@ -287,13 +287,14 @@
 </div>
 
 <div id="tableContainerAllLegends" class="buttonno" style="display:none; position:absolute; top:1em; right:28em; background-color:white; border:2px solid white; padding:0em;">
-    <table id="legendTableAllLegends" border="1" class='buttonno' style="width: 200px; color: white;"></table>
+    <table id="legendTableAllLegends" border="1" class='buttonno' style="width: 300px; color: white;"></table>
 </div>
 
   <div id="D-MessageWindow" style="visibility:hidden; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="1"><tr><td id="MessageText" style="color:black; padding:2em" align="center" valign="center">&nbsp;</td></tr></table></div>
   <div id="D-HelpWindow" style="visibility:hidden; overflow:auto; z-index: 99999990; position:absolute; top:50%; left:50%; max-height:90%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="100%" height="100%" border="0"><tr><td id="HelpText" style="color:black; padding:2em" align="center" valign="center"></td></tr></table></div>
-  <div id="D-LegendInfo" style="visibility:hidden; width:40%; overflow:auto; z-index: 99999990; position:absolute; top:50%; left:50%; max-height:90%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="00%" height="100%" border="0"><tr><td id="LegendInfo" style="color:black; padding:2em" align="left" valign="left"></td></tr></table></div>
+  <div id="D-LegendInfo" style="visibility:hidden; width:40%; overflow:auto; z-index: 99999990; position:absolute; top:50%; left:50%; max-height:90%; transform:translate(-50%,-50%); box-shadow: 0em 0em 2em rgba(0,0,0,1); background: rgba(255,2559,255,0.9);"><table width="00%" height="100%" border="0"><tr><td id="LegendInfo" style="color:black; padding:2em" align="justify" valign="left"></td></tr></table></div>
   <script src="script.js"></script>
 <script src="translation.js"></script>
+<script src="legends.js"></script>
 </body>
 </html>

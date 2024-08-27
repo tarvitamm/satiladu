@@ -446,6 +446,20 @@ var layerOrto = new ol.layer.Tile({
   })
 });
 
+var wmsLayer = new ol.layer.Tile({
+  source: new ol.source.TileWMS({
+    url: 'https://ixgsmap2.ymparisto.fi/geoserver/eo/ows?',
+    params: {
+      'LAYERS': 'TARKKA_baltic_sea_water_area',
+      'TILED': true,
+      'FORMAT': 'image/png',
+      'TRANSPARENT': true
+    },
+    serverType: 'geoserver'
+  }),
+  opacity: 0.6 // Adjust opacity as needed
+});
+
 var layerDeadtrees = new ol.layer.Tile({
   preload: 0,
   extent: extent,
@@ -1037,6 +1051,8 @@ function setsensdateexact(newdate) {
       layerMSI[witchActive].getSource().updateParams({"date": sensedate[witchActive]});
       layerMSI[witchActive].getSource().clear();
       currentDate = newdate;
+      console.log(currentDate);
+      generateLegendTable()
       break;
     }
   }
@@ -1123,7 +1139,9 @@ function changePictures() {
   createProductListDiv();
 
   window.dispatchEvent(new Event('resize'));
-
+  currentDate = sensedate[witchActive];
+  console.log(sensedate[witchActive]);
+  generateLegendTable();
 }
 
 
@@ -1243,6 +1261,7 @@ function minimap(minimapday,pn) {
 
     }, 250);
   }
+  generateLegendTable();
 }
 
 
@@ -1483,29 +1502,33 @@ fetch(CmsWMTS[nr])
     CmsLayerGroup.getLayers().push(CmsLayer[nr]);
   });
 }
-let number2 = -1;
-function setClms(nr) {
-  number2 = nr;
-  if (nr==-1 || nr==Clms) {
-    ClmsLayerGroup.setVisible(false);
-    CLms=-1;
-    document.getElementById('clms-0').className="buttonno";
-  } else {
-    ClmsLayerGroup.setVisible(true);
-    Clms = -1;
-
-    document.getElementById('clms-0').className="buttonnoy";
-    if (ClmsLayer[nr] === undefined) loadClms(nr);}
-
-
-  onMoveEnd(false);
-}
 var ClmsWMS = ['https://geoserver2.ymparisto.fi/geoserver/eo/ows?service=wms&version=1.3.0&request=GetCapabilities'];
 var ClmsMatrixSet = ['EPSG:3067'];
 var ClmsParser = [new ol.format.WMSCapabilities()];
 var ClmsOptions = [undefined, undefined];
 var ClmsLayer = [undefined, undefined];
 var Clms=-1;
+let number2 = -1;
+function setClms(nr) {
+  number2 = nr;
+  console.log('jõudsin siiani');
+  if (nr==-1 || nr==Clms) {
+    ClmsLayerGroup.setVisible(false);
+    Clms=-1;
+    document.getElementById('clms-0').className="buttonno";
+    console.log('false');
+  } else {
+    ClmsLayerGroup.setVisible(true);
+    Clms = nr;
+    console.log('true');
+    document.getElementById('clms-0').className="buttonnoy";
+    if (ClmsLayer[nr] === undefined) loadClms(nr);
+    }
+
+
+  onMoveEnd(false);
+}
+
 function loadClms(nr) {
   fetch(ClmsWMS[nr])
     .then(function (response) {
@@ -1924,361 +1947,8 @@ function refreshDivContent(translationValue) {
 }
 
 
-//['katastriuksused','kaitsealad','kaitsemetsad','metsateatised','pollumassiivid'];
-borders_legend_urls = ['', '','','','https://teenus.maaamet.ee/ows/wms-satiladu?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=kaitsemetsad&format=image/png&STYLE=default', '', '', '', '', '']
-borders_alternate_legends = ["<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">", "<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">","<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">", "<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='red'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='red' stroke-width='2' fill='rgba(255, 0, 0, 0.5)'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">", '', "<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">","<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">", "<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='None'/></svg>\" alt=\"Legend Image\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">", '', '']
-borders_legend_titles = ['- katastripiir','- riigimetsa piir','- erametsa piir','- kaitsealade piir','- kaitsemetsa piir','- metsateatiste piir', '- põldude piir', '- kõrgusjoon', '', '']
-borders_titles = ['Kataster', 'Riigimets', 'Eramets', 'Kaitsealad', 'Kaitsemets', 'Teatised', 'Põld', 'Kõrgused', 'Põhikaart', 'Mullastik']
-borders_help_text = ['<strong style=font-size:20px;>Katastrikaart</strong><br><br>Kaardikiht annab kõige ajakohasema seisu maakatastris registreeritud katastriüksuste üldandmete kohta. Katastripiirid kaardirakenduses on informatiivsed<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Riigimetsa kaart</strong><br><br>Musta joonega piiratud alad on riigi omandis. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Erametsa kaart</strong><br><br> Erametsa kaardil paiknevad musta joonega piiratud alad on eraomandis olevad metsad.  <br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Kaitsealad</strong><br><br>Eestis on kokku 859 kaitseala kogupindalaga 831 273 ha. Punase joonega piiritletud alad on Eestis määratletud kaitsealad<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://kaitsealad.ee/et<br>', '<strong style=font-size:20px;>Kaitsemets</strong><br><br>Kaitsemetsa asukoht võib olla kaitsealal, kaitstava looduse üksikobjekti ümber ja ranna piiranguvööndis ning hoiualal. Kaitsemetsade näiteks saab tuua puhkealad, metsapargid ja parkmetsad, linnade rohelise vööndi metsad ja rohealade puistud, maanteede ja raudteede äärsed metsad, kõrge saagikusega marja- ja seenemetsad, mereäärsed rannametsad, mälestiste kaitsevööndite metsad ning allikalised alad.<br>Antud kaardikihil on kaitsemets helesinise joonega piiritletud aladel<br><br><strong style=font-size:20px;>Allikas:</strong><br>https://kah-alad.ee/moisted/kaitsemets/<br>', '<strong style=font-size:20px;>Teatiste kaart</strong><br><br>Kaardil on musta joonega piiritletud alad teatised.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Põldude kaart</strong><br><br> Kaardil on musta joonega piiritletud alad põllud.<<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Samakõrgusjoonte kaart</strong><br><br>Joon, mis ühendab samal kõrgusel üle merepinna asuvad punktid joonena. Reeglina kasutatakse kaardil ühesuguse kõrguserinevusega samakõrgusjooni, nt 2 või 5 meetrise vahega. Tulemusena näitab joonte omavaheline horisontaalne kaugus nõlva kallet.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://wiki.estgis.ee/index.php?title=Samak%C3%B5rgusjoon<br>', '<strong style=font-size:20px;>Eesti põhikaart</strong><br><br>Eesti põhikaart 1:10 000 on digitaalne suuremõõtkavaline topograafiline kaart, mida toodetakse Eesti topograafia andmekogu (ETAK) andmetest.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Mullastik</strong><br><br><strong>Tz</strong> Maetud muld<br> <strong>Kh</strong> Paepealne muld<br> <strong>Tzg</strong> Gleistunud maetud muld<br> <strong>Kr</strong> Koreserikas rähkmuld<br> <strong>Gor</strong> Koreserikas leostunud gleimuld<br> <strong>K</strong> Rähkmuld<br> <strong>Go</strong> Leostunud gleimuld<br> <strong>Kk</strong> Klibumuld<br> <strong>GI</strong> Leetjas gleimuld<br> <strong>Kor</strong> Koreserikas leostunud muld<br> <strong>LPG</strong> Kahkjas leetunud gleimuld<br> <strong>Ko</strong> Leostunud muld<br> <strong>LkG</strong> Leetunud gleimuld<br> <strong>KI</strong> Leetjas muld<br> <strong>LG</strong> Leede-gleimuld<br> <strong>Gh1</strong> Paepealne turvastunud muld<br> <strong>Go1</strong> Küllastunud turvastunud muld<br> <strong>GI1</strong> Küllastumata turvastunud muld<br> <strong>LG1</strong> Leede-turvastunud muld<br> <strong>M</strong> Madalsoomuld<br> <strong>S</strong> Siirdesoomuld<br> <strong>R</strong> Rabamuld<br> <strong>E2k</strong> Keskmiselt erodeeritud rähkmuld<br> <strong>E2o</strong> Keskmiselt erodeeritud leostunud ja leetjas muld<br> <strong>E2I</strong> Keskmiselt erodeeritud kahkjas leetunud ja leetunud muld<br> <strong>E3k</strong> Tugevasti erodeeritud rähkmuld<br> <strong>E3o</strong> Tugevasti erodeeritud leostunud ja leetjas muld<br> <strong>E3I</strong> Tugevasti erodeeritud kahkjas leetunud ja leetunud muld<br> <strong>D</strong> Deluviaalmuld<br> <strong>Dg</strong> Gleistunud deluviaalmuld<br> <strong>DG</strong> Deluviaal-gleimuld<br> <strong>Ag</strong> Gleistunud lammimuld<br> <strong>AG</strong> Lammi-gleimuld<br> <strong>AG1</strong> Lammi-turvastunud muld<br> <strong>AM</strong> Lammi-madalsoomuld<br> <strong>Ar</strong> Sooldunud primitiivne muld<br> <strong>ArG</strong> Sooldunud gleimuld<br> <strong>ArG1</strong> Sooldunud turvastunud muld<br> <strong>Arv</strong> Sooldunud veealune muld<br> <strong>Gr</strong> Ranniku - gleimuld<br> <strong>Gr1</strong> Ranniku - turvastunud muld<br> <strong>Mr</strong> Ranniku - madalsoomuld<br> <strong>Av</strong> Veealune muld<br> <strong>TzG</strong> Maetud gleimuld<br> <strong>TzM</strong> Maetud madalsoomuld<br> <strong>Tu</strong> Puistangumuld<br> <strong>Tug</strong> Gleistunud puistangumuld<br> <strong>TuG</strong> Puistangu gleimuld<br> <strong>TuM</strong> Puistangu madalsoomuld<br> <strong>Pu</strong> Puistangupinnas<br> <strong>Pug</strong> Gleistunud puistangupinnas<br> <strong>PuG</strong> Glei-puistangupinnas<br> <strong>Pp</strong> Paljandpinnas<br> <strong>Ppg</strong> Gleistunud paljandpinnas<br> <strong>PpG</strong> Glei-paljandpinnas<br> <strong>C</strong> Tehispinnas<br> <strong>Ty</strong> Segatud muld<br> <strong>Tyg</strong> Gleistunud segatud muld<br> <strong>TyG</strong> Segatud gleimuld<br> <strong>TyM</strong> Segatud madalsoomuld<br> <strong>L</strong> Primitiivne leedemuld (liivmuld)<br> <strong>LI</strong> Nõrgalt leetunud leedemuld<br> <strong>LII</strong> Keskmiselt leetunud leedemuld<br> <strong>LIII</strong> Tugevasti leetunud leedemuld<br> <strong>Ls</strong> Sekundaarne leedemuld<br> <strong>Khg</strong> Gleistunud paepealne muld<br> <strong>Krg</strong> Gleistunud koreserikas rähkmuld<br> <strong>Kg</strong> Gleistunud rähkmuld<br> <strong>Kkg</strong> Gleistunud klibumuld<br> <strong>Korg</strong> Gleistunud koreserikas leostunud muld<br> <strong>Kog</strong> Gleistunud leostunud muld<br> <strong>KIg</strong> Gleistunud leetjas muld<br> <strong>LPg</strong> Gleistunud kahkjas leetunud muld<br> <strong>LkIg</strong> Gleistunud nõrgalt leetunud muld<br> <strong>LkIIg</strong> Gleistunud keskmiselt leetunud muld<br> <strong>LkIIIg</strong> Gleistunud tugevasti leetunud muld<br> <strong>L(k)Ig</strong> Gleistunud nõrgalt leetunud huumuslik leedemuld<br> <strong>L(k)IIg</strong> Gleistunud keskmiselt leetunud huumuslik leedemuld<br> <strong>L(k)IIIg</strong> Gleistunud tugevasti leetunud huumuslik leedemuld<br> <strong>LIg</strong> Gleistunud nõrgalt leetunud leedemuld<br> <strong>LIIg</strong> Gleistunud keskmiselt leetunud leedemuld<br> <strong>LIIIg</strong> Gleistunud tugevasti leetunud leedemuld<br> <strong>Lsg</strong> Gleistunud sekundaarne leedemul<br> <strong>Gh</strong> Paepealne gleimuld<br><strong>Gkr</strong> Koreserikas rähkne gleimuld<br> <strong>Gk</strong> Rähkne gleimuld<br> <strong>B</strong> Rusukaldemuld<br> <strong>Bg</strong> Gleistunud rusukaldemuld<br> <strong>BG</strong> Rusukalde gleimuld<br> <strong>Tx</strong> Eemaldatud muld<br> <strong>Txg</strong> Gleistunud eemaldatud muld<br> <strong>TxG</strong> Eemaldatud gleimuld<br> <strong>TxM</strong> Eemaldatud madalsoomuld<br> <strong>TxR</strong> Eemaldatud rabamuld<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>'];
-
-//mask_legend_urls = [];
-mask_legend_titles = ['- Ei ole mets', '- Ei ole veekogu', '- Ei ole märgala', '- Ei ole lage', '- Alla 10 m', '- Üle 1 m', '- <10m 2008-20'];
-mask_titles = ['Mets', 'Veekogu', 'Märgala', 'Lage', 'Üle 10 meetri', 'Alla 1 meetri', '>10m 2008-2020'];
-mask_help_text = ['<strong style=font-size:20px;>Mets</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad metsad<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Veekogu</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad veekogud<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Märgala</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad märgalad<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Lagealad</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad lagedad alad<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Üle 10 meetri</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad alad, mille kõrgus on merepinnast üle 10 meetri.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Alla 1 meetri</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad alad, mille kõrgus on merepinnast alla 1 meetri.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>', '<strong style=font-size:20px;>Üle 10 meetri 2008-2020</strong><br><br>Antud kaardikihil on musta värviga kuvatud kõik Eestis asuvad alad, mille kõrgus on merepinnast üle 10 meetri olnud vahemikus 2008-2020.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet<br>'];
-
-
-orto_legend_urls = ['', '', 'https://teenus.maaamet.ee/ows/wms-satiladu-ndvi?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=NDVI_2021_suvi&format=image/png&STYLE=default&WIDTH=40&HEIGHT=40', 'https://teenus.maaamet.ee/ows/wms-chm?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=CHM2018_suvi&format=image/png&STYLE=default', 'https://teenus.maaamet.ee/ows/wms-chm?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=CHM2018_suvi&format=image/png&STYLE=default', 'https://teenus.maaamet.ee/ows/wms-chm?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=CHM2018_suvi&format=image/png&STYLE=default'];
-orto_legend_titles = ['','','','','',''];
-orto_alternate_legends = ['','','','','',''];
-orto_titles = ['Ortofoto', 'Metsanduslik', 'Taimkatte indeks', 'Taimkate 2018-2021', 'Taimkate 2012-2017', 'Taimkate 2008-2011'];
-orto_help_text = ['<strong style=font-size:20px;>Ortofoto</strong><br><br>Eesti topokaardistuse tarbeks toodetud ortofotod on piksli suurusega 20-40 cm ja katavad kogu riigi territooriumi. Tiheasustusega alade ortofotod toodetakse piksli suurusega 10-16 cm. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://geoportaal.maaamet.ee/geoportaal.maaamet.ee/est/ruumiandmed/ortofotod-p99.html <br>', '<strong style=font-size:20px;>Metsanduslik ortofoto</strong><br><br> Eesti topokaardistuse tarbeks toodetud ortofotod on piksli suurusega 20-40 cm ja katavad kogu riigi territooriumi. Tiheasustusega alade ortofotod toodetakse piksli suurusega 10-16 cm. <br><br> Metsanduslikud ortofotod valmivad Maa-ametil aeropildistamise käigus. Leica ADS aerokaamera salvestab lisaks punasele, rohelisele ja sinisele värvikanalile ka lähi-ifrapuna kanalit.  <br><br> Metsanduslike ehk n-ö valevärvi ortofotode pealt on võimalik eristada taimkatteta alasid, okas-, sega- ja lehtpuumetsi, niiskeid alasid jm. CIR pilte kasutatakse metsanduses, põllumajanduses, ülikoolides jne erinevate pindade määramisel, mis eristuvad just eriti hästi valevärvi pildilt. <br><br> <strong style=font-size:20px;>Allikas:</strong ><br>https://geoportaal.maaamet.ee/geoportaal.maaamet.ee/est/ruumiandmed/ortofotod-p99.html <br>', '<strong style=font-size:20px;>Taimkatte indeks</strong><br><br>Arvutuslik taimkatteindeks ehk NDVI on indeks, mille abil on mugav hinnata taimkatte tihedust ja taimetervist. Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust (NIR) ja rohelist valgust (G), neelab aga punast (R). NDVI abil saab hinnata, milline on peegeldunud lähi-infrapunakiirguse ja punase kiirguse erinevus. <br>Kui ala NDVI väärtus on positiivne, siis see paistab pildil rohelisena. Mida kõrgem NDVI väärtus, seda rohelisem ja tihedam on taimkate. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ndvi-p6.html', '<strong style=font-size:20px;>Eesti taimkatte kõrgusmudel (CHM - Canopy Height Model)</strong><br><br>Taimkatte kõrgusmudel (CHM - Canopy Height Model) näitab taimestiku kõrgust maapinnast.<br><br> Andmed katavad kogu Eestit (välja arvatud väikesed piirkonnad kagupiiril).<br>Mudel on jaotatud kõrgusklassidesse, kus alla 1-meetrise väärtusega pikslid on läbipaistvad. Järgnevad kõrgusklassid on: 1-4 m, 4-10 m, 10-20 m, 20-30 m ja üle 30-meetrise väärtusega pikslid. <br>Arvutamisel on eeldatud, et Eestis ei ole üle 50 meetri kõrguseid puid. <br><br> <strong style=font-size:20px;>Allikas:</strong ><br>https://metadata.geoportaal.ee/geonetwork/inspire/api/records/89c5e3e6-ebd4-4154-bdc9-a9106d10e1b7', '<strong style=font-size:20px;>Eesti taimkatte kõrgusmudel (CHM - Canopy Height Model)</strong><br><br>Taimkatte kõrgusmudel (CHM - Canopy Height Model) näitab taimestiku kõrgust maapinnast.<br><br> Andmed katavad kogu Eestit (välja arvatud väikesed piirkonnad kagupiiril).<br>Mudel on jaotatud kõrgusklassidesse, kus alla 1-meetrise väärtusega pikslid on läbipaistvad. Järgnevad kõrgusklassid on: 1-4 m, 4-10 m, 10-20 m, 20-30 m ja üle 30-meetrise väärtusega pikslid. <br>Arvutamisel on eeldatud, et Eestis ei ole üle 50 meetri kõrguseid puid. <br><br> <strong style=font-size:20px;>Allikas:</strong ><br>https://metadata.geoportaal.ee/geonetwork/inspire/api/records/89c5e3e6-ebd4-4154-bdc9-a9106d10e1b7', '<strong style=font-size:20px;>Eesti taimkatte kõrgusmudel (CHM - Canopy Height Model)</strong><br><br>Taimkatte kõrgusmudel (CHM - Canopy Height Model) näitab taimestiku kõrgust maapinnast.<br><br> Andmed katavad kogu Eestit (välja arvatud väikesed piirkonnad kagupiiril).<br>Mudel on jaotatud kõrgusklassidesse, kus alla 1-meetrise väärtusega pikslid on läbipaistvad. Järgnevad kõrgusklassid on: 1-4 m, 4-10 m, 10-20 m, 20-30 m ja üle 30-meetrise väärtusega pikslid. <br>Arvutamisel on eeldatud, et Eestis ei ole üle 50 meetri kõrguseid puid. <br><br> <strong style=font-size:20px;>Allikas:</strong ><br>https://metadata.geoportaal.ee/geonetwork/inspire/api/records/89c5e3e6-ebd4-4154-bdc9-a9106d10e1b7'];
-
-
-else_legend_urls = ['https://teenus.maaamet.ee/ows/ai_tuletised?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=ai_surnud_puud&format=image/png&STYLE=default', ''];
-else_alternate_legends = ['', "<img src=\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='black'/><circle cx='12' cy='12' r='6' fill='white'/></svg>\" alt=\"Circle Icon\" style=\"margin-right: 8px; width: 1.5em; height: 1.5em; object-fit: contain;\"\">"];
-else_legend_titles = ['', '- mesilad'];
-else_titles = ['Surnud puud', 'Mesilad'];
-else_help_text = ['<strong style=font-size:20px;>Surnud puud</strong><br><br> Tehisaruga tuvastatud surnud puude asukohad Eestis.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>Maa-Amet', '<strong style=font-size:20px;>Mesilad</strong><br><br>PRIA’s registreeritud mesilad<br><br> <strong style=font-size:20px;>Allikas:</strong><br>PRIA (Põllumajanduse Registrite ja Informatsiooni Amet)<br>'];
-
-
-designed_legend_urls = ['','','https://teenus.maaamet.ee/ows/wms-sentinel-2-ndvi?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=sentinel_2_ndvi_two&format=image/png&STYLE=default','','https://teenus.maaamet.ee/ows/wms-sentinel-2-ndpi?version=1.1.1&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=sentinel_2_ndpi&format=image/png&STYLE=default','','','','','','','','','']
-designed_legend_titles = ['','','','','','','','','','','','','',''];
-designed_alternate_legends = ['','','','','','','','','','','','','',''];
-designed_titles = ['RGB','NRG','NDVI','NGR','NDPI','PNB','NGP','NDR','PDB','NDN','PDN','NNR','DNP','Kujundatud'];
-designed_help_text = ['<strong style=font-size:20px;>RGB</strong><br><br>Tavapärane ortofoto - RGB tähistab kolme põhivärvi – punane (Red), roheline (Green) ja sinine (Blue) – mille erinevates kombinatsioonides on võimalik kujutada kogu värvispektrit. Iga värvi intensiivsust mõõdetakse skaalal 0 kuni 255, mis võimaldab luua enam kui 16 miljonit erinevat värvitooni.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://geoportaal.maaamet.ee/geoportaal.maaamet.ee/est/ruumiandmed/ortofotod-p99.html','<strong style=font-size:20px;>NRG (NIR-Red-Green)</strong><br><br>Antud valevärvipilti võib nimetada ka talviseks metsanduslikuks pildiks. Siin valevärvipildil kombineeritakse tagasipeegeldunud lähi-infrapunakiirgust (NIR), punast valgust (Red) ja rohelist valgust (Green). Nähtava spektri punasesse kanalisse on seega asetatud lähi-infrapunakiirguse info, rohelisse kanalisse punase nähtava kiirguse info ning sinisesse kanalisse rohelise valgusspektri info. <br><br> Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust ja rohelist valgust. Lähi-infrapunakiirgust peegeldavad taimed kõige intensiivsemalt ning kuna kuvame seda läbi punase kanali, on ka pildi peal taimkate punast värvi. Erksamad punased on lehtpuud, tumedamad aga okaspuud, mis peegeldavad vähem lähi-infrapunakiirgust. Kui lehtpuud sügise hakul enam rohelised ei ole ning oma lehed langetavad, näeme ka satelliidipildil erisust. Okaspuud kui igihaljad puittaimed püsivad satelliidi valevärvipildil kirsipunased, mil raagus puude alad on rohelised. Kui fotosünteesiv taim peegeldab tagasi lähi-infrapunakiirgust, rohelist ja vähesel määral punast valgust, siis raagus või kahjustunud puude korral rohelise ja lähi-infrapunakiirguse tagasipeegeldumine on väga väike või puuduv ning punase valguse tagasipeegeldumise osakaal suurenenud oluliselt. Kuna sellel valevärvipildi kombinatsioonil kuvame punast valgust läbi rohelise kanali, paistavadki raagus või taimkattevaesed alad rohelised. NRG kombinatsiooni puhul tulevad hästi välja ka puude varjud. <br><br>Erksad punased või roosad on ka kõrgema või tihedama taimkattega põllumassiivid ja rohumaad. Taimkatteta mullased massiivid paistavad rohelisena. Muld peegeldab küll lähi-infrapunakiirgust, aga kuna punase valguse osatähtsus on suurem, paistab selline paljas maapind helerohelist värvi. Seetõttu on ka niidetud rohumaad ja turbaväljad NGR valevärvipildil helerohelised. <br><br><strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/nrg-nir-red-green-p5.html<br>','<strong style=font-size:20px;>NDVI</strong><br><br>NDVI on arvutuslik taimkatteindeks, mille abil on mugav hinnata taimkatte tihedust ja taimetervist. <br> Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust (NIR) ja rohelist valgust (G), neelab aga punast (R). <br> NDVI abil saab hinnata, milline on peegeldunud lähi-infrapunakiirguse ja punase kiirguse erinevus järgmise arvutuseeskirja abil: NDVI = (NIR – R) / (NIR + R). <br><br>Kui ala NDVI väärtus on positiivne, siis see paistab pildil rohelisena. Mida kõrgem NDVI väärtus, seda rohelisem ja tihedam on taimkate. <br> Kui taimkate on hõre, siis peegeldub rohkem punast valgust kui lähi-infrapunakiirgust. Kui alale vastav NDVI väärtus on negatiivne, siis vastav ala on pildil punane. Sellistel aladel on taimkate hõre või taimed kannatavad stressi all. <br>Ka pilved peegeldavad rohkem punast valgust kui lähiinfrapunakiirgust, seetõttu on need ka pildi peal punased. Mõned õhemad pilved võivad paista ka kollastena. Tehispinnad on samuti toonis kollasest punaseni. <br> <br><strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ndvi-p6.html<br>','<strong style=font-size:20px;>NGR</strong><br><br>NGR valevärvipildil kombineeritakse tagasipeegeldunud lähi-infrapunakiirgust (NIR), rohelist valgust (Green) ja punast valgust (Red). Nähtava spektri punasesse kanalisse on seega asetatud lähi-infrapunakiirguse info, rohelisse kanalisse rohelise nähtava kiirguse info ning sinisesse kanalisse punase valgusspektri info. <br><br> Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust ja rohelist valgust. Valevärvipildil tähendaks see punase ja rohelise valguse kombineerimist, mis RGB-mudeli korral paistab oranžina. Kuna lehtpuud peegeldavad intensiivsemalt lähi-infrapunakiirgust kui okaspuud, siis neid on värvi järgi lihtne eristada. Lehtmetsad paistavad seetõttu tekstuurse tumeoranžina, okasmetsad on aga tumerohelistena. Seetõttu annab NGR pilt hea ülevaate metsade koosseisust. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ngr-p7.html<br>','<strong style=font-size:20px;>NDPI</strong><br><br>NDPI on arvutuslik veekogude indeks, mille abil on võimalik hinnata taimkatte veesisaldust. See leitakse omavahel võrreldes tagasipeegeldunud lühilainelist infrapunakiirgust (SWIR) tagasipeegeldunud rohelise valgusega (G).<br><br> Kui alalt peegeldub rohkem rohelist valgust kui lühilainelist infrapunakiirgust, siis on indeks negatiivse väärtusega. Kaardil on selline ala sinisest tumesiniseni. Sellist värvi on üldiselt veekogud ja veega küllastunud taimkate. <br> <br> Tuleb arvestada, et kuigi NDPI on üsna efektiivne pinnavee ja veega küllastunud taimkatte tuvastamisel, on selle tuvastus piiratud õhukese maa pealmise pinna kihiga ning tundub olevat kõige valiidsem ajal, mil taimkate on roheline. Lisaks esineb teatud piiranguid seoses märgaladega. <br> Talvisel ajal saab filtri abil hinnata, millised alad on lumikatte all ja millised mitte. Lumised alad on sinised, lumikatteta alad aga kollased. <br> <br>  <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ndpi-p8.html<br>','<strong style=font-size:20px;>PNB</strong><br><br>PNB valevärvipildi peal kombineeritakse arvutuslikku veekogude indeksit (NDPI), tagasipeegeldunud lähi-infrapunakiirgust (NIR) ja sinist valgust.<br><br>Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust, sinist valgust aga oluliselt vähem. Heas seisus taimedel on ka madal NDPI väärtus, mis tähendab, et veesisaldus on neil piisav. Seetõttu on terve taimkattega alad pildil rohelist värvi. Helerohelised on sellised alad, kus klorofülli sisaldus taimedes on suur ja ka veesisaldus piisav. Sellised on näiteks niitmata põllud ja lehtpuud. Okaspuud peegeldavad veidi vähem lähi-infrapunakiirgust võrreldes lehtpuudega. Seetõttu paistavad need pildil pruunikas-rohelisena. <br><br>Niidetud põllud on aga erkroosad. Seda seetõttu, et sellistel aladel paistab välja muld, mille NDPI väärtus on kõrge, kuid lähi-infrapuna ja sinisest spektri piirkonnast peegeldub vähem valgust. Roosa värv tähendab aga seda, et suur panus on ka sinisel värvil. Seda seetõttu, et sinise kanali osatähtsus on sellise filtri korral suurim. Põllud, kus on hõre taimkate, paistavad tumesinistena, kuna taimede vahelt paistab välja ka muld.<br><br>Turbaväljadel on kõrge NDPI väärtus ning nendelt peegeldub vähe sinist valgust ja lähiinfrapunakiirgust. Seetõttu paistavad need punastena. Sama tooni on ka rabad<br><br>Veekogudel on enamjaolt madal NDPI väärtus, samuti neelavad need hästi lähiinfrapunakiirgust. Need peegeldavad vähesel määral sinist valgust, seetõttu on need pildi peal tumesinised. Pilved peegeldavad nii lähiinfrapunakiirgust kui ka sinist valgust, NDPI väärtus on neil madal. Seetõttu on need helesinist värvi. <br><br><strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/pnb-p9.html<br>','<strong style=font-size:20px;>NGP</strong><br><br>NGP valevärvipildi peal kombineeritakse tagasipeegeldunud lähi-infrapunakiirgust (NIR), rohelist valgust ja arvutuslikku veekogude indeksit (NDPI). Taimedes sisalduv klorofüll peegeldab hästi lähi-infrapunakiirgust ja rohelist valgust. Heas seisus taimedel on ka madal NDPI väärtus, mis tähendab, et veesisaldus on neil piisav. Seetõttu on taimkattega alad pildil kollasest oranžini. Tumeoranžid on sellised alad, kus klorofülli sisaldus taimedes on suur ja ka veesisaldus on piisav. Sellised on näiteks niitmata põllud ja lehtpuud. Okaspuud peegeldavad veidi vähem lähi-infrapunakiirgust võrreldes lehtpuudega. Seetõttu paistavad need pildil tumerohelistena. Niidetud põllud on aga helesinised. Seda seetõttu, et sellistel aladel paistab välja muld, mille NDPI väärtus on kõrge. Hõreda taimkattega põldude värv varieerub rohelisest helesiniseni, kuna taimede vahelt paistab välja ka muld. Turbaväljadel on kõrge NDPI väärtus ja nendelt peegeldub vähe rohelist valgust. Seetõttu paistavad need sinistena. Sama tooni on ka rabad. Veekogudel on enamjaolt madal NDPI väärtus, samuti neelavad need hästi lähi-infrapunakiirgust. Need peegeldavad vähesel määral vaid rohelist valgust, seetõttu on need pildi peal tumerohelised. Pilved aga peegeldavad lisaks rohelisele valgusele ka lähi-infrapunakiirgust, NDPI väärtus on neil madal. Seetõttu on pilved pildi peal kollased. Sama värvi on ka lumi. Tehisalad tunneb ära helerohelise värvi poolest.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ngp-p10.html<br>','<strong style=font-size:20px;>NDR</strong><br><br>NDR valevärvipildi peal kombineeritakse tagasipeegeldunud lähi-infrapunakiirgust (NIR), punast valgust ja arvutuslikku taimkatte indeksit (NDVI). Taimkatteindeksi abil saab hinnata vaadeldava ala taimkatte tihedust ja selle tervist. Mida kõrgem on indeksi väärtus, seda rohkem rohelust on vaadeldavas piirkonnas. Tihe taimkate peegeldab ka palju lähi-infrapunakiirgust. Vähe peegeldatakse punast valgust, kuna seda taim neelab ja kasutab fotosünteesiks. Seetõttu paistavad taimkattega alad pildil rohelisest kollaseni. Kollastena paistavad põllumaad, samuti ka lehtpuud. Okaspuud aga peegeldavad vähem lähi-infrapunakiirgust ja seetõttu on pildil rohelised. Hõreda taimkattega põllud on pildil roosat värvi. Niidetud põllud on lillast tumesiniseni, kuna paistab välja muld, mis peegeldab hästi punast valgust ja lähi-infrapunakiirgust. Ka turbaväljad ja tehisalad on tumesinised. Tumelillad on ka rabad. Veekogud neelavad hästi valgust kogu vaadeldavast spektri piirkonnast, ka NDVI väärtus on neil madal. Seetõttu paistavad need pildi peal mustana. Talvisel ajal paistab lumi pildil roosana, okaspuud on aga rohelised. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ndr-p11.html<br>','<strong style=font-size:20px;>PDB</strong><br><br>PDB valevärvipildi peal kombineeritakse arvutuslikku veekogude indeksit (NDPI), taimkatteindeksit (NDVI) ja sinist valgust. NDVI abil on võimalik hinnata vaadeldava ala rohelust. Mida suurem on NDVI väärtus ala kohta, seda tihedam ja tervem on taimkate. NDPI abil saab aga hinnata taimkatte veesisaldust. Mida suurem on taimkatte veesisaldus, seda väiksem on NDPI väärtus. Mida suurem on NDPI väärtus, seda rohkem peegeldab ala lühilainelist infrapunakiirgust võrreldes rohelise valgusega. Pildil paistavad hästi välja sellised alad, kus NDVI väärtus on väike, NDPI väärtus aga suur. Fuktsiaroosana paistavad näiteks niidetud põllud, punasena turbaväljad. Kui on tegemist tiheda taimkattega alaga, kus NDVI väärtus on suur ja NDPI väärtus madal, siis ala paistab rohelisena. Tumerohelistena paistavad okaspuud, veidi heledamana aga lehtpuud. Ka põllud on helerohelised. Veekogud neelavad hästi sinist valgust, samuti on neil väike NDVI ja NDPI väärtus, seetõttu on need pildil tumesinised või mustad. Tehispinnad on tumesinised. Talvisel ajal on paistab lumi pildil sinisena. Alad, mis ei ole paksu lume all on rohelised kuni oranžid, valdavalt aga kollased.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/pdb-p12.html<br>','<strong style=font-size:20px;>NDN</strong><br><br>NDN valevärvipildi korral kombineeritakse omavahel arvutuslikku taimkatteindeksit (NDVI) ning tagasipeegeldunud lähi-infrapunakiirgust (NIR). Mida rohkem rohelust on vaadeldavas piirkonnas, seda suurem on NDVI väärtus. Lisaks sellele saab rohelust hinnata ka otse tagasipeegeldunud lähi-infrapunakiirgust mõõtes. Sellised alad, kus NDVI väärtus on kõrge ja peegeldub ka palju lähi-infrapunakiirgust, on pildil valged. Sellised alad on näiteks niitmata põllud, mis pildil paistavad selgete piiridega valgete laikudena. Lisaks paistavad valgetena ka lehtmetsad. Okaspuudelt peegeldub mõnevõrra vähem lähi-infrapunakiirgust, seetõttu on okasmetsad rohelist värvi. Rohelised on ka sellised põllulapid, kus suurt taimekasvu veel ei ole. Hästi eristatavad on veel niidetud põllud, mis pildil on tumeroosad. Seda seetõttu, et mulla NDPI väärtus on kõrge. Sarnast värvi on ka turbaväljad, kuid mõnevõrra tuhmimad. Hästi eristatavad on ka tehisalad, mis on samuti roosad, kuid turbaväljadega võrreldes erksamat tooni. Veekogud on pildil mustad, kuna vesi peegeldab vähe lähi-infrapunakiirgust. Pilved on pildil roosat värvi, kuna need peegeldavad hästi lähiinfrapunakiirgust. Talvisel ajal paistab lumi roosana, kuna see peegeldab hästi lähi-infrapunakiirgust. Alad, mis ei ole paksu lumikatte all, on aga rohelist värvi.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/ndn-p13.html<br>','<strong style=font-size:20px;>PDN</strong><br><br>PDN valevärvipildi korral kombineeritakse omavahel arvutuslikku veekogude indeksit (NDPI), taimkatteindeksit (NDVI) ning tagasipeegeldunud lähi-infrapunakiirgust (NIR). Valevärvipilt on mõeldud eelkõige talvisel ajal tehtud piltide uurimiseks. Taimkatte indeksi abil on võimalik hinnata ala taimkatte tihedust ja selle tervist. Seda määratakse tagasipeegeldunud lähiinfrapunakiirguse ja punase valguse erinevuse järgi. Taimedes sisalduv klorofüll peegeldab rohkem lähi-infrapunakiirgust kui punast valgust. Tänu sellele on võimalik eristada okaspuid raagus puudest. Hästi paistavad välja okaspuud, mis kõrge NDVI ja NDPI tõttu on pildil kollased. Sellised alad, kus on raagus puud, on pildil rohelised. Lumi on aga pildil tumesinine. Suvel tehtud piltidel paistavad niitmata põllud ja lehtpuud helesinistena, okaspuud aga rohelistena. Seda seetõttu, et okaspuudes on vähem klorofülli kui lehtpuudes. Niidetud või lagedad alad on aga punased. Seda seetõttu, et paistab välja muld, mis peegeldab hästi lühilainelist infrapunakiirgust. Sellest tulenevalt on mulla NDPI väärtus kõrge. Oranžid või punased on ka turbaväljad. Veekogud on mustad, kuna nende NDPI on väga väike ning need neelavad hästi ka lähi-infrapunakiirgust.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/pdn-p14.html<br>','<strong style=font-size:20px;>NNR</strong><br><br>NNR valevärvipildi korral kombineeritakse omavahel tagasipeegeldunud lähiinfrapunakiirgust (NIR) ja punast valgust. Kuna taimedes sisalduv klorofüll peegeldab tagasi lähiinfrapunakiirgust ja neelab punast valgust, siis taimkattega alade värv varieerub rohelisest helekollaseni. Talvisel ajal saab eristada okasmetsa raagus puudest. Okaspuud peegeldavad ka talvel lähi-infrapunakiirgust, kuna need on igihaljad. Seetõttu on okaspuud pildil rohelised. Alad, kus on vaid raagus puud, paistavad aga sinistena. Lumi peegeldab hästi valgust kogu vaadeldavas spektraalpiirkonnas. Seetõttu paistavad paksu lumikatte all olevad alad valgetena. Veekogud neelavad hästi valgust kogu antud spektraalpiirkonnast, seetõttu on need mustad. Seetõttu paistavad hästi välja ka veekogude piirid. Suvisel ajal on taimkate tihedam ning seetõttu ka tagasipeegeldunud lähi-infrapunakiirguse hulk suurem. Seega on taimkattega alad rohelised või eriti suure klorofüllisisalduse puhul ka kollased. Niidetud või lagedad alad on aga sinised. Seda seetõttu, et paistab välja muld, mis peegeldab hästi nii punast valgust kui ka lähi-infrapunakiirgust. Kuna aga punase valguse osatähtsus on pildil suurem, siis muld paistab ikkagi sinisena. Ka turbaväljad ja rabad on pildil sinist värvi.<br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/nnr-p15.html<br>','<strong style=font-size:20px;>DNP</strong><br><br>DNP valevärvipildi korral kombineeritakse omavahel arvutuslikku taimkatte indeksit (NDVI), veekogude indeksit (NDPI) ning tagasipeegeldunud lähi-infrapunakiirgust (NIR). Taimkatte indeksi abil on võimalik hinnata ala taimkatte tihedust ja selle tervist. Seda määratakse tagasipeegeldunud lähi-infrapunakiirguse ja punase valguse erinevuse järgi. Taimedes sisalduv klorofüll peegeldab rohkem lähi-infrapunakiirgust kui punast valgust. Seetõttu võivad taimkattega alad olla pildi peal punased. Sellised alad on näiteks okasmetsad. Eriti suure klorofülli sisalduse korral on taimestik pildil kollane. Sellisteks aladeks on näiteks lehtmetsad ja niitmata põllud. <br><br>Niidetud põllud on sinised, kuna paistab välja muld, mille NDPI väärtus on kõrge. Turbaväljade värv varieerub roosast tumesiniseni. Roosad on ka rabad. Veekogud on aga mustad, kuna nende NDPI on minimaalne ning need neelavad ka hästi lähi-infrapunakiirgust. Tehisalad ja pilved on pildi peal rohelised. Talvisel ajal paistab pildil lumi rohelisena ja roosana paistavad okaspuud. Raagus puud on pildil aga oranžid. <br><br> <strong style=font-size:20px;>Allikas:</strong><br>https://ehwebtest.maaamet.ee/est/abi/dnp-p16.html<br>','Kujundatud'];
-
-//    function showLegendTable(urls,titles, bottom, left, index, type) {
-//    let legendName = 'legendTable' + type + "-" + index;
-//    let tableName = 'tableContainer' + type + "-" + index;;
-//    const tableContainer = document.getElementById(tableName);
-//    const legendTable = document.getElementById(legendName);
-//    console.log(tableContainer);
-//    // Clear previous table content
-//    legendTable.innerHTML = '';
-//    let tableContent = `
-//        <tr><th colspan="1" style="color: black;">Legend</th></tr>
-//    `;
-//
-//    // Adjust the position of the table container
-//    tableContainer.style.bottom = bottom;
-//    if (type != 'Designed') tableContainer.style.left = left;
-//    else tableContainer.style.right = left;
-//
-//    fetch(urls[index])
-//        .then(response => response.blob())
-//        .then(blob => {
-//            const imageUrl = URL.createObjectURL(blob);
-//            // Append new row to the existing table content
-//            const rowContent = `
-//                <tr>
-//                    <td style="color: black; display: flex; align-items: center; font-size: 14px;">
-//                        <img src="${imageUrl}" alt="Legend Image" style="margin-right: 8px;"> ${titles[index]}
-//                    </td>
-//                </tr>
-//            `;
-//            console.log(rowContent);
-//            tableContent += rowContent;
-//            legendTable.innerHTML += tableContent;
-//        })
-//        .catch(error => console.error('Error fetching legend:', error));
-//
-//    // Display the table container
-//    tableContainer.style.display = 'block';
-//}
-//
-//    function hideTable() {
-//        const tableContainer = document.getElementById('tableContainer');
-//        tableContainer.style.display = 'none';
-//    }
-//
-//document.addEventListener('DOMContentLoaded', () => {
-//    const legendButtons = document.querySelectorAll('.LegendButtonBorders');
-//    legendButtons.forEach((button) => {
-//        button.addEventListener('mouseenter', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            showLegendTable(borders_legend_urls, borders_legend_titles, '10em', '12em', buttonId, 'Borders');
-//        });
-//        button.addEventListener('mouseleave', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            let tableName = 'tableContainerBorders-' + buttonId;
-//            const tableContainer = document.getElementById(tableName);
-//            tableContainer.style.display = 'none';
-//        });
-//    });
+//document.getElementById('clms-0').addEventListener('click', function() {
+//  console.log('midagi muutus');
+//  var isVisible = wmsLayer.getVisible();
+//  wmsLayer.setVisible(!isVisible);
 //});
-//
-//document.addEventListener('DOMContentLoaded', () => {
-//    const legendButtons = document.querySelectorAll('.LegendButtonOrto');
-//    legendButtons.forEach((button) => {
-//        button.addEventListener('mouseenter', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            showLegendTable(orto_legend_urls, orto_legend_titles, '0em', '14em', buttonId, 'Orto');
-//        });
-//        button.addEventListener('mouseleave', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            let tableName = 'tableContainerOrto-' + buttonId;
-//            const tableContainer = document.getElementById(tableName);
-//            tableContainer.style.display = 'none';
-//        });
-//    });
-//});
-//
-//document.addEventListener('DOMContentLoaded', () => {
-//    const legendButtons = document.querySelectorAll('.LegendButtonElse');
-//    legendButtons.forEach((button) => {
-//        button.addEventListener('mouseenter', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            showLegendTable(else_legend_urls, else_legend_titles, '0em', '12em', buttonId, 'Else');
-//        });
-//        button.addEventListener('mouseleave', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            let tableName = 'tableContainerElse-' + buttonId;
-//            const tableContainer = document.getElementById(tableName);
-//            tableContainer.style.display = 'none';
-//        });
-//    });
-//});
-//
-//document.addEventListener('DOMContentLoaded', () => {
-//    const legendButtons = document.querySelectorAll('.LegendButtonDesigned');
-//    legendButtons.forEach((button) => {
-//        button.addEventListener('mouseenter', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            showLegendTable(designed_legend_urls, designed_legend_titles, '20em', '8em', buttonId, 'Designed');
-//        });
-//        button.addEventListener('mouseleave', (event) => {
-//            const buttonId = event.target.id.slice(-1);
-//            let tableName = 'tableContainerDesigned-' + buttonId;
-//            const tableContainer = document.getElementById(tableName);
-//            tableContainer.style.display = 'none';
-//        });
-//    });
-//});
-
-let isPopupVisible = false;
-
-    function openLegendInfoBox(content) {
-        const legendInfo = document.getElementById('LegendInfo');
-        legendInfo.innerHTML = content;
-        const legendInfoBox = document.getElementById('D-LegendInfo');
-
-        if (isPopupVisible) {
-            legendInfoBox.style.visibility = 'hidden';
-        } else {
-            legendInfoBox.style.visibility = 'visible';
-        }
-
-        isPopupVisible = !isPopupVisible;
-    }
-
-function addLegend(urls, legendTitles, titles,  index, legendTable, helpText, alternate_legend_pictures) {
-    if (urls[index] == ""){
-        if (alternate_legend_pictures[index] == ""){
-
-
-        const sentence = helpText[index];
-            // Create a unique ID for the text box
-            const textBoxId = `textBox-${index}`;
-
-            // Append new row to the existing table content
-            const rowContent = `
-                <tr>
-                    <td style="color: white; font-size: 16px; text-align: center;">
-                        <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <strong>${titles[index]}</strong>
-                            <div onclick="openLegendInfoBox('${sentence}')" style="cursor: pointer; margin-left: 8px; justify-content: right;">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><circle cx='12' cy='12' r='10' stroke='white' stroke-width='2' fill='none'/><text x='12' y='17' text-anchor='middle' font-size='15' fill='white'>i</text></svg>" alt="Info button icon" style="width: 1.5em; height: 1.5em; object-fit: contain;">
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; font-size: 14px; justify-content: left; margin-top: 8px;">
-                             Legend puudub
-                        </div>
-                    </td>
-                </tr>
-            `;
-
-            legendTable.innerHTML += rowContent;
-        }
-        else{
-
-        const sentence = helpText[index];
-            // Create a unique ID for the text box
-            const textBoxId = `textBox-${index}`;
-
-            let rowContent = `
-                <tr>
-                    <td style="color: white; font-size: 16px; text-align: center;" ${alternate_legend_pictures[index] === '- põldude piir' ? 'rowspan="2"' : ''}>
-                        <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <strong>${titles[index]}</strong>
-                            <div onclick="openLegendInfoBox('${sentence}')" style="cursor: pointer; margin-left: 8px; justify-content: right;">
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><circle cx='12' cy='12' r='10' stroke='white' stroke-width='2' fill='none'/><text x='12' y='17' text-anchor='middle' font-size='15' fill='white'>i</text></svg>" alt="Info button icon" style="width: 1.5em; height: 1.5em; object-fit: contain;">
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; font-size: 14px; justify-content: left; margin-top: 8px;">
-                            ${alternate_legend_pictures[index]}
-                            <span>${legendTitles[index]}</span>
-                        </div>
-            `;
-
-            if (legendTitles[index] === '- põldude piir') {
-                rowContent += `
-                        <div style="display: flex; align-items: center; font-size: 14px; justify-content: left; margin-top: 8px;">
-                            <strong style="color: black;">47152508845</strong>
-                            <span style="color: white; margin-left: 4px;">- põllu number</span>
-                        </div>
-                    `;
-            }
-
-            rowContent += `
-                    </td>
-                </tr>
-            `;
-
-            legendTable.innerHTML += rowContent;
-        }
-    }
-
-    else{
-    fetch(urls[index])
-        .then(response => response.blob())
-        .then(blob => {
-            const imageUrl = URL.createObjectURL(blob);
-            // Append new row to the existing table content
-            const sentence = helpText[index];
-            // Create a unique ID for the text box
-            const textBoxId = `textBox-${index}`;
-
-            // Append new row to the existing table content
-            const rowContent = `
-            <tr>
-                <td style="color: white; font-size: 16px; text-align: center;">
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <strong>${titles[index]}</strong>
-                        <div onclick="openLegendInfoBox('${sentence}')" style="cursor: pointer; margin-left: 8px; justify-content: right;">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><circle cx='12' cy='12' r='10' stroke='white' stroke-width='2' fill='none'/><text x='12' y='17' text-anchor='middle' font-size='15' fill='white'>i</text></svg>" alt="Info button icon" style="width: 1.5em; height: 1.5em; object-fit: contain;">
-                            </div>
-                    </div>
-                    <div style="display: flex; align-items: center; font-size: 14px; justify-content: left; margin-top: 8px;">
-                        <img src="${imageUrl}" alt="Legend Image" style="margin-right: 8px;">
-                        ${legendTitles[index]}
-                    </div>
-                </td>
-            </tr>
-            `;
-
-            legendTable.innerHTML += rowContent;
-
-        })
-        .catch(error => console.error('Error fetching legend:', error));
-}
-}
-
-
-
-function addLegendMask(image, legendTitles, titles, index, legendTable, helpText){
-    const sentence = helpText[index];
-    const rowContent = `
-                <tr>
-                    <td style="color: white; font-size: 16px; text-align: center;">
-                        <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <strong>${titles[index]}</strong>
-                            <div onclick="openLegendInfoBox('${sentence}')" style="cursor: pointer; margin-left: 8px; justify-content: right;">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><circle cx='12' cy='12' r='10' stroke='white' stroke-width='2' fill='none'/><text x='12' y='17' text-anchor='middle' font-size='15' fill='white'>i</text></svg>" alt="Info button icon" style="width: 1.5em; height: 1.5em; object-fit: contain;">
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center;font-size: 14px; justify-content: left; margin-top: 8px;">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><rect x='4' y='4' width='16' height='16' rx='2' ry='2' stroke='black' stroke-width='2' fill='black'/></svg>" alt="Black Box Icon" style="margin-right: 8px;width: 1.5em; height: 1.5em; object-fit: contain;">
-                            ${legendTitles[index]}
-                        </div>
-                    </td>
-                </tr>
-            `;
-            legendTable.innerHTML += rowContent;
-
-}
-
-
-let lastUrl = '';
-function generateLegendTable() {
-    const currentUrl = window.location.href;
-    const queryString = window.location.search;
-    const cleanQueryString = queryString.substring(1);
-    const queryParamsArray = cleanQueryString.split('&');
-
-    const excludeKeys = ['mapbox', 'sensor', 'date'];
-    const filteredParamsArray = queryParamsArray.filter(param => {
-    const key = param.split('=')[0];
-    return !excludeKeys.includes(key);
-});
-    const tableContainer = document.getElementById(tableContainerAllLegends);
-    const legendTable = document.getElementById(legendTableAllLegends);
-    const filteredParamsString = filteredParamsArray.sort().join('&');
-
-    if (lastUrl != filteredParamsString){
-    legendTableAllLegends.innerHTML = '';
-    filteredParamsArray.forEach(param => {
-        const key_value = param.split('=');
-        if (key_value[0] == 'filter'){
-            let index = -1
-            for(let k=0; k <= ProductsWMS.length; k++){
-                if (ProductsWMS[k].toLowerCase() == key_value[1]) {
-                    index = k;
-                    break;
-                }
-            }
-            addLegend(designed_legend_urls,designed_legend_titles, designed_titles,index, legendTableAllLegends, designed_help_text, designed_alternate_legends);
-        }
-        else if (key_value[0] == 'borders'){
-            addLegend(borders_legend_urls,borders_legend_titles, borders_titles, key_value[1],legendTableAllLegends, borders_help_text, borders_alternate_legends);
-        }
-        else if (key_value[0] == 'orto'){
-            addLegend(orto_legend_urls,orto_legend_titles,orto_titles, key_value[1],legendTableAllLegends, orto_help_text, orto_alternate_legends);
-        }
-        else if (key_value[0] == 'mask'){
-            addLegendMask('../mask_legend.png',mask_legend_titles,mask_titles, key_value[1], legendTableAllLegends, mask_help_text);
-        }
-        else if (key_value[0] == 'deadtrees'){
-            addLegend(else_legend_urls,else_legend_titles, else_titles,0, legendTableAllLegends, else_help_text, else_alternate_legends);
-        }
-        else if (key_value[0] == 'points'){
-            addLegend(else_legend_urls,else_legend_titles, else_titles ,1, legendTableAllLegends, else_help_text, else_alternate_legends);
-        }
-
-        });
-
-    }
-    lastUrl = filteredParamsString;
-    }
-
-document.addEventListener('DOMContentLoaded', generateLegendTable);
-
-document.addEventListener('click', function(event) {
-    generateLegendTable();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const legendButton = document.getElementById('legendButtonAllLegends');
-    const tableContainer = document.getElementById('tableContainerAllLegends');
-
-    legendButton.addEventListener('click', (event) => {
-        if (tableContainer.style.display === 'block' || tableContainer.style.display === '') {
-            tableContainer.style.display = 'none';
-            legendButton.className = "buttonno";
-        } else {
-            tableContainer.style.display = 'block';
-            legendButton.className = "buttonnoy";
-        }
-    });
-});
-
-
