@@ -1711,21 +1711,33 @@ function wResize() {
     document.getElementById('scalebar').style.visibility='visible';
   }
 
-  if (map.getSize()[0] / parseFloat(getComputedStyle(document.querySelector('body'))['font-size']) < 48) {
-    if (document.getElementById('InAadressDiv').style.top == '1em') {
-      document.getElementById('InAadressDiv').style.top = '4em';
-      document.getElementById('InAadressDiv').style.left = null;
-      document.getElementById('InAadressDiv').style.right = '1em';
-    }
-  } else {
-    if (document.getElementById('InAadressDiv').style.top == '4em') {
-      document.getElementById('InAadressDiv').style.top = '1em';
-      document.getElementById('InAadressDiv').style.right = null;
-      document.getElementById('InAadressDiv').style.left = '7em';
-    }
 
+  if (map.getSize()[0] < 830){
+    document.getElementById('legendbutton').style.top = '7em';
+    document.getElementById('legendbutton').style.right = '1em';
+    document.getElementById('tableContainerAllLegends').style.top = '7em';
+    document.getElementById('tableContainerAllLegends').style.right = '4em';
+    document.getElementById('InAadressDiv').style.top = '4em';
+    document.getElementById('InAadressDiv').style.left = null;
+    document.getElementById('InAadressDiv').style.right = '1em';
   }
+  else{
+  document.getElementById('InAadressDiv').style.top = '1em'
+    document.getElementById('InAadressDiv').style.left = '7em';
+    if (map.getSize()[0] < 1200){
+    document.getElementById('legendbutton').style.top = '4em';
+    document.getElementById('legendbutton').style.right = '1em';
+    document.getElementById('tableContainerAllLegends').style.top = '4em';
+    document.getElementById('tableContainerAllLegends').style.right = '4em';
 
+    }
+    else{
+    document.getElementById('legendbutton').style.top = '1em';
+    document.getElementById('legendbutton').style.right = '25em';
+    document.getElementById('tableContainerAllLegends').style.top = '1em';
+    document.getElementById('tableContainerAllLegends').style.right = '28em';
+    }
+  }
 }
 
 
